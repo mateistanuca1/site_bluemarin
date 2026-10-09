@@ -8,6 +8,7 @@ import SectionTitle from '@/components/SectionTitle';
 import SocialCards from '@/components/SocialCards';
 import ContactForm from '@/components/forms/ContactForm';
 import { getContent } from '@/lib/content';
+import { cx } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -30,7 +31,13 @@ export default async function ContactPage() {
       <Section size="lg">
         <SectionTitle kicker="Suntem aproape">Date de contact</SectionTitle>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Grila urmeaza numarul de carduri, ca sa nu ramana coloane goale. */}
+        <div
+          className={cx(
+            'mt-12 grid gap-4',
+            contact.cards.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3',
+          )}
+        >
           {contact.cards.map((c) => (
             <a
               key={c.label}

@@ -72,33 +72,9 @@ export default function Footer({ site }: { site: Site }) {
                 className="flex items-start gap-3 transition-colors hover:text-brand-light"
               >
                 <Icon name="phone" className="mt-0.5 h-4 w-4 shrink-0 text-brand-light" />
-                <span>
-                  {contact.phone}
-                  {contact.phoneLabel && (
-                    <span className="block text-[12px] text-white/45">{contact.phoneLabel}</span>
-                  )}
-                </span>
+                {contact.phone}
               </a>
             </li>
-
-            {contact.phoneSecondary && contact.phoneSecondaryHref && (
-              <li>
-                <a
-                  href={`tel:${contact.phoneSecondaryHref}`}
-                  className="flex items-start gap-3 transition-colors hover:text-brand-light"
-                >
-                  <Icon name="phone" className="mt-0.5 h-4 w-4 shrink-0 text-brand-light" />
-                  <span>
-                    {contact.phoneSecondary}
-                    {contact.phoneSecondaryLabel && (
-                      <span className="block text-[12px] text-white/45">
-                        {contact.phoneSecondaryLabel}
-                      </span>
-                    )}
-                  </span>
-                </a>
-              </li>
-            )}
 
             <li>
               <a

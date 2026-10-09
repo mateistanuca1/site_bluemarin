@@ -11,7 +11,7 @@ from html import escape
 from flask import Blueprint, jsonify, request
 from werkzeug.datastructures import FileStorage
 
-from .. import appsscript, security as sec
+from .. import security as sec, virtuagym
 from ..config import settings
 from ..db import session_scope
 from ..mail import Attachment, send
@@ -127,27 +127,6 @@ def _guard():
     return None
 
 
-def _to_google(form_type: str, fields: dict, files: dict | None = None):
-    """Trimite formularul la Google Apps Script in loc de baza de date.
-
-    Intoarce un raspuns Flask gata de returnat, sau None daca modul
-    `apps-script` nu e activ si trebuie urmata calea obisnuita.
-    """
-    if not settings.uses_apps_script:
-        return None
-
-    try:
-        appsscript.send(form_type, fields, files)
-    except appsscript.AppsScriptError:
-        log.exception("Trimiterea catre Apps Script a esuat (%s)", form_type)
-        return sec.json_error(
-            "Nu am putut inregistra cererea chiar acum. Te rugam sa incerci din nou "
-            "sau sa ne suni la 0744 258 258.",
-            502,
-        )
-    return True
-
-
 # --------------------------------------------------------------------------- #
 # Contact
 # --------------------------------------------------------------------------- #
@@ -167,15 +146,6 @@ def contact():
         sec.consent(data.get("gdpr", True))
     except sec.ValidationError as exc:
         return sec.json_error(exc.message)
-
-    sent = _to_google(
-        "contact",
-        {"name": name, "email": email_addr, "subject": subject, "message": message},
-    )
-    if sent is not None:
-        if sent is not True:
-            return sent
-        return jsonify({"message": "Mesajul a fost trimis. Te contactam in cel mai scurt timp!"})
 
     with session_scope() as db:
         db.add(
@@ -225,25 +195,6 @@ def package_request():
         sec.consent(data.get("gdpr", True))
     except sec.ValidationError as exc:
         return sec.json_error(exc.message)
-
-    sent = _to_google(
-        "pachet",
-        {
-            "name": name,
-            "email": email_addr,
-            "phone": phone,
-            "age": age,
-            "message": message,
-            "package": package,
-            "location": location,
-        },
-    )
-    if sent is not None:
-        if sent is not True:
-            return sent
-        return jsonify(
-            {"message": "Cererea a fost trimisa! Te contactam pentru a stabili programul."}
-        )
 
     with session_scope() as db:
         db.add(
@@ -312,16 +263,6 @@ def careers():
 
     assert cv is not None
     cv_content, cv_name, cv_type = cv
-
-    sent = _to_google(
-        "cariere",
-        {"name": name, "email": email_addr, "phone": phone, "message": message},
-        {"cv": (cv_name, cv_content, cv_type)},
-    )
-    if sent is not None:
-        if sent is not True:
-            return sent
-        return jsonify({"message": "Am primit CV-ul tau. Te contactam in cel mai scurt timp!"})
 
     with session_scope() as db:
         submission = Submission(
@@ -410,39 +351,6 @@ def enrollment():
     submitted_at = datetime.now(timezone.utc)
     ip = sec.client_ip()
 
-    # Varianta "apps-script": Google face tot — Sheet, PDF in Drive, email si
-    # membrul in Virtuagym. Formatul campurilor e cel asteptat de scriptul
-    # clubului (vezi scripts/apps-script/Cod.gs).
-    sent = _to_google(
-        "inscriere",
-        {
-            "firstName": student,
-            "birthDate": data.get("birthDate", ""),
-            "nameLegalParent": parent,
-            "phone": phone,
-            "email": email_addr,
-            "locationName": location,
-            "enrolleeType": data.get("enrolleeType", ""),
-            "signature": base64.b64encode(signature).decode("ascii"),
-            "consentIp": ip,
-        },
-        {
-            "file": (photo_name, photo_content, photo_type),
-            "medicalCertificate": (medical_name, medical_content, medical_type),
-        },
-    )
-    if sent is not None:
-        if sent is not True:
-            return sent
-        return jsonify(
-            {
-                "message": (
-                    "Felicitari! Inscrierea a fost trimisa. Verifica emailul — ai primit "
-                    "o copie a fisei in format PDF."
-                )
-            }
-        )
-
     with session_scope() as db:
         submission = Submission(
             kind="inscriere",
@@ -462,7 +370,7 @@ def enrollment():
         db.flush()
         submission_id = submission.id
 
-        # Fisa PDF — acelasi rol pe care il avea Google Apps Script-ul vechi.
+        # Fisa de inscriere in PDF, trimisa pe email si arhivata la noi.
         try:
             pdf_bytes = build_enrollment_pdf(
                 EnrollmentData(
@@ -498,6 +406,15 @@ def enrollment():
             files.append(("fisa-pdf", pdf_bytes, pdf_name, "application/pdf"))
 
         _persist(db, submission, files)
+
+        # Creeaza membrul in softul clubului. Optional: daca nu e configurat
+        # sau daca Virtuagym nu raspunde, inscrierea ramane salvata oricum.
+        submission.virtuagym_member_id = virtuagym.create_member(
+            full_name=student,
+            email=email_addr,
+            phone=phone,
+            external_id=f"bluemarin-{submission_id}",
+        )
 
     rows = [
         ("Cursant", student),

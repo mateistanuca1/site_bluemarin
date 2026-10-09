@@ -7,32 +7,22 @@ functionalitati — dar cu continutul editabil dintr-un panou de admin.
 ```
 Frontend   Next.js 15 (App Router, TypeScript, Tailwind)  -> Vercel, gratis
 Backend    Flask + SQLAlchemy                             -> Vercel, aceeasi aplicatie
-Formulare  Google Apps Script (Sheets + Drive + Gmail)    -> 0 lei, fara baza de date
-           sau Postgres + Resend                          -> tot gratuit, dar 2 servicii
+Date       Postgres (Neon / Supabase)                     -> tier gratuit
+Fisiere    in baza de date, sau Cloudflare R2             -> tier gratuit
+Email      Resend                                         -> 3.000/luna gratis
+Membri     Virtuagym (optional)                           -> contul clubului
 ```
 
-Formularele pot merge in doua feluri, controlate de `FORMS_BACKEND`:
-
-| | `apps-script` (recomandat) | `db` |
-|---|---|---|
-| Unde ajung datele | Google Sheet | Postgres (Neon) |
-| Fisa de inscriere PDF | Google Docs -> Drive | `backend/pdf.py` |
-| Emailuri | Gmail | Resend |
-| Membri in Virtuagym | da, automat | nu |
-| Servicii de configurat | niciunul in plus | Neon + Resend |
-
-Clubul foloseste deja un Apps Script pentru inscrieri. Modul `apps-script`
-continua sa-l foloseasca — aceeasi foaie, acelasi folder Drive, aceeasi
-integrare Virtuagym — dar trece prin backend, ca sa pastram validarile,
-limitarea de trafic si mesajele in romana, si ca sa nu ajunga nicio cheie
-in browser.
+Tot ce tine de formulare se intampla in backend-ul propriu: validarea, fisa de
+inscriere in PDF, emailurile, arhivarea documentelor si crearea membrului in
+Virtuagym. Nu exista nicio dependenta de Google Apps Script.
 
 ---
 
 ## Cuprins
 
 - [Pornire rapida](#pornire-rapida)
-- [Formulare prin Google Apps Script](#formulare-prin-google-apps-script)
+- [Ce se intampla la o inscriere](#ce-se-intampla-la-o-inscriere)
 - [Structura proiectului](#structura-proiectului)
 - [Cum editezi continutul](#cum-editezi-continutul)
 - [Deploy pe Vercel](#deploy-pe-vercel)
@@ -87,73 +77,33 @@ Verifica oricand ce e configurat si ce lipseste:
 
 ---
 
-## Formulare prin Google Apps Script
+## Ce se intampla la o inscriere
 
-Varianta fara baza de date: datele ajung intr-un Google Sheet, fisa de
-inscriere se genereaza in Google Docs si se salveaza ca PDF in Drive,
-emailurile pleaca prin Gmail, iar membrul se creeaza in Virtuagym.
+1. Formularul valideaza datele in browser, in romana, si le trimite la `/api/inscriere`.
+2. Backend-ul revalideaza tot (nu are incredere in browser), verifica limita de
+   trafic si capcana pentru roboti.
+3. Trimiterea se salveaza in baza de date, impreuna cu IP-ul si ora
+   consimtamantului.
+4. `backend/pdf.py` genereaza fisa de inscriere: datele, cele doua documente
+   medicale si semnatura.
+5. Documentele si fisa se arhiveaza prin `backend/storage.py`.
+6. Pleaca doua emailuri: unul catre club, cu fisa atasata, si unul catre
+   parinte sau cursant, cu aceeasi fisa.
+7. Daca sunt configurate cheile `VIRTUAGYM_*`, cursantul e creat si in softul
+   clubului. Pasul e optional: daca Virtuagym nu raspunde, inscrierea ramane
+   salvata si se noteaza in log, iar in admin apare „nesincronizat".
 
-### 1. Publica scriptul
+Toate cererile se vad in `/api/admin/cereri`, cu export CSV.
 
-1. Intra pe [script.google.com](https://script.google.com) -> **Proiect nou**
-2. Lipeste continutul fisierului [`scripts/apps-script/Cod.gs`](scripts/apps-script/Cod.gs)
-3. **Project Settings** -> **Script Properties** -> adauga:
+### Virtuagym
 
-   | Cheie | Valoare |
-   |---|---|
-   | `SHARED_TOKEN` | un secret lung, generat de tine |
-   | `SHEET_ID` | id-ul foii de calcul (din URL) |
-   | `DRIVE_FOLDER_ID` | id-ul folderului unde se salveaza fisele |
-   | `TEMPLATE_DOC_MINOR` | id-ul sablonului Google Docs pentru copii |
-   | `TEMPLATE_DOC_ADULT` | id-ul sablonului pentru adulti |
-   | `NOTIFY_EMAIL` | unde primesti notificarile |
-   | `VIRTUAGYM_API_KEY` | cheia Virtuagym |
-   | `VIRTUAGYM_CLUB_SECRET` | club secret |
-   | `VIRTUAGYM_CLUB_ID` | id-ul clubului |
-
-4. **Deploy** -> **New deployment** -> **Web app**
-   - *Execute as:* **Me**
-   - *Who has access:* **Anyone**
-5. Copiaza URL-ul care se termina in `/exec`
-
-> Cheile stau in Script Properties, nu in cod. Scriptul vechi le avea scrise
-> direct in fisier — oricine deschidea proiectul le putea citi.
-
-### 2. Configureaza site-ul
-
-In Vercel -> **Settings** -> **Environment Variables**:
-
-```
-FORMS_BACKEND=apps-script
-APPS_SCRIPT_URL=https://script.google.com/macros/s/.../exec
-APPS_SCRIPT_TOKEN=acelasi-secret-ca-SHARED_TOKEN
-```
-
-Atat. Nu mai ai nevoie de `DATABASE_URL` si nici de `RESEND_API_KEY`.
-
-Verifica cu:
-
-```bash
-.venv/bin/python -m backend.cli check
-```
-
-### Sabloanele Google Docs
-
-Scriptul inlocuieste in sablon: `{NAME}`, `{DATE}`, `{PARENT}`, `{PHONE}`,
-`{EMAIL}`, iar in locul lui `{AVIZ}` insereaza cele doua documente medicale
-si semnatura.
-
-### Ce s-a reparat fata de scriptul vechi
-
-| Problema | Acum |
+| Variabila | De unde o iei |
 |---|---|
-| PDF-ul nu ajungea niciodata atasat — functia returna documentul Google, nu PDF-ul, si il stergea inainte de export | Exportul se face cat timp fisierul exista; documentul temporar se sterge dupa |
-| Cheile API erau scrise in cod | Script Properties |
-| Oricine putea posta pe URL-ul `/exec` | Token comun, verificat la fiecare cerere |
-| Data nasterii ajungea in Virtuagym drept nume de familie | Numele se desparte corect |
-| O eroare la Virtuagym pierdea toata inscrierea | Virtuagym e optional; inscrierea se salveaza oricum |
-| Doua scripturi aproape identice (copii / adulti) | Unul singur, cu `enrolleeType` |
-| Doar inscrierile | Toate cele patru formulare |
+| `VIRTUAGYM_API_KEY` | panoul Virtuagym al clubului |
+| `VIRTUAGYM_CLUB_SECRET` | la fel |
+| `VIRTUAGYM_CLUB_ID` | la fel |
+
+Lasa-le goale daca nu vrei sincronizarea — restul fluxului merge identic.
 
 ---
 
@@ -191,7 +141,6 @@ backend/
 
 api/index.py          punctul de intrare pentru Vercel
 scripts/
-  apps-script/Cod.gs  backend-ul Google (Sheets + Drive + Gmail + Virtuagym)
   fetch-images.mjs    descarca pozele de pe site-ul vechi
   images.manifest.json  lista pozelor descarcate
 docs/
@@ -348,6 +297,9 @@ Cele care conteaza cel mai des:
 | `STORAGE_BACKEND` | `db` | `db`, `s3` sau `local`. |
 | `MAX_UPLOAD_MB` | `8` | Limita per fisier incarcat. |
 | `RATE_LIMIT_PER_HOUR` | `12` | Cate formulare accepta de la acelasi IP intr-o ora. |
+| `VIRTUAGYM_API_KEY` | — | Fara ea, inscrierile nu ajung in softul clubului. |
+| `VIRTUAGYM_CLUB_SECRET` | — | Pereche cu cheia de mai sus. |
+| `VIRTUAGYM_CLUB_ID` | — | Id-ul clubului in Virtuagym. |
 
 ---
 
@@ -404,7 +356,7 @@ galeria cu lightbox.
 | Inainte | Acum |
 |---|---|
 | Contact Form 7 + Popup Maker | Formulare proprii, cu validare in romana |
-| Apps Script apelat direct din browser (cu chei la vedere) | Acelasi Apps Script, dar prin backend — cheile raman pe server |
+| Google Apps Script (Sheets + Drive + Gmail + Virtuagym), apelat direct din browser cu cheile la vedere | Totul in `backend/` — PDF, email, arhivare, Virtuagym. Cheile stau in variabile de mediu |
 | `signature_pad` de pe CDN | Canvas propriu, fara dependinte externe |
 | WPBakery + 10 plugin-uri | Componente React |
 | Panou WordPress | `/api/admin` |
@@ -439,12 +391,9 @@ galeria cu lightbox.
 - [ ] Harta pentru Militari Wellness e generata din adresa; daca vrei
       coordonate exacte, inlocuieste `mapEmbed` in `content/locations.json`
 - [ ] Verifica domeniul in Resend inainte de lansare, altfel emailurile ajung
-      in spam (doar pentru `FORMS_BACKEND=db`)
+      in spam
 - [ ] **Roteste cheile Virtuagym.** Cele din scriptul vechi au circulat in
-      clar — genereaza altele noi din panoul Virtuagym si pune-le doar in
-      Script Properties
-- [ ] Al doilea numar de telefon (**0724 212 978**, „Receptie") si adresa
-      **Complex Sportiv 2000, Str. Gabriela Szabo 3-11** apar in emailul de
-      confirmare trimis de scriptul vostru. Numarul e deja pe site;
-      confirma daca adresa aceea e o locatie activa si o adaugam ca a treia
-      locatie in `content/locations.json`
+      clar — genereaza altele noi si pune-le in variabilele de mediu de pe Vercel
+- [ ] Dupa ce scoti din functiune vechiul Apps Script, arhiveaza foaia de
+      calcul si folderul Drive: de acum inscrierile se duc in baza de date si
+      se vad in `/api/admin/cereri`

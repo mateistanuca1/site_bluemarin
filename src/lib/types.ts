@@ -15,10 +15,6 @@ export type Site = {
   contact: {
     phone: string;
     phoneHref: string;
-    phoneLabel?: string;
-    phoneSecondary?: string;
-    phoneSecondaryHref?: string;
-    phoneSecondaryLabel?: string;
     email: string;
     address: string;
     mapEmbed: string;

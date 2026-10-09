@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import Icon from './Icon';
 import { cx } from '@/lib/utils';
@@ -33,6 +33,16 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
+  /**
+   * Meniul orizontal incape doar daca etichetele sunt scurte. Fiindca ele se
+   * pot edita din panoul de admin, nu ne bazam pe un prag fix de latime:
+   * masuram cat loc cere lista si, daca nu incape, trecem pe butonul de meniu.
+   * Altfel intrarile ar iesi din cutia lor si ar intra peste logo si telefon.
+   */
+  const navRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [tooNarrow, setTooNarrow] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setAtTop(window.scrollY <= 24);
     onScroll();
@@ -44,6 +54,32 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
     setMenuOpen(false);
     setOpenGroup(null);
   }, [pathname]);
+
+  useLayoutEffect(() => {
+    const box = navRef.current;
+    const list = listRef.current;
+    if (!box || !list) return;
+
+    /*
+     * `invisible` pastreaza elementul in layout, deci `scrollWidth` ramane
+     * latimea reala a listei si cand e ascunsa — asa putem sti cand e loc sa o
+     * aratam inapoi. Cele 8 px sunt o rezerva, ca sa nu comutam pe muchie.
+     */
+    const check = () => {
+      if (list.scrollWidth === 0) return;
+      setTooNarrow(list.scrollWidth + 8 > box.clientWidth);
+    };
+    check();
+
+    const ro = new ResizeObserver(check);
+    ro.observe(box);
+    ro.observe(list);
+
+    // Fontul se incarca dupa prima randare si schimba latimea textului.
+    document.fonts?.ready.then(check).catch(() => {});
+
+    return () => ro.disconnect();
+  }, [nav]);
 
   // Blocheaza derularea paginii cat timp meniul mobil e deschis.
   useEffect(() => {
@@ -60,7 +96,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
     isActive(item.href) || (item.children ?? []).some((c) => isActive(c.href));
 
   const linkBase =
-    'rounded px-2.5 py-2 text-[11.5px] font-bold uppercase tracking-wide2 transition-colors xl:px-3 xl:text-[12px]';
+    'rounded px-2 py-2 text-[11.5px] font-bold uppercase tracking-wide2 transition-colors xl:px-2.5 xl:text-[12px]';
 
   return (
     <header
@@ -86,10 +122,20 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
 
         {/* Navigatie desktop */}
         <nav
+          ref={navRef}
           className="hidden min-w-0 flex-1 items-center justify-center lg:flex"
           aria-label="Navigație principală"
+          // Cand nu incape o ascundem, dar o lasam in layout: altfel cutia ar
+          // avea latime zero si n-am mai sti cand e loc sa o aratam la loc.
+          aria-hidden={tooNarrow || undefined}
         >
-          <ul className="flex items-center gap-0.5 xl:gap-1">
+          <ul
+            ref={listRef}
+            className={cx(
+              'flex items-center gap-0.5 xl:gap-1',
+              tooNarrow && 'invisible pointer-events-none',
+            )}
+          >
             {nav.map((item) =>
               item.children ? (
                 <li key={item.label} className="group relative">
@@ -173,7 +219,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
             aria-expanded={menuOpen}
             aria-controls="meniu-mobil"
             aria-label={menuOpen ? 'Închide meniul' : 'Deschide meniul'}
-            className="site-header__link -mr-2 rounded p-2 lg:hidden"
+            className={cx('site-header__link -mr-2 rounded p-2', !tooNarrow && 'lg:hidden')}
           >
             <Icon name={menuOpen ? 'close' : 'menu'} className="h-6 w-6" />
           </button>
@@ -184,7 +230,8 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
       <div
         id="meniu-mobil"
         className={cx(
-          'overflow-y-auto overscroll-contain border-t border-line bg-white lg:hidden',
+          'overflow-y-auto overscroll-contain border-t border-line bg-white',
+          !tooNarrow && 'lg:hidden',
           menuOpen ? 'max-h-[calc(100dvh-68px)]' : 'hidden',
         )}
       >

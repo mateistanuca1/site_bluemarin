@@ -34,6 +34,10 @@
         </tr>
       {% endif %}
       {{ line('Acord GDPR', 'da, de la IP ' ~ row.consent_ip if row.consent else 'nu') }}
+      {% if row.kind == 'inscriere' %}
+        {{ line('Membru Virtuagym',
+                row.virtuagym_member_id if row.virtuagym_member_id else 'nesincronizat') }}
+      {% endif %}
     </tbody>
   </table>
 </div>

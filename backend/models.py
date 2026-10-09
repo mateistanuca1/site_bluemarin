@@ -90,6 +90,9 @@ class Submission(Base):
     consent_ip: Mapped[str] = mapped_column(String(64), nullable=False, default="")
     user_agent: Mapped[str] = mapped_column(String(255), nullable=False, default="")
 
+    # Id-ul membrului creat in Virtuagym, daca sincronizarea a reusit.
+    virtuagym_member_id: Mapped[int | None] = mapped_column(Integer)
+
     handled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     notes: Mapped[str] = mapped_column(Text, nullable=False, default="")
 

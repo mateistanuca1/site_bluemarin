@@ -5,16 +5,10 @@
   "formLead": "Fie că vrei să te înscrii, să afli o informație sau doar să facem cunoștință, noi suntem aici.",
   "cards": [
     {
-      "label": "Înscrieri",
+      "label": "Telefon",
       "value": "0744 258 258",
       "icon": "phone",
       "href": "tel:+40744258258"
-    },
-    {
-      "label": "Recepție",
-      "value": "0724 212 978",
-      "icon": "phone",
-      "href": "tel:+40724212978"
     },
     {
       "label": "E-mail",
