@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import Icon from './Icon';
 
@@ -12,6 +13,10 @@ const PAGE = 18;
 export default function GalleryGrid({ images }: { images: Img[] }) {
   const [shown, setShown] = useState(PAGE);
   const [open, setOpen] = useState<number | null>(null);
+  // Lightbox-ul se randeaza in <body>: sectiunea parinte are `isolate`, deci
+  // un z-index mare nu l-ar scoate de sub bara fixa de sus.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const close = useCallback(() => setOpen(null), []);
   const go = useCallback(
@@ -77,9 +82,9 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
         </div>
       )}
 
-      {open !== null && (
+      {open !== null && mounted && createPortal(
         <div
-          className="on-dark fixed inset-0 z-[60] flex animate-fade-in items-center justify-center bg-deep-900/95 p-4"
+          className="on-dark fixed inset-0 z-[80] flex animate-fade-in items-center justify-center bg-deep-900/95 p-4"
           role="dialog"
           aria-modal="true"
           aria-label="Vizualizare imagine"
@@ -128,7 +133,8 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
           <p className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] tabular-nums tracking-wide2 text-white/80">
             {open + 1} / {images.length}
           </p>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );

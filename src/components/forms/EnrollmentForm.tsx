@@ -42,7 +42,20 @@ const years = Array.from({ length: 90 }, (_, i) => {
   return { value: String(y), label: String(y) };
 });
 
-type Errors = Partial<Record<'birthDate' | 'photo' | 'medical' | 'signature', string>>;
+type Field =
+  | 'firstName'
+  | 'birthDate'
+  | 'nameLegalParent'
+  | 'phone'
+  | 'email'
+  | 'photo'
+  | 'medical'
+  | 'signature'
+  | 'terms';
+
+type Errors = Partial<Record<Field, string>>;
+
+const EMAIL_RE = /^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/;
 type Who = 'minor' | 'adult';
 
 /** Antetul numerotat al unei sectiuni din formular. */
@@ -79,12 +92,20 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
     return ok ? undefined : 'Acceptăm doar imagini (JPG, PNG) sau PDF.';
   }
 
+  function text(fd: FormData, name: string): string {
+    return String(fd.get(name) ?? '').trim();
+  }
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const form = e.currentTarget;
     const fd = new FormData(form);
     const next: Errors = {};
+
+    if (text(fd, 'firstName').length < 3) {
+      next.firstName = 'Scrie numele și prenumele cursantului.';
+    }
 
     const day = String(fd.get('birthDay') ?? '');
     const month = String(fd.get('birthMonth') ?? '');
@@ -100,21 +121,36 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
       }
     }
 
+    if (who === 'minor' && text(fd, 'nameLegalParent').length < 3) {
+      next.nameLegalParent = 'Scrie numele părintelui sau al tutorelui.';
+    }
+
+    if (text(fd, 'phone').replace(/\D/g, '').length < 10) {
+      next.phone = 'Scrie un număr de telefon valid, cu cel puțin 10 cifre.';
+    }
+
+    if (!EMAIL_RE.test(text(fd, 'email'))) {
+      next.email = 'Scrie o adresă de e-mail validă.';
+    }
+
     next.photo = validateFile(fd.get('photo'));
     next.medical = validateFile(fd.get('medical'));
 
     const signature = sigRef.current?.toBase64() ?? null;
     if (!signature) next.signature = 'Te rugăm să semnezi înainte de a trimite formularul.';
 
+    if (!fd.get('terms')) {
+      next.terms = 'Trebuie să accepți regulamentul și politicile ca să te poți înscrie.';
+    }
+
     const clean = Object.fromEntries(Object.entries(next).filter(([, v]) => v)) as Errors;
     setErrors(clean);
 
     if (Object.keys(clean).length > 0) {
-      // Du utilizatorul la prima problema.
-      formRef.current?.querySelector('[aria-invalid="true"]')?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+      // Du utilizatorul la prima problema si pune cursorul acolo.
+      const first = formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]');
+      first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      first?.focus?.({ preventScroll: true });
       return;
     }
 
@@ -161,7 +197,7 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="space-y-10">
+    <form ref={formRef} onSubmit={onSubmit} noValidate className="space-y-10">
       <Step n={1} title="Date cursant">
         <ToggleGroup<Who>
           label="Cursantul este"
@@ -179,6 +215,7 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
           required
           autoComplete="name"
           placeholder="Nume și prenume"
+          error={errors.firstName}
         />
 
         <div>
@@ -232,6 +269,7 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
             autoComplete="name"
             placeholder="Numele părintelui sau al tutorelui"
             hint="Persoana care semnează fișa de înscriere."
+            error={errors.nameLegalParent}
           />
         )}
 
@@ -243,6 +281,7 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
           required
           autoComplete="tel"
           placeholder="07xx xxx xxx"
+          error={errors.phone}
         />
 
         <TextField
@@ -254,6 +293,7 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
           autoComplete="email"
           placeholder="nume@exemplu.ro"
           hint="Aici primești fișa de înscriere în format PDF."
+          error={errors.email}
         />
       </Step>
 
@@ -283,7 +323,7 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
         )}
 
         <div className="pt-2">
-          <CheckboxField name="terms" required>
+          <CheckboxField name="terms" required error={errors.terms}>
             Am citit și accept{' '}
             <Link href="/regulament" className="font-medium text-brand underline underline-offset-2">
               Regulamentul intern
