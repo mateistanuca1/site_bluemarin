@@ -1,0 +1,78 @@
+{
+  "title": "Tarife",
+  "lead": "Alege pachetul potrivit si revenim la tine cat mai curand posibil!",
+  "currency": "lei",
+  "commonConditions": [
+    "valabilitate – 30 zile",
+    "durata – 50 min",
+    "varsta minima – 4 ani"
+  ],
+  "locations": [
+    {
+      "slug": "bazin-cs-rapid",
+      "name": "Bazin C.S. Rapid",
+      "address": "Calea Giulesti 18, sector 6, Bucuresti",
+      "schedule": ["Luni – Vineri | 12:00 – 19:00", "Sambata | 12:00 – 14:00"],
+      "categories": [
+        {
+          "id": "grup",
+          "name": "Grup",
+          "note": "",
+          "packages": [
+            { "sessions": 1, "label": "1 sedinta", "price": 80 },
+            { "sessions": 4, "label": "4 sedinte", "price": 280 },
+            { "sessions": 8, "label": "8 sedinte", "price": 480 },
+            { "sessions": 12, "label": "12 sedinte", "price": 600 }
+          ]
+        },
+        {
+          "id": "antrenor-personal",
+          "name": "Antrenor personal 1:1",
+          "note": "1 antrenor – 1 copil",
+          "packages": [
+            { "sessions": 1, "label": "1 sedinta", "price": 190 },
+            { "sessions": 4, "label": "4 sedinte", "price": 680 },
+            { "sessions": 8, "label": "8 sedinte", "price": 1200 }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "militari-wellness",
+      "name": "Militari Wellness",
+      "address": "Str. Rezervelor 72, Militari Residence – Rosu",
+      "schedule": ["Luni – Vineri | 10:00 – 20:00"],
+      "categories": [
+        {
+          "id": "grup",
+          "name": "Grup 1:6",
+          "note": "1 antrenor – maxim 6 cursanti",
+          "packages": [
+            { "sessions": 1, "label": "1 sedinta", "price": 90 },
+            { "sessions": 4, "label": "4 sedinte", "price": 320 },
+            { "sessions": 8, "label": "8 sedinte", "price": 560 }
+          ]
+        },
+        {
+          "id": "mini-grup",
+          "name": "Mini-grup 1:2",
+          "note": "1 antrenor – 2 cursanti",
+          "packages": [
+            { "sessions": 1, "label": "1 sedinta", "price": 140 },
+            { "sessions": 4, "label": "4 sedinte", "price": 520 }
+          ]
+        },
+        {
+          "id": "antrenor-personal",
+          "name": "Antrenor personal 1:1",
+          "note": "1 antrenor – 1 cursant",
+          "packages": [
+            { "sessions": 1, "label": "1 sedinta", "price": 190 },
+            { "sessions": 4, "label": "4 sedinte", "price": 680 },
+            { "sessions": 8, "label": "8 sedinte", "price": 1200 }
+          ]
+        }
+      ]
+    }
+  ]
+}

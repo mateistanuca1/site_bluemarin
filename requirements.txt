@@ -1,0 +1,12 @@
+# Backend Flask — ruleaza identic local, pe Vercel sau pe un VPS.
+Flask==3.1.2
+Werkzeug==3.1.3
+SQLAlchemy==2.0.43
+# Driver Postgres (pentru Neon/Supabase). Local se foloseste SQLite, fara driver extra.
+psycopg2-binary==2.9.10
+# Generare PDF — Python pur, fara librarii de sistem (merge pe Vercel).
+fpdf2==2.8.4
+Pillow==11.3.0
+# Apeluri HTTP catre Resend si catre webhook-ul de revalidare Next.js
+requests==2.32.5
+python-dotenv==1.1.1

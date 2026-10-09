@@ -1,0 +1,33 @@
+{# Randeaza recursiv un grup de campuri generat de backend/jsonform.py #}
+{% macro render_group(group, depth=0) %}
+  {% for f in group.fields %}
+    <div class="field">
+      <label for="{{ f.path }}">{{ f.label }}</label>
+      {% if f.kind == 'bool' %}
+        <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink)">
+          <input type="checkbox" id="{{ f.path }}" name="{{ f.path }}" value="1"
+                 {% if f.value %}checked{% endif %} style="width:auto">
+          <span>Activat</span>
+        </label>
+      {% elif f.kind == 'number' %}
+        <input type="number" id="{{ f.path }}" name="{{ f.path }}" value="{{ f.value }}" step="any">
+      {% elif f.kind == 'textarea' %}
+        <textarea id="{{ f.path }}" name="{{ f.path }}" rows="4">{{ f.value }}</textarea>
+      {% elif f.kind == 'html' %}
+        <textarea id="{{ f.path }}" name="{{ f.path }}" class="code" rows="14">{{ f.value }}</textarea>
+        <p class="muted" style="margin:5px 0 0">Text in format HTML — pastreaza etichetele &lt;p&gt;, &lt;h2&gt;, &lt;ul&gt;.</p>
+      {% else %}
+        <input type="text" id="{{ f.path }}" name="{{ f.path }}" value="{{ f.value }}">
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  {% for sub in group.groups %}
+    <details class="group" {% if depth < 1 %}open{% endif %}>
+      <summary>{{ sub.label }}</summary>
+      <div class="group-body">
+        {{ render_group(sub, depth + 1) }}
+      </div>
+    </details>
+  {% endfor %}
+{% endmacro %}

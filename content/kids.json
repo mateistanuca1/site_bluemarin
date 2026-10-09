@@ -1,0 +1,49 @@
+{
+  "title": "Cursuri inot copii",
+  "quote": "Locul in care cursurile de inot devin o pasiune!",
+  "hero": "/images/cursuri-copii-hero.webp",
+  "subtitle": "Cu fiecare lungime de bazin devenim tot mai puternici!",
+  "intro": [
+    "Bluemarin este un club sportiv care a luat nastere din dorinta de a crea lucruri frumoase. Pasiunea noastra pentru inot o impartasim cu mare bucurie in suflet pentru cei mici. Indrumam copiii catre educatie prin sport!",
+    "Cursurile de inot din cadrul clubului nostru au rolul de a-i atrage pe cei mici catre mediul acvatic. Odata ce afla secretele inotului acestia vor fi fascinati. Vor ajunge sa inoate, teama de apa va disparea, iar joaca din jurul piscinei nu va reprezenta un pericol."
+  ],
+  "acclimatisation": {
+    "title": "Acomodarea cu apa",
+    "text": "Familiarizarea cu apa se face sub atenta supraveghere a instructorilor nostri, ce sunt inarmati cu multa rabdare si intelegere pana cand copiii deprind gesturile motrice si se simt curajosi si pregatiti sa porneasca singuri la drum.\n\nLe oferim copiilor suport didactic, metodologic si psihologic pe tot parcursul calatoriei acvatice. Misiunea noastra este sa oferim cele mai bune cursuri de inot pentru copii.",
+    "materials": ["plute", "baghete", "centuri"],
+    "closing": "Usor, usor, incercam ca aceste materiale sa nu mai fie necesare. Fara sa ii fortam sau sa ii constrangem, ii incurajam pe cei mici ca pot inota si fara ajutorul acestora."
+  },
+  "levels": {
+    "title": "Nivelurile de pregatire",
+    "items": [
+      {
+        "title": "Initiere",
+        "subtitle": "Cursuri de inot pentru copii",
+        "text": "Copiii iubesc cursurile de inot, cu conditia ca acestea sa nu fie prea solicitante si monotone. De aceea, instructorii nostri sunt pe zi ce trece mai inovativi si in acelasi timp glumeti. Prin diferite metode reusesc sa capteze atentia celor mici, sa le insufle miscarile de baza intr-un mod corect inca de la inceput. Le prezinta acestora micile secrete prin care reusesc sa se scufunde, sa inainteze si sa descopere fascinanta lume acvatica.\n\nIncepem prin a-i invata pe #bluemarini sa inoate primele doua procedee de inot, respectiv craul si spate."
+      },
+      {
+        "title": "Avansati",
+        "subtitle": "Cursuri de inot pentru copii",
+        "text": "Dupa ce am urmat pasii de baza, e timpul sa insistam pe o buna executie. Exersam, si iar exersam, pana cand tehnica de inot devine impecabila.\n\nContinuam sa invatam restul de procedee, bras si fluture. O varietate mai mare in exercitii, mai mult dinamism in antrenament.\n\nAntrenorii nostri incep sa isi puna cunostintele in valoare. Ei stiu cum sa se adapteze fiecarei categorii de varsta, cum sa imbine utilul cu placutul si cum sa le capteze atentia si mai mult copiilor."
+      },
+      {
+        "title": "Performanta",
+        "subtitle": "Cursuri de inot pentru copii",
+        "text": "Aici este momentul sa trecem cu adevarat la treaba si sa ne punem cunostintele in practica la nivel maxim.\n\nIncepem sa construim planuri specifice de antrenament, sa periodizam pregatirea in functie de competitii si sa ne bucuram de acestea prin fiecare participare.\n\nDevenim tot mai puternici si din ce in ce mai uniti. Vom fi toti pentru unul si unul pentru toti!\n\nImpreuna vom savura gustul victoriei, dar si tristetea infrangerii!"
+      }
+    ]
+  },
+  "formats": {
+    "title": "Formatul cursurilor",
+    "items": [
+      {
+        "title": "Conceptul grupelor",
+        "text": "Grupele noastre sunt formate dintr-un numar mic de copii, ce au la dispozitie un culoar de inot, si sunt indrumati indeaproape de antrenori. Asadar atentia asupra lor este sporita iar rezultatele nu intarzie sa apara.\n\nCursurile de inot pentru copii aduc foarte multe beneficii acestora. Cei mici isi fac prieteni noi, cu care socializeaza, se intrec, invata sa ii respecte si pe care abia asteapta sa ii revada."
+      },
+      {
+        "title": "Antrenor personal",
+        "text": "Daca stii ca cel mic prezinta o teama mare de apa, sau ca nu este o fire sportiva, sau pur si simplu ca iti doresti ca el sa aiba parte de o atentie sporita, atunci conceptul cursului de inot individual este cea mai buna varianta.\n\nAntrenorii nostri sunt foarte bine pregatiti si inarmati cu multa rabdare si intelegere. Nu ii vor forta niciodata pe copii, ci vor aduce de fiecare data variante alternative prin care acestia se vor relaxa si vor ajunge sa iubeasca inotul."
+      }
+    ]
+  }
+}

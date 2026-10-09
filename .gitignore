@@ -1,0 +1,31 @@
+# Dependinte
+/node_modules
+/.venv
+/venv
+__pycache__/
+*.py[cod]
+
+# Build
+/.next
+/out
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# Mediu — NU urca aceste fisiere pe GitHub
+.env
+.env.local
+.env*.local
+
+# Date locale
+/bluemarin.db
+/uploads
+*.sqlite3
+
+# Vercel
+.vercel
+
+# Sistem
+.DS_Store
+*.log
+npm-debug.log*

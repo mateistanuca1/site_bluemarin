@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+{% block title %}Cerere #{{ row.id }}{% endblock %}
+{% block body %}
+<p><a href="{{ url_for('admin.submissions') }}">&larr; Toate cererile</a></p>
+
+<h1>{{ row.name or 'Cerere' }} <span class="pill kind">{{ kind_labels.get(row.kind, row.kind) }}</span></h1>
+<p class="sub">Primita {{ row.created_at|datetime_ro }} · cerere #{{ row.id }}</p>
+
+<div class="card">
+  <table>
+    <tbody>
+      {% macro line(label, value, href=None) %}
+        {% if value %}
+          <tr>
+            <th style="width:190px;background:transparent">{{ label }}</th>
+            <td>{% if href %}<a href="{{ href }}">{{ value }}</a>{% else %}{{ value }}{% endif %}</td>
+          </tr>
+        {% endif %}
+      {% endmacro %}
+
+      {{ line('Nume', row.name) }}
+      {{ line('Email', row.email, 'mailto:' ~ row.email) }}
+      {{ line('Telefon', row.phone, 'tel:' ~ row.phone) }}
+      {{ line('Data nasterii', row.birth_date) }}
+      {{ line('Parinte / reprezentant', row.legal_parent) }}
+      {{ line('Varsta', row.age) }}
+      {{ line('Pachet', row.package) }}
+      {{ line('Locatie', row.location) }}
+      {{ line('Subiect', row.subject) }}
+      {% if row.message %}
+        <tr>
+          <th style="width:190px;background:transparent">Mesaj</th>
+          <td style="white-space:pre-wrap">{{ row.message }}</td>
+        </tr>
+      {% endif %}
+      {{ line('Acord GDPR', 'da, de la IP ' ~ row.consent_ip if row.consent else 'nu') }}
+    </tbody>
+  </table>
+</div>
+
+{% if files %}
+<h2>Fisiere</h2>
+<div class="card">
+  {% for f in files %}
+    <div class="filebox">
+      <div style="flex:1">
+        <strong>{{ role_labels.get(f.role, f.role) }}</strong><br>
+        <span class="muted">{{ f.filename }} · {{ (f.size / 1024)|round|int }} kB</span>
+      </div>
+      <a class="btn ghost sm" href="{{ url_for('admin.download', file_id=f.id) }}" target="_blank" rel="noopener">
+        Deschide
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<h2>Stare</h2>
+<form method="post" class="card">
+  <div class="field">
+    <label style="display:flex;align-items:center;gap:9px;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink)">
+      <input type="checkbox" name="handled" value="1" {% if row.handled %}checked{% endif %} style="width:auto">
+      <span>Cerere rezolvata</span>
+    </label>
+  </div>
+  <div class="field">
+    <label for="notes">Note interne</label>
+    <textarea id="notes" name="notes" rows="4" placeholder="Ex. sunat pe 12.10, programat luni 17:00">{{ row.notes }}</textarea>
+  </div>
+  <button class="btn" type="submit">Salveaza</button>
+</form>
+{% endblock %}

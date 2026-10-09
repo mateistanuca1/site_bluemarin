@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% block title %}Continut{% endblock %}
+{% block body %}
+<h1>Continut</h1>
+<p class="sub">Alege ce vrei sa editezi. Modificarile apar pe site in cateva minute.</p>
+
+<div class="card" style="padding:0;overflow:hidden">
+<table>
+  <thead><tr><th>Sectiune</th><th>Ultima modificare</th><th></th></tr></thead>
+  <tbody>
+  {% for key in keys %}
+    <tr>
+      <td><strong>{{ labels.get(key, key) }}</strong><br><span class="muted">{{ key }}.json</span></td>
+      <td class="muted">
+        {% if updated.get(key) %}{{ updated[key]|datetime_ro }}{% else %}textele initiale{% endif %}
+      </td>
+      <td>
+        <div class="row-actions">
+          <a class="btn ghost sm" href="{{ url_for('admin.content_edit', key=key) }}">Editeaza</a>
+          <a class="btn ghost sm" href="{{ url_for('admin.content_json', key=key) }}">JSON</a>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<form method="post" action="{{ url_for('admin.content_seed') }}">
+  <button class="btn ghost sm" type="submit">Incarca sectiunile care lipsesc</button>
+  <span class="muted">Adauga in baza de date sectiunile care nu au fost salvate inca. Nu suprascrie nimic.</span>
+</form>
+{% endblock %}

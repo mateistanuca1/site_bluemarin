@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }} — JSON{% endblock %}
+{% block body %}
+<h1>{{ title }} — JSON</h1>
+<p class="sub">
+  Editor brut. Foloseste-l cand vrei sa adaugi sau sa stergi elemente (un antrenor nou,
+  un pachet de tarife, o poza). · <a href="{{ url_for('admin.content_edit', key=key) }}">editor normal</a>
+</p>
+
+<form method="post">
+  <div class="card">
+    <label for="json">Continutul sectiunii</label>
+    <textarea id="json" name="json" class="code" spellcheck="false">{{ raw }}</textarea>
+  </div>
+  <div class="sticky-save">
+    <button class="btn" type="submit">Salveaza</button>
+    <a class="btn ghost" href="{{ url_for('admin.content_index') }}">Inapoi</a>
+  </div>
+</form>
+{% endblock %}

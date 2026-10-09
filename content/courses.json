@@ -1,0 +1,108 @@
+{
+  "title": "Cursuri de inot",
+  "quote": "Locul in care cursurile de inot devin o poveste!",
+  "hero": "/images/cursuri-hero.webp",
+  "intro": [
+    "Bluemarin Sport Club reprezinta un concept ce a fost creat din pasiune pentru sport si mediul acvatic, pasiune pe care dorim sa o transmitem mai departe catre voi.",
+    "Organizam cursuri de inot ce se adreseaza tuturor categoriilor de varsta, cu rolul de a transforma nesiguranta sau teama de apa intr-o frumoasa activitate si experienta de care sa va bucurati cu fiecare ocazie.",
+    "Satisfactia noastra va fi si mai mare atunci cand unii dintre voi vor alege drumul performantei si vom savura gustul succesului impreuna.",
+    "Incepem prin a ne prezenta si interactiona intr-un mod cat mai prietenos. Mizam pe o buna comunicare cu fiecare cursant, indiferent ca este adult sau copil. Vrem ca fiecare sa ajunga intr-un cadru armonios in care sa se relaxeze si sa descopere beneficiile inotului si ale sportului in general."
+  ],
+  "credentials": {
+    "title": "Acreditari",
+    "items": [
+      {
+        "title": "Certificat de Identitate Fiscala",
+        "text": "Asociatie recunoscuta de Ministerul Finantelor Publice."
+      },
+      {
+        "title": "Certificat de Identitate Sportiva",
+        "text": "Club sportiv inregistrat de Ministerul Tineretului si Sportului."
+      },
+      {
+        "title": "Instructori / Antrenori licentiati",
+        "text": "Acreditati de Centrul National de Formare si Perfectionare a Antrenorilor."
+      },
+      {
+        "title": "Federatia Romana de Natatie si Pentatlon Modern",
+        "text": "Acolo unde inima noastra bate in ritm #Bluemarin."
+      },
+      {
+        "title": "Federatia Romana de Triatlon",
+        "text": "Un curcubeu de sporturi minunate."
+      },
+      {
+        "title": "Federatia Romana de Ciclism",
+        "text": "Pedala dupa pedala, pana la succes."
+      }
+    ]
+  },
+  "stages": {
+    "title": "Cum se desfasoara cursurile",
+    "items": [
+      {
+        "title": "Acomodarea cu apa",
+        "text": "Familiarizarea cu apa este esentiala si se face treptat sub indrumarile noastre. Nu suntem adeptii lucrurilor facute in graba, care pot duce cursantul la o fobie de apa si la dorinta de a renunta. Optam pentru pasi siguri, bine stabiliti, alimentati de rabdare ce ulterior vor duce la reusita.\n\nSuportul nostru va fi didactic, psihologic, cat si fizic. Orice incepator va fi acompaniat din apa atat cat este necesar ca acesta sa poata executa exercitiile de baza in siguranta dar si intr-un mod corect."
+      },
+      {
+        "title": "Primele procedee: craul si spate",
+        "text": "Primele procedee de baza predate in cursul de initiere vor fi craul si spate. Se vor repeta atat cat este necesar pentru a fi executate corect. Pentru a ajunge la procedeul de baza, adica cel final, se vor parcurge exercitii si tehnici derivate.\n\nLa fiecare curs de inot vom exersa si sariturile in apa, de la marginea bazinului."
+      },
+      {
+        "title": "Bras si fluture",
+        "text": "Urmatoarele doua procedee pe care le vom preda vor fi bras si fluture. Procedeul fluture fiind cel mai dificil, acesta necesita atat o buna coordonare, cat si forta.\n\nCa sariturile in cap sa devina si mai spectaculoase, acestea se vor executa perfect de pe bloc start."
+      },
+      {
+        "title": "Performanta",
+        "text": "Momentul in care inotul devine o pasiune, iar podiumul o dorinta!\n\nAjunsi la un nivel ce ne permite punerea in practica a antrenamentelor specifice, pornim in drumul spre succes. Impreuna vom savura gustul victoriei, dar si tristetea infrangerii!"
+      }
+    ]
+  },
+  "materials": {
+    "title": "Materiale puse la dispozitie",
+    "groups": [
+      { "label": "Copii", "items": ["aripioare", "colace", "jucarii acvatice"] },
+      { "label": "Adulti si copii", "items": ["plute", "baghete", "centuri pentru talie"] }
+    ]
+  },
+  "formats": {
+    "title": "Tipuri de cursuri",
+    "items": [
+      {
+        "title": "Curs in grup",
+        "subtitle": "cursuri de inot | copii – adulti",
+        "text": "Optam pentru un grup mic format dintr-un numar redus de cursanti care beneficiaza de culoarele bazinului. Avem astfel timpul necesar sa corectam fiecare cursant si sa ii oferim cele mai bune explicatii pentru a deveni mai bun cu fiecare lungime de bazin. Orele de grup vin cu avantajul de a dezvolta spiritul competitional intre cursanti.\n\nDe asemenea, cursantii socializeaza si leaga prietenii, atmosfera devenind astfel mai atractiva pentru urmatoarele cursuri de inot."
+      },
+      {
+        "title": "Antrenor personal",
+        "subtitle": "cursuri de inot | copii – adulti",
+        "text": "Cursurile de inot cu antrenor personal sunt recomandate persoanelor care prezinta o frica si teama de apa destul de mare, ori celor ce au nevoie mai mare de timp pentru deprinderea gesturilor motrice, sau ce prezinta nevoi speciale. Cursul se desfasoara sub stricta si riguroasa atentie a unui antrenor personal focusata asupra unui singur cursant. Asimilarea informatiilor este mult mai rapida, iar ajutorul oferit este mult mai mare.\n\nRecomandarea noastra este de a solicita acest curs atat cat trebuie. In timp, cursul poate deveni monoton — existand doar stimulul unui antrenor se dovedeste ca fiind insuficient."
+      }
+    ]
+  },
+  "instructors": {
+    "title": "Antrenorii nostri",
+    "text": "Componenta echipei noastre este formata din fosti sau actuali sportivi de performanta, ce au castigat numeroase titluri de campioni nationali, balcanici, europeni sau mondiali. Deveniti mai tarziu antrenori si instructori de inot, calificati in competente profesionale in ramura natatiei si acreditati de Ministerul Tineretului si Sportului. Cu o experienta castigata in ani, petrecuti in marile bazine in care au savurat gustul succesului atat ca sportivi cat si ca antrenori.\n\nAdevarati profesionisti ce dau dovada de profesionalism, devotament si seriozitate, cu fiecare ocazie. Oameni ce muncesc cu drag si care au transformat pasiunea pentru inot intr-un job pe care il iubesc.\n\nDaca vrei sa transformi cursul de inot intr-o experienta pe care vei dori sa o traiesti in fiecare zi, atunci trebuie sa contezi pe experienta noastra!"
+  },
+  "enrollment": {
+    "title": "Cum te inscrii",
+    "steps": [
+      {
+        "title": "Inscrierea",
+        "text": "Inscrierea la cursurile noastre de inot se face dupa o prezentare a serviciilor. Ulterior fiecare cursant primeste o fisa de inscriere in care ii sunt prezentate termenele si conditiile, si in care isi va trece datele personale si de contact."
+      },
+      {
+        "title": "Avizul medical",
+        "text": "Este necesar avizul medicului de familie care sa ateste printr-o adeverinta ca persoana in cauza este apta din punct de vedere fizic si epidemiologic pentru cursul de inot. Fiecare membru este obligat sa poarte echipament sportiv specific (costum de baie, papuci, casca, ochelari)."
+      },
+      {
+        "title": "Programarea",
+        "text": "Clubul nostru isi desfasoara activitatea in baza programarilor. Avand un numar limita de cursanti pe ora, recomandam sa stabilim de comun acord anumite zile si ore in care puteti ajunge. Putem programa una, doua sau mai multe sedinte de inot pe saptamana, in functie de tipul de abonament dorit. Daca nu doriti achizitionarea unui abonament, puteti achita fiecare sedinta in parte.\n\nProgramarile se pot face la receptia clubului nostru, telefonic sau online."
+      },
+      {
+        "title": "Programul",
+        "text": "Programul in care se desfasoara cursurile de inot este accesibil tuturor. Puteti ajunge fie dimineata inainte de scoala sau job, fie dupa-masa sau seara. Consideram bazinul o a doua casa, asadar, aveti sanse mari sa ne gasiti mai mereu."
+      }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "title": "Echipa",
+  "lead": "Componenta echipei noastre este formata din fosti sau actuali sportivi de performanta, ce au castigat numeroase titluri de campioni nationali, balcanici, europeni sau mondiali. Deveniti mai tarziu antrenori si instructori de inot, calificati in competente profesionale in ramura natatiei si acreditati de Ministerul Tineretului si Sportului.",
+  "members": [
+    {
+      "slug": "bogdan-marin",
+      "name": "Bogdan Marin",
+      "role": "Fondator | Antrenor - Instructor inot",
+      "shortRole": "Fondator",
+      "quote": "Cele mai frumoase lucruri prind culoare atunci cand adaugi pasiune. Iar noi iubim ceea ce facem!",
+      "photo": "/images/echipa/bogdan-marin.webp",
+      "bio": [
+        "Bogdan a pus bazele Bluemarin Sport Club in 2017, pornind de la o pasiune simpla pentru apa si de la convingerea ca un curs de inot poate fi mult mai mult decat o lectie tehnica.",
+        "Coordoneaza activitatea clubului si lucreaza in continuare direct cu cursantii, de la primele sedinte de acomodare cu apa pana la pregatirea pentru competitii."
+      ]
+    },
+    {
+      "slug": "adriana-pache",
+      "name": "Adriana Pache",
+      "role": "Antrenor - Instructor inot",
+      "shortRole": "Coordonator initiere",
+      "quote": "Daca vrei sa fii cel mai bun, trebuie sa faci lucruri pe care altii nu sunt dispusi sa le faca!",
+      "photo": "/images/echipa/adriana-pache.webp",
+      "bio": [
+        "Adriana coordoneaza sectia de initiere, acolo unde copiii fac primul contact cu bazinul.",
+        "Lucreaza cu rabdare si metoda, pas cu pas, pana cand teama de apa se transforma in incredere."
+      ]
+    },
+    {
+      "slug": "andreea-balan",
+      "name": "Andreea Balan",
+      "role": "Antrenor Triatlon - Instructor inot",
+      "shortRole": "Coordonator performanta",
+      "quote": "Ai doar 3 alegeri in viata: sa abandonezi, sa te supui sau sa dai tot ce poti!",
+      "photo": "/images/echipa/andreea-balan.webp",
+      "bio": [
+        "Andreea coordoneaza grupele de performanta si pregatirea pentru triatlon.",
+        "Construieste planuri de antrenament periodizate in functie de calendarul competitional."
+      ]
+    },
+    {
+      "slug": "tudor-dumitru",
+      "name": "Tudor Dumitru",
+      "role": "Instructor inot",
+      "shortRole": "Instructor inot",
+      "quote": "Diferenta dintre vis si realitate este determinarea de a continua indiferent de obstacole.",
+      "photo": "/images/echipa/tudor-dumitru.webp",
+      "bio": [
+        "Tudor lucreaza cu grupele de copii si cu cursantii adulti care vor sa isi corecteze tehnica."
+      ]
+    },
+    {
+      "slug": "razvan-petrescu",
+      "name": "Razvan Petrescu",
+      "role": "Instructor inot",
+      "shortRole": "Instructor inot",
+      "quote": "Fiecare antrenament este o oportunitate de a deveni mai bun decat ieri.",
+      "photo": "/images/echipa/razvan-petrescu.webp",
+      "bio": [
+        "Razvan pune accentul pe consecventa si pe progresul masurabil, antrenament cu antrenament."
+      ]
+    },
+    {
+      "slug": "codrin-ene",
+      "name": "Codrin Ene",
+      "role": "Antrenor - Instructor inot",
+      "shortRole": "Antrenor - Instructor inot",
+      "quote": "In fiecare lungime de bazin se ascunde un progres.",
+      "photo": "/images/echipa/codrin-ene.webp",
+      "bio": [
+        "Codrin lucreaza atat la initiere, cat si la perfectionarea procedeelor de inot."
+      ]
+    },
+    {
+      "slug": "alexandra-zamfir",
+      "name": "Alexandra Zamfir",
+      "role": "Instructor inot",
+      "shortRole": "Instructor inot",
+      "quote": "Cu incredere si disciplina, fiecare vis devine realizabil.",
+      "photo": "/images/echipa/alexandra-zamfir.webp",
+      "bio": [
+        "Alexandra se ocupa in principal de grupele de copii mici, la acomodarea cu apa."
+      ]
+    },
+    {
+      "slug": "rebeca-daroiu",
+      "name": "Rebeca Daroiu",
+      "role": "Instructor inot",
+      "shortRole": "Instructor inot",
+      "quote": "Inotul nu este doar un sport, este o lectie de perseverenta si curaj.",
+      "photo": "/images/echipa/rebeca-daroiu.webp",
+      "bio": [
+        "Rebeca insoteste cursantii de la primele exercitii pana la inotul independent."
+      ]
+    }
+  ]
+}

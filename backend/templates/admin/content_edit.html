@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% from "admin/_fields.html" import render_group %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<h1>{{ title }}</h1>
+<p class="sub">
+  Editeaza textele si salveaza. <code>{{ key }}.json</code> ·
+  <a href="{{ url_for('admin.content_json', key=key) }}">editor JSON</a>
+  (pentru a adauga sau sterge elemente intregi)
+</p>
+
+<form method="post">
+  {{ render_group(tree) }}
+
+  <div class="sticky-save">
+    <button class="btn" type="submit">Salveaza</button>
+    <a class="btn ghost" href="{{ url_for('admin.content_index') }}">Inapoi</a>
+    <span class="right"></span>
+    <button class="btn danger sm" type="submit"
+            formaction="{{ url_for('admin.content_reset', key=key) }}"
+            formnovalidate
+            onclick="return confirm('Sigur revii la textele initiale? Modificarile tale se pierd.')">
+      Reseteaza la textele initiale
+    </button>
+  </div>
+</form>
+{% endblock %}

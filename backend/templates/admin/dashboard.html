@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% block title %}Panou{% endblock %}
+{% block body %}
+<h1>Panou</h1>
+<p class="sub">Cereri primite si continutul site-ului.</p>
+
+<div class="grid g4">
+  {% for kind, label in kind_labels.items() %}
+    <a class="stat" href="{{ url_for('admin.submissions', tip=kind) }}" style="text-decoration:none">
+      <b>{{ counts.get(kind, 0) }}</b>
+      <span>{{ label }}</span>
+    </a>
+  {% endfor %}
+</div>
+
+{% if pending %}
+  <div class="flash error" style="margin-top:16px">
+    Ai <strong>{{ pending }}</strong> {{ 'cerere nerezolvata' if pending == 1 else 'cereri nerezolvate' }}.
+    <a href="{{ url_for('admin.submissions', nerezolvate='1') }}">Vezi-le</a>
+  </div>
+{% endif %}
+
+<h2>Ultimele cereri</h2>
+{% if recent %}
+<div class="card" style="padding:0;overflow:hidden">
+<table>
+  <thead>
+    <tr><th>Data</th><th>Tip</th><th>Nume</th><th>Contact</th><th>Detalii</th><th>Stare</th></tr>
+  </thead>
+  <tbody>
+  {% for r in recent %}
+    <tr>
+      <td class="muted">{{ r.created_at|datetime_ro }}</td>
+      <td><span class="pill kind">{{ kind_labels.get(r.kind, r.kind) }}</span></td>
+      <td><a href="{{ url_for('admin.submission_detail', submission_id=r.id) }}">{{ r.name or '—' }}</a></td>
+      <td class="muted">{{ r.email }}{% if r.phone %}<br>{{ r.phone }}{% endif %}</td>
+      <td class="muted">{{ r.package or r.location or r.subject or '—' }}</td>
+      <td>
+        {% if r.handled %}<span class="pill done">rezolvat</span>
+        {% else %}<span class="pill new">nou</span>{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p><a class="btn ghost sm" href="{{ url_for('admin.submissions') }}">Toate cererile</a></p>
+{% else %}
+  <div class="card"><p class="muted" style="margin:0">Nicio cerere inca.</p></div>
+{% endif %}
+
+<h2>Continut</h2>
+<div class="card">
+  <div class="grid g2">
+    {% for key in keys %}
+      <a href="{{ url_for('admin.content_edit', key=key) }}"
+         style="text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:5px;padding:13px 15px">
+        <strong style="display:block;font-size:14px">{{ labels.get(key, key) }}</strong>
+        <span class="muted" style="font-size:12px">
+          {% if updated.get(key) %}modificat {{ updated[key]|datetime_ro }}{% else %}textele initiale{% endif %}
+        </span>
+      </a>
+    {% endfor %}
+  </div>
+  <form method="post" action="{{ url_for('admin.revalidate_now') }}" style="margin-top:16px">
+    <button class="btn ghost sm" type="submit">Actualizeaza site-ul acum</button>
+    <span class="muted">Forteaza reconstruirea paginilor, daca modificarile nu au aparut inca.</span>
+  </form>
+</div>
+{% endblock %}

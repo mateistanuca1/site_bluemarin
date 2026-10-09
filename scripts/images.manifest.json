@@ -1,0 +1,168 @@
+{
+  "_comment": "Mapare: imagine de pe site-ul vechi -> fisier local optimizat. Ruleaza 'npm run images' ca sa le descarci. Adauga linii noi aici cand vrei mai multe poze.",
+  "base": "https://www.bluemarin.ro/wp-content/uploads/",
+  "branding": [
+    {
+      "src": "2013/10/logo-B.png",
+      "out": "logo-bluemarin.png",
+      "width": 320,
+      "format": "png"
+    }
+  ],
+  "backgrounds": [
+    {
+      "src": "2025/03/097A0265.jpg",
+      "out": "hero-bazin.webp",
+      "width": 1920
+    },
+    {
+      "src": "2020/03/DSC_8739-min.jpg",
+      "out": "filozofia.webp",
+      "width": 1920
+    },
+    {
+      "src": "2025/03/097A6049.jpg",
+      "out": "academia.webp",
+      "width": 1920
+    },
+    {
+      "src": "2025/03/097A7082.jpg",
+      "out": "contact-bg.webp",
+      "width": 1920
+    },
+    {
+      "src": "2023/03/097A7158.jpg",
+      "out": "cursuri-hero.webp",
+      "width": 1920
+    },
+    {
+      "src": "2025/03/097A0245.jpg",
+      "out": "cursuri-copii-hero.webp",
+      "width": 1920
+    },
+    {
+      "src": "2025/04/097A4529-32.jpg",
+      "out": "cariere-hero.webp",
+      "width": 1920
+    },
+    {
+      "src": "2020/03/DSC_7424-2-min.jpg",
+      "out": "regulament-hero.webp",
+      "width": 1920
+    },
+    {
+      "src": "2025/12/Bazin-Rapid2-Copy-min.png",
+      "out": "locatii/bazin-cs-rapid.webp",
+      "width": 1920
+    },
+    {
+      "src": "2025/11/militari-wellness-13.jpg",
+      "out": "locatii/militari-wellness.webp",
+      "width": 1920
+    },
+    {
+      "src": "2020/03/DSC_9770-min.jpg",
+      "out": "tarife-hero.webp",
+      "width": 1920
+    }
+  ],
+  "team": [
+    {
+      "src": "2025/03/IMG_7289-1300x867-7.jpg",
+      "out": "echipa/bogdan-marin.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2025/03/IMG_7289-1300x867-6.jpg",
+      "out": "echipa/adriana-pache.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2025/03/IMG_7289-1300x867-5.jpg",
+      "out": "echipa/andreea-balan.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2025/02/IMG_7289-1300x867-1.jpg",
+      "out": "echipa/tudor-dumitru.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2026/06/IMG_7289-1300x867-1.jpg",
+      "out": "echipa/razvan-petrescu.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2025/07/codrin-site-2.jpg",
+      "out": "echipa/codrin-ene.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2025/03/IMG_7289-1300x867-1.png",
+      "out": "echipa/alexandra-zamfir.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "2025/02/IMG_7289-1300x867-2.jpg",
+      "out": "echipa/rebeca-daroiu.webp",
+      "width": 640,
+      "height": 640
+    }
+  ],
+  "gallery": [
+    "2025/11/499553393_10025600034227033_6654084440610791703_n.jpg",
+    "2025/11/499683658_10033934480060255_2387838677049361582_n.jpg",
+    "2025/11/502493236_10025600054227031_439931322323512579_n-2.jpg",
+    "2025/11/54458084_2108780902575692_1387461198965899264_n.jpg",
+    "2025/11/militari-wellness-13.jpg",
+    "2025/12/bazin-rapid.png",
+    "2025/12/bazin-rapid-3-min.png",
+    "2025/12/bazin-rapid-4-min.png",
+    "2025/12/bazin-rapid-5-min.png",
+    "2025/12/Bazin-Rapid2-Copy-min-1.png",
+    "2025/03/097A6049.jpg",
+    "2025/03/097A7082.jpg",
+    "2020/03/DSC_0132-min.jpg",
+    "2020/03/DSC_0139-min.jpg",
+    "2020/03/DSC_0212-min.jpg",
+    "2020/03/DSC_0334-min.jpg",
+    "2020/03/DSC_1520-1-min.jpg",
+    "2020/03/DSC_1583-1-min.jpg",
+    "2020/03/DSC_1988-min.jpg",
+    "2020/03/DSC_2367-min.jpg",
+    "2020/03/DSC_2371-min.jpg",
+    "2020/03/DSC_2373-min.jpg",
+    "2020/03/DSC_2959-min.jpg",
+    "2020/03/DSC_7424-2-min.jpg",
+    "2020/03/DSC_8351-min.jpg",
+    "2020/03/DSC_8456-min.jpg",
+    "2020/03/DSC_8502-min.jpg",
+    "2020/03/DSC_8739-min.jpg",
+    "2020/03/DSC_9724-3-min.jpg",
+    "2020/03/DSC_9727-1-min.jpg",
+    "2020/03/IMG_2071-min.jpg",
+    "2020/03/IMG_2074-min.jpg",
+    "2020/03/IMG_2081-min.jpg",
+    "2020/03/IMG_2141-min.jpg",
+    "2020/03/cover-initiere-3-1300x867.jpg",
+    "2020/03/82805044_680189142517773_160705375429984256_o.jpg",
+    "2025/03/097A0265.jpg",
+    "2025/03/097A0245.jpg",
+    "2023/03/097A7158.jpg",
+    "2025/04/097A4529-32.jpg",
+    "2020/03/DSC_9770-min.jpg",
+    "2020/03/DSC_1477-1-min.jpg",
+    "2020/03/DSC_0131-min.jpg",
+    "2020/05/avansati-1.jpg",
+    "2020/05/personal-trainer-1.jpg",
+    "2020/05/medalii-copy.jpg",
+    "2020/07/fluture-marin-2.jpg"
+  ]
+}

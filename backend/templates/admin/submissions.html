@@ -1,0 +1,61 @@
+{% extends "admin/base.html" %}
+{% block title %}Cereri{% endblock %}
+{% block body %}
+<h1>Cereri</h1>
+<p class="sub">{{ total }} {{ 'cerere' if total == 1 else 'cereri' }} in total.</p>
+
+<div class="card">
+  <div class="row-actions">
+    <a class="btn ghost sm" href="{{ url_for('admin.submissions') }}"
+       style="{{ 'background:var(--brand);color:#fff' if not kind and not only_pending }}">Toate</a>
+    {% for k, label in kind_labels.items() %}
+      <a class="btn ghost sm" href="{{ url_for('admin.submissions', tip=k) }}"
+         style="{{ 'background:var(--brand);color:#fff' if kind == k }}">{{ label }}</a>
+    {% endfor %}
+    <a class="btn ghost sm" href="{{ url_for('admin.submissions', nerezolvate='1') }}"
+       style="{{ 'background:var(--brand);color:#fff' if only_pending }}">Doar nerezolvate</a>
+    <span class="right"></span>
+    <a class="btn ghost sm" href="{{ url_for('admin.export_csv', tip=kind) }}">Export CSV</a>
+  </div>
+</div>
+
+{% if rows %}
+<div class="card" style="padding:0;overflow:hidden">
+<table>
+  <thead>
+    <tr><th>Data</th><th>Tip</th><th>Nume</th><th>Contact</th><th>Detalii</th><th>Stare</th></tr>
+  </thead>
+  <tbody>
+  {% for r in rows %}
+    <tr>
+      <td class="muted">{{ r.created_at|datetime_ro }}</td>
+      <td><span class="pill kind">{{ kind_labels.get(r.kind, r.kind) }}</span></td>
+      <td><a href="{{ url_for('admin.submission_detail', submission_id=r.id) }}"><strong>{{ r.name or '—' }}</strong></a></td>
+      <td class="muted">
+        {% if r.email %}<a href="mailto:{{ r.email }}">{{ r.email }}</a><br>{% endif %}
+        {% if r.phone %}<a href="tel:{{ r.phone }}">{{ r.phone }}</a>{% endif %}
+      </td>
+      <td class="muted">{{ r.package or r.location or r.subject or '—' }}</td>
+      <td>
+        {% if r.handled %}<span class="pill done">rezolvat</span>
+        {% else %}<span class="pill new">nou</span>{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% if pages > 1 %}
+<div class="row-actions">
+  {% for p in range(1, pages + 1) %}
+    <a class="btn ghost sm" href="{{ url_for('admin.submissions', tip=kind, nerezolvate='1' if only_pending else None, pagina=p) }}"
+       style="{{ 'background:var(--brand);color:#fff' if p == page }}">{{ p }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% else %}
+  <div class="card"><p class="muted" style="margin:0">Nicio cerere care sa se potriveasca.</p></div>
+{% endif %}
+{% endblock %}
