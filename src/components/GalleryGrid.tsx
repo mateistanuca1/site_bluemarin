@@ -46,7 +46,7 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
             key={img.src}
             type="button"
             onClick={() => setOpen(i)}
-            className="group relative aspect-square overflow-hidden bg-brand-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            className="group relative aspect-square overflow-hidden rounded bg-brand-100"
             aria-label={`Deschide imaginea ${i + 1} din ${images.length}`}
           >
             <Image
@@ -59,7 +59,7 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
             />
             <span
               aria-hidden="true"
-              className="absolute inset-0 bg-deep/0 transition-colors duration-300 group-hover:bg-deep/30"
+              className="absolute inset-0 bg-deep-900/0 transition-colors duration-300 group-hover:bg-deep-900/35"
             />
           </button>
         ))}
@@ -79,7 +79,7 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
 
       {open !== null && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/92 p-4"
+          className="on-dark fixed inset-0 z-[60] flex animate-fade-in items-center justify-center bg-deep-900/95 p-4"
           role="dialog"
           aria-modal="true"
           aria-label="Vizualizare imagine"
@@ -90,8 +90,8 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
           <button
             type="button"
             onClick={close}
-            aria-label="Inchide"
-            className="absolute right-4 top-4 z-10 p-2 text-white/80 transition-colors hover:text-white"
+            aria-label="Închide"
+            className="absolute right-4 top-4 z-10 rounded-full border border-white/20 p-2 text-white/80 transition-colors hover:border-white hover:text-white"
           >
             <Icon name="close" className="h-7 w-7" />
           </button>
@@ -99,10 +99,10 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
           <button
             type="button"
             onClick={() => go(-1)}
-            aria-label="Imaginea anterioara"
-            className="absolute left-2 z-10 p-3 text-white/70 transition-colors hover:text-white sm:left-6"
+            aria-label="Imaginea anterioară"
+            className="absolute left-2 z-10 rounded-full border border-white/20 p-3 text-white/70 transition-colors hover:border-white hover:text-white sm:left-6"
           >
-            <Icon name="chevron-left" className="h-8 w-8" />
+            <Icon name="chevron-left" className="h-7 w-7" />
           </button>
 
           <div className="relative h-[80vh] w-full max-w-5xl">
@@ -119,13 +119,13 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
           <button
             type="button"
             onClick={() => go(1)}
-            aria-label="Imaginea urmatoare"
-            className="absolute right-2 z-10 p-3 text-white/70 transition-colors hover:text-white sm:right-6"
+            aria-label="Imaginea următoare"
+            className="absolute right-2 z-10 rounded-full border border-white/20 p-3 text-white/70 transition-colors hover:border-white hover:text-white sm:right-6"
           >
-            <Icon name="chevron-right" className="h-8 w-8" />
+            <Icon name="chevron-right" className="h-7 w-7" />
           </button>
 
-          <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[13px] tracking-wide2 text-white/60">
+          <p className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] tabular-nums tracking-wide2 text-white/80">
             {open + 1} / {images.length}
           </p>
         </div>

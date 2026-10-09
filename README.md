@@ -7,15 +7,32 @@ functionalitati — dar cu continutul editabil dintr-un panou de admin.
 ```
 Frontend   Next.js 15 (App Router, TypeScript, Tailwind)  -> Vercel, gratis
 Backend    Flask + SQLAlchemy                             -> Vercel, aceeasi aplicatie
-Date       Postgres (Neon / Supabase)                     -> tier gratuit
-Email      Resend                                         -> 3.000/luna gratis
+Formulare  Google Apps Script (Sheets + Drive + Gmail)    -> 0 lei, fara baza de date
+           sau Postgres + Resend                          -> tot gratuit, dar 2 servicii
 ```
+
+Formularele pot merge in doua feluri, controlate de `FORMS_BACKEND`:
+
+| | `apps-script` (recomandat) | `db` |
+|---|---|---|
+| Unde ajung datele | Google Sheet | Postgres (Neon) |
+| Fisa de inscriere PDF | Google Docs -> Drive | `backend/pdf.py` |
+| Emailuri | Gmail | Resend |
+| Membri in Virtuagym | da, automat | nu |
+| Servicii de configurat | niciunul in plus | Neon + Resend |
+
+Clubul foloseste deja un Apps Script pentru inscrieri. Modul `apps-script`
+continua sa-l foloseasca — aceeasi foaie, acelasi folder Drive, aceeasi
+integrare Virtuagym — dar trece prin backend, ca sa pastram validarile,
+limitarea de trafic si mesajele in romana, si ca sa nu ajunga nicio cheie
+in browser.
 
 ---
 
 ## Cuprins
 
 - [Pornire rapida](#pornire-rapida)
+- [Formulare prin Google Apps Script](#formulare-prin-google-apps-script)
 - [Structura proiectului](#structura-proiectului)
 - [Cum editezi continutul](#cum-editezi-continutul)
 - [Deploy pe Vercel](#deploy-pe-vercel)
@@ -70,6 +87,76 @@ Verifica oricand ce e configurat si ce lipseste:
 
 ---
 
+## Formulare prin Google Apps Script
+
+Varianta fara baza de date: datele ajung intr-un Google Sheet, fisa de
+inscriere se genereaza in Google Docs si se salveaza ca PDF in Drive,
+emailurile pleaca prin Gmail, iar membrul se creeaza in Virtuagym.
+
+### 1. Publica scriptul
+
+1. Intra pe [script.google.com](https://script.google.com) -> **Proiect nou**
+2. Lipeste continutul fisierului [`scripts/apps-script/Cod.gs`](scripts/apps-script/Cod.gs)
+3. **Project Settings** -> **Script Properties** -> adauga:
+
+   | Cheie | Valoare |
+   |---|---|
+   | `SHARED_TOKEN` | un secret lung, generat de tine |
+   | `SHEET_ID` | id-ul foii de calcul (din URL) |
+   | `DRIVE_FOLDER_ID` | id-ul folderului unde se salveaza fisele |
+   | `TEMPLATE_DOC_MINOR` | id-ul sablonului Google Docs pentru copii |
+   | `TEMPLATE_DOC_ADULT` | id-ul sablonului pentru adulti |
+   | `NOTIFY_EMAIL` | unde primesti notificarile |
+   | `VIRTUAGYM_API_KEY` | cheia Virtuagym |
+   | `VIRTUAGYM_CLUB_SECRET` | club secret |
+   | `VIRTUAGYM_CLUB_ID` | id-ul clubului |
+
+4. **Deploy** -> **New deployment** -> **Web app**
+   - *Execute as:* **Me**
+   - *Who has access:* **Anyone**
+5. Copiaza URL-ul care se termina in `/exec`
+
+> Cheile stau in Script Properties, nu in cod. Scriptul vechi le avea scrise
+> direct in fisier — oricine deschidea proiectul le putea citi.
+
+### 2. Configureaza site-ul
+
+In Vercel -> **Settings** -> **Environment Variables**:
+
+```
+FORMS_BACKEND=apps-script
+APPS_SCRIPT_URL=https://script.google.com/macros/s/.../exec
+APPS_SCRIPT_TOKEN=acelasi-secret-ca-SHARED_TOKEN
+```
+
+Atat. Nu mai ai nevoie de `DATABASE_URL` si nici de `RESEND_API_KEY`.
+
+Verifica cu:
+
+```bash
+.venv/bin/python -m backend.cli check
+```
+
+### Sabloanele Google Docs
+
+Scriptul inlocuieste in sablon: `{NAME}`, `{DATE}`, `{PARENT}`, `{PHONE}`,
+`{EMAIL}`, iar in locul lui `{AVIZ}` insereaza cele doua documente medicale
+si semnatura.
+
+### Ce s-a reparat fata de scriptul vechi
+
+| Problema | Acum |
+|---|---|
+| PDF-ul nu ajungea niciodata atasat — functia returna documentul Google, nu PDF-ul, si il stergea inainte de export | Exportul se face cat timp fisierul exista; documentul temporar se sterge dupa |
+| Cheile API erau scrise in cod | Script Properties |
+| Oricine putea posta pe URL-ul `/exec` | Token comun, verificat la fiecare cerere |
+| Data nasterii ajungea in Virtuagym drept nume de familie | Numele se desparte corect |
+| O eroare la Virtuagym pierdea toata inscrierea | Virtuagym e optional; inscrierea se salveaza oricum |
+| Doua scripturi aproape identice (copii / adulti) | Unul singur, cu `enrolleeType` |
+| Doar inscrierile | Toate cele patru formulare |
+
+---
+
 ## Structura proiectului
 
 ```
@@ -104,6 +191,7 @@ backend/
 
 api/index.py          punctul de intrare pentru Vercel
 scripts/
+  apps-script/Cod.gs  backend-ul Google (Sheets + Drive + Gmail + Virtuagym)
   fetch-images.mjs    descarca pozele de pe site-ul vechi
   images.manifest.json  lista pozelor descarcate
 docs/
@@ -306,20 +394,21 @@ domeniul site-ului in `ALLOWED_ORIGINS`.
 
 ## Ce s-a schimbat fata de site-ul vechi
 
-**Pastrat identic:** paleta (`#6b98ed`, `#4048c9`, `#f25ca2`), fontul Raleway,
-structura celor 9 sectiuni de pe prima pagina, toate cele 11 intrari de meniu,
-textele, cei 8 antrenori, cele 15 pachete de tarife, butonul fix de telefon pe
-mobil, counterele animate, galeria cu lightbox.
+**Pastrat:** paleta (albastru / albastru inchis / roz), fontul Raleway,
+structura sectiunilor de pe prima pagina, textele, cei 8 antrenori, cele 15
+pachete de tarife, butonul fix de telefon pe mobil, counterele animate,
+galeria cu lightbox.
 
 **Inlocuit:**
 
 | Inainte | Acum |
 |---|---|
 | Contact Form 7 + Popup Maker | Formulare proprii, cu validare in romana |
-| Google Apps Script (fisa de inscriere) | `backend/pdf.py` — PDF generat de noi, trimis pe email si arhivat |
+| Apps Script apelat direct din browser (cu chei la vedere) | Acelasi Apps Script, dar prin backend — cheile raman pe server |
 | `signature_pad` de pe CDN | Canvas propriu, fara dependinte externe |
 | WPBakery + 10 plugin-uri | Componente React |
 | Panou WordPress | `/api/admin` |
+| Texte fara diacritice | Tot continutul rescris cu diacritice |
 
 **Adaugat:**
 
@@ -330,6 +419,9 @@ mobil, counterele animate, galeria cu lightbox.
 - Date structurate `SportsActivityLocation` pentru rezultatele locale Google
 - Limitare de trafic pe formulare + capcana pentru roboti
 - Export CSV al tuturor cererilor primite
+- Formularul de inscriere are varianta pentru copil si pentru adult, iar
+  documentele cerute sunt cele reale: **aviz epidemiologic** si
+  **adeverinta „apt efort fizic"**
 
 **Ce n-a fost preluat:** blogul (avea 2 articole din 2018, nu era in meniu) si
 ~45 de pagini vechi marcate `test`/`bug`/`COVID-19`. Sunt inventariate in
@@ -346,4 +438,13 @@ mobil, counterele animate, galeria cu lightbox.
       Am pastrat-o o singura data — confirma preturile in `content/pricing.json`
 - [ ] Harta pentru Militari Wellness e generata din adresa; daca vrei
       coordonate exacte, inlocuieste `mapEmbed` in `content/locations.json`
-- [ ] Verifica domeniul in Resend inainte de lansare, altfel emailurile ajung in spam
+- [ ] Verifica domeniul in Resend inainte de lansare, altfel emailurile ajung
+      in spam (doar pentru `FORMS_BACKEND=db`)
+- [ ] **Roteste cheile Virtuagym.** Cele din scriptul vechi au circulat in
+      clar — genereaza altele noi din panoul Virtuagym si pune-le doar in
+      Script Properties
+- [ ] Al doilea numar de telefon (**0724 212 978**, „Receptie") si adresa
+      **Complex Sportiv 2000, Str. Gabriela Szabo 3-11** apar in emailul de
+      confirmare trimis de scriptul vostru. Numarul e deja pe site;
+      confirma daca adresa aceea e o locatie activa si o adaugam ca a treia
+      locatie in `content/locations.json`

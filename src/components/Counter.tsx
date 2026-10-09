@@ -12,9 +12,9 @@ type Props = {
   separator?: string;
 };
 
-const DURATION = 1800;
+const DURATION = 1600;
 
-/** Cifra care numara crescator cand intra in ecran — ca pe site-ul vechi. */
+/** Cifra care numara crescator cand intra in ecran. */
 export default function Counter({ to, label, icon, separator }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState(0);
@@ -60,12 +60,17 @@ export default function Counter({ to, label, icon, separator }: Props) {
   const shown = separator ? value.toLocaleString('ro-RO') : String(value);
 
   return (
-    <div ref={ref} className="text-center">
-      <Icon name={icon as IconName} className="mx-auto mb-4 h-9 w-9 text-white/70" />
-      <div className="text-[40px] font-semibold leading-none text-accent sm:text-[52px]">
+    <div ref={ref} className="flex flex-col items-center text-center">
+      <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-white/10">
+        <Icon name={icon as IconName} className="h-6 w-6 text-brand-light" />
+      </span>
+
+      <div className="text-[clamp(2.4rem,5.5vw,3.4rem)] font-bold leading-none text-accent">
         {shown}
+        {to >= 1000 && <span aria-hidden="true">+</span>}
       </div>
-      <div className="mt-3 text-[13px] font-light uppercase tracking-wide2 text-white/85 sm:text-[15px]">
+
+      <div className="mt-3 text-[13px] font-medium uppercase tracking-wide2 text-white/80 sm:text-[14px]">
         {label}
       </div>
     </div>

@@ -1,23 +1,26 @@
+import Icon from './Icon';
 import { cx } from '@/lib/utils';
 
 type Props = { quote: string; cite?: string; className?: string };
 
-/** Citatul mare cu ghilimele decorative, preluat din tema veche. */
+/** Citatul mare, cu ghilimele decorative. */
 export default function ParallaxQuote({ quote, cite, className }: Props) {
   return (
     <figure className={cx('relative text-center', className)}>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none block select-none font-quote text-[80px] leading-[0.5] text-white/25 sm:text-[110px]"
-      >
-        &ldquo;
-      </span>
-      <blockquote className="mx-auto max-w-3xl font-quote text-[20px] italic leading-snug sm:text-[28px] lg:text-[34px]">
+      <Icon
+        name="quote"
+        className="mx-auto mb-7 h-9 w-9 text-white/25 sm:h-11 sm:w-11"
+      />
+
+      <blockquote className="mx-auto max-w-3xl font-quote text-[clamp(1.25rem,3.2vw,2.1rem)] italic leading-[1.35]">
         {quote}
       </blockquote>
+
       {cite && (
-        <figcaption className="mt-6 text-[13px] font-semibold uppercase tracking-headline opacity-80 sm:text-[15px]">
-          {cite}
+        <figcaption className="mt-7 flex items-center justify-center gap-3">
+          <span aria-hidden="true" className="h-px w-8 bg-white/30" />
+          <span className="label text-white/75">{cite}</span>
+          <span aria-hidden="true" className="h-px w-8 bg-white/30" />
         </figcaption>
       )}
     </figure>

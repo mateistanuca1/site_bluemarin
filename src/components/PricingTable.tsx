@@ -29,9 +29,10 @@ export default function PricingTable({ locations, currency, commonConditions, on
       {/* Taburi de locatie, doar cand afisam mai multe */}
       {shown.length > 1 && (
         <div
-          className="mb-10 flex flex-wrap justify-center gap-2"
+          className="mb-10 flex flex-wrap justify-center gap-2 rounded-full border border-line bg-white p-1.5
+                     shadow-card mx-auto w-fit"
           role="tablist"
-          aria-label="Alege locatia"
+          aria-label="Alege locația"
         >
           {shown.map((l) => (
             <button
@@ -41,10 +42,10 @@ export default function PricingTable({ locations, currency, commonConditions, on
               aria-selected={l.slug === active}
               onClick={() => setActive(l.slug)}
               className={cx(
-                'border-2 px-6 py-3 text-[12px] font-semibold uppercase tracking-wide2 transition-colors',
+                'rounded-full px-6 py-2.5 text-[12px] font-bold uppercase tracking-wide2 transition-colors',
                 l.slug === active
-                  ? 'border-brand bg-brand text-white'
-                  : 'border-black/15 text-ink hover:border-brand hover:text-brand',
+                  ? 'bg-brand text-white'
+                  : 'text-ink-soft hover:bg-brand-50 hover:text-brand',
               )}
             >
               {l.name}
@@ -53,7 +54,7 @@ export default function PricingTable({ locations, currency, commonConditions, on
         </div>
       )}
 
-      <p className="mb-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center text-[13px] text-muted">
+      <p className="mb-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center text-[13.5px] text-ink-muted">
         <span className="flex items-center gap-2">
           <Icon name="pin" className="h-4 w-4 text-brand" />
           {current.address}
@@ -66,14 +67,14 @@ export default function PricingTable({ locations, currency, commonConditions, on
         ))}
       </p>
 
-      <div className="space-y-12">
+      <div className="space-y-14">
         {current.categories.map((cat) => (
           <div key={cat.id}>
-            <div className="mb-6 text-center">
-              <h3 className="text-[18px] font-semibold uppercase tracking-headline sm:text-[21px]">
+            <div className="mb-7 text-center">
+              <h3 className="text-[18px] font-bold uppercase tracking-headline sm:text-[21px]">
                 {cat.name}
               </h3>
-              {cat.note && <p className="mt-2 text-[13px] text-muted">{cat.note}</p>}
+              {cat.note && <p className="mt-2 text-[13.5px] text-ink-muted">{cat.note}</p>}
             </div>
 
             <div
@@ -93,26 +94,39 @@ export default function PricingTable({ locations, currency, commonConditions, on
                 return (
                   <div
                     key={p.sessions}
-                    className="group flex flex-col border border-black/10 bg-white p-7 text-center
-                               shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-brand hover:shadow-lg"
-                  >
-                    <p className="text-[12px] font-semibold uppercase tracking-headline text-muted">
-                      {p.label}
-                    </p>
-                    <p className="mt-4 text-[34px] font-semibold leading-none text-brand">
-                      {formatPrice(p.price)}
-                      <span className="ml-1.5 text-[15px] font-light text-muted">{currency}</span>
-                    </p>
-                    {p.sessions > 1 && (
-                      <p className="mt-2 text-[12px] text-muted">
-                        ≈ {formatPrice(perSession)} {currency} / sedinta
-                      </p>
+                    className={cx(
+                      'card card-hover relative flex flex-col p-7 text-center',
+                      p.featured && 'border-brand ring-1 ring-brand',
                     )}
+                  >
+                    {p.featured && (
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand px-3 py-1 text-[10px] font-bold uppercase tracking-wide2 text-white">
+                        Cel mai ales
+                      </span>
+                    )}
+
+                    <p className="label text-ink-muted">{p.label}</p>
+
+                    <p className="mt-4 text-[34px] font-bold leading-none text-brand">
+                      {formatPrice(p.price)}
+                      <span className="ml-1.5 text-[15px] font-normal text-ink-muted">
+                        {currency}
+                      </span>
+                    </p>
+
+                    {/* Inaltime rezervata si cand pachetul are o singura sedinta,
+                        ca butoanele din acelasi rand sa ramana aliniate. */}
+                    <p className="mt-2 min-h-[1.25rem] text-[12.5px] text-ink-muted">
+                      {p.sessions > 1 && `≈ ${formatPrice(perSession)} ${currency} / ședință`}
+                    </p>
 
                     <button
                       type="button"
                       onClick={() => setSelected({ pkg: label, location: current.name })}
-                      className="btn btn-outline mt-6 w-full"
+                      className={cx(
+                        'btn mt-auto w-full',
+                        p.featured ? 'btn-primary' : 'btn-outline',
+                      )}
                     >
                       Alege
                     </button>
@@ -124,19 +138,23 @@ export default function PricingTable({ locations, currency, commonConditions, on
         ))}
       </div>
 
-      <div className="mt-12 border-t border-black/10 pt-8 text-center">
-        <p className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] text-muted">
+      <div className="mt-14 rounded-card border border-line bg-brand-50 px-6 py-7 text-center">
+        <ul className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2.5 text-[13.5px] text-ink-soft">
           {commonConditions.map((c) => (
-            <span key={c} className="flex items-center gap-2">
-              <Icon name="check" className="h-4 w-4 text-brand" />
+            <li key={c} className="flex items-center gap-2">
+              <Icon name="check" className="h-4 w-4 shrink-0 text-brand" />
               {c}
-            </span>
+            </li>
           ))}
-        </p>
-        <p className="mt-6 text-[13px] text-muted">
-          Vrei sa te inscrii direct?{' '}
-          <Link href={`/inscriere/${current.slug}`} className="font-semibold text-brand underline">
-            Completeaza formularul de inscriere
+        </ul>
+
+        <p className="mt-5 text-[14px] text-ink-soft">
+          Vrei să te înscrii direct?{' '}
+          <Link
+            href={`/inscriere/${current.slug}`}
+            className="font-semibold text-brand underline underline-offset-2 hover:no-underline"
+          >
+            Completează formularul de înscriere
           </Link>
         </p>
       </div>

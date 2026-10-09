@@ -1,96 +1,96 @@
 {
   "title": "Echipa",
-  "lead": "Componenta echipei noastre este formata din fosti sau actuali sportivi de performanta, ce au castigat numeroase titluri de campioni nationali, balcanici, europeni sau mondiali. Deveniti mai tarziu antrenori si instructori de inot, calificati in competente profesionale in ramura natatiei si acreditati de Ministerul Tineretului si Sportului.",
+  "lead": "Componența echipei noastre este formată din foști sau actuali sportivi de performanță, care au câștigat numeroase titluri de campioni naționali, balcanici, europeni sau mondiali. Deveniți mai târziu antrenori și instructori de înot, calificați în competențe profesionale în ramura natației și acreditați de Ministerul Tineretului și Sportului.",
   "members": [
     {
       "slug": "bogdan-marin",
       "name": "Bogdan Marin",
-      "role": "Fondator | Antrenor - Instructor inot",
+      "role": "Fondator · Antrenor – Instructor înot",
       "shortRole": "Fondator",
-      "quote": "Cele mai frumoase lucruri prind culoare atunci cand adaugi pasiune. Iar noi iubim ceea ce facem!",
+      "quote": "Cele mai frumoase lucruri prind culoare atunci când adaugi pasiune. Iar noi iubim ceea ce facem!",
       "photo": "/images/echipa/bogdan-marin.webp",
       "bio": [
-        "Bogdan a pus bazele Bluemarin Sport Club in 2017, pornind de la o pasiune simpla pentru apa si de la convingerea ca un curs de inot poate fi mult mai mult decat o lectie tehnica.",
-        "Coordoneaza activitatea clubului si lucreaza in continuare direct cu cursantii, de la primele sedinte de acomodare cu apa pana la pregatirea pentru competitii."
+        "Bogdan a pus bazele Bluemarin Sport Club în 2017, pornind de la o pasiune simplă pentru apă și de la convingerea că un curs de înot poate fi mult mai mult decât o lecție tehnică.",
+        "Coordonează activitatea clubului și lucrează în continuare direct cu cursanții, de la primele ședințe de acomodare cu apa până la pregătirea pentru competiții."
       ]
     },
     {
       "slug": "adriana-pache",
       "name": "Adriana Pache",
-      "role": "Antrenor - Instructor inot",
-      "shortRole": "Coordonator initiere",
-      "quote": "Daca vrei sa fii cel mai bun, trebuie sa faci lucruri pe care altii nu sunt dispusi sa le faca!",
+      "role": "Antrenor – Instructor înot",
+      "shortRole": "Coordonator inițiere",
+      "quote": "Dacă vrei să fii cel mai bun, trebuie să faci lucruri pe care alții nu sunt dispuși să le facă!",
       "photo": "/images/echipa/adriana-pache.webp",
       "bio": [
-        "Adriana coordoneaza sectia de initiere, acolo unde copiii fac primul contact cu bazinul.",
-        "Lucreaza cu rabdare si metoda, pas cu pas, pana cand teama de apa se transforma in incredere."
+        "Adriana coordonează secția de inițiere, acolo unde copiii fac primul contact cu bazinul.",
+        "Lucrează cu răbdare și metodă, pas cu pas, până când teama de apă se transformă în încredere."
       ]
     },
     {
       "slug": "andreea-balan",
-      "name": "Andreea Balan",
-      "role": "Antrenor Triatlon - Instructor inot",
-      "shortRole": "Coordonator performanta",
-      "quote": "Ai doar 3 alegeri in viata: sa abandonezi, sa te supui sau sa dai tot ce poti!",
+      "name": "Andreea Bălan",
+      "role": "Antrenor Triatlon – Instructor înot",
+      "shortRole": "Coordonator performanță",
+      "quote": "Ai doar 3 alegeri în viață: să abandonezi, să te supui sau să dai tot ce poți!",
       "photo": "/images/echipa/andreea-balan.webp",
       "bio": [
-        "Andreea coordoneaza grupele de performanta si pregatirea pentru triatlon.",
-        "Construieste planuri de antrenament periodizate in functie de calendarul competitional."
+        "Andreea coordonează grupele de performanță și pregătirea pentru triatlon.",
+        "Construiește planuri de antrenament periodizate în funcție de calendarul competițional."
       ]
     },
     {
       "slug": "tudor-dumitru",
       "name": "Tudor Dumitru",
-      "role": "Instructor inot",
-      "shortRole": "Instructor inot",
-      "quote": "Diferenta dintre vis si realitate este determinarea de a continua indiferent de obstacole.",
+      "role": "Instructor înot",
+      "shortRole": "Instructor înot",
+      "quote": "Diferența dintre vis și realitate este determinarea de a continua indiferent de obstacole.",
       "photo": "/images/echipa/tudor-dumitru.webp",
       "bio": [
-        "Tudor lucreaza cu grupele de copii si cu cursantii adulti care vor sa isi corecteze tehnica."
+        "Tudor lucrează cu grupele de copii și cu cursanții adulți care vor să își corecteze tehnica."
       ]
     },
     {
       "slug": "razvan-petrescu",
-      "name": "Razvan Petrescu",
-      "role": "Instructor inot",
-      "shortRole": "Instructor inot",
-      "quote": "Fiecare antrenament este o oportunitate de a deveni mai bun decat ieri.",
+      "name": "Răzvan Petrescu",
+      "role": "Instructor înot",
+      "shortRole": "Instructor înot",
+      "quote": "Fiecare antrenament este o oportunitate de a deveni mai bun decât ieri.",
       "photo": "/images/echipa/razvan-petrescu.webp",
       "bio": [
-        "Razvan pune accentul pe consecventa si pe progresul masurabil, antrenament cu antrenament."
+        "Răzvan pune accentul pe consecvență și pe progresul măsurabil, antrenament cu antrenament."
       ]
     },
     {
       "slug": "codrin-ene",
       "name": "Codrin Ene",
-      "role": "Antrenor - Instructor inot",
-      "shortRole": "Antrenor - Instructor inot",
-      "quote": "In fiecare lungime de bazin se ascunde un progres.",
+      "role": "Antrenor – Instructor înot",
+      "shortRole": "Antrenor – Instructor înot",
+      "quote": "În fiecare lungime de bazin se ascunde un progres.",
       "photo": "/images/echipa/codrin-ene.webp",
       "bio": [
-        "Codrin lucreaza atat la initiere, cat si la perfectionarea procedeelor de inot."
+        "Codrin lucrează atât la inițiere, cât și la perfecționarea procedeelor de înot."
       ]
     },
     {
       "slug": "alexandra-zamfir",
       "name": "Alexandra Zamfir",
-      "role": "Instructor inot",
-      "shortRole": "Instructor inot",
-      "quote": "Cu incredere si disciplina, fiecare vis devine realizabil.",
+      "role": "Instructor înot",
+      "shortRole": "Instructor înot",
+      "quote": "Cu încredere și disciplină, fiecare vis devine realizabil.",
       "photo": "/images/echipa/alexandra-zamfir.webp",
       "bio": [
-        "Alexandra se ocupa in principal de grupele de copii mici, la acomodarea cu apa."
+        "Alexandra se ocupă în principal de grupele de copii mici, la acomodarea cu apa."
       ]
     },
     {
       "slug": "rebeca-daroiu",
-      "name": "Rebeca Daroiu",
-      "role": "Instructor inot",
-      "shortRole": "Instructor inot",
-      "quote": "Inotul nu este doar un sport, este o lectie de perseverenta si curaj.",
+      "name": "Rebeca Dăroiu",
+      "role": "Instructor înot",
+      "shortRole": "Instructor înot",
+      "quote": "Înotul nu este doar un sport, este o lecție de perseverență și curaj.",
       "photo": "/images/echipa/rebeca-daroiu.webp",
       "bio": [
-        "Rebeca insoteste cursantii de la primele exercitii pana la inotul independent."
+        "Rebeca însoțește cursanții de la primele exerciții până la înotul independent."
       ]
     }
   ]

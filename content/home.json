@@ -2,123 +2,178 @@
   "hero": {
     "kicker": "Din pasiune pentru sport",
     "title": "Bluemarin Sport Club",
-    "subtitle": "Cursuri de inot pentru copii si adulti, in Bucuresti",
-    "image": "/images/hero-bazin.webp",
-    "primaryCta": { "label": "Vezi tarifele", "href": "/tarife" },
-    "secondaryCta": { "label": "Inscrie-te", "href": "/inscriere/bazin-cs-rapid" }
+    "subtitle": "Cursuri de înot pentru copii și adulți, în București",
+    "image": "/images/hero-inot.webp",
+    "primaryCta": {
+      "label": "Vezi tarifele",
+      "href": "/tarife"
+    },
+    "secondaryCta": {
+      "label": "Înscrie-te",
+      "href": "/inscriere/bazin-cs-rapid"
+    },
+    "highlights": [
+      "Două bazine în București",
+      "Grupe mici, de la 4 ani",
+      "Antrenori licențiați MTS"
+    ],
+    "imagePosition": "50% 38%"
   },
   "intro": {
-    "title": "Locul in care fiecare val poarta o poveste!",
+    "title": "Locul în care fiecare val poartă o poveste!",
     "paragraphs": [
-      "In 2017, din pasiune pentru sport, am creat mai mult decat un club de inot – am construit o comunitate unita de apa, ambitie si visuri indraznete.",
-      "La Bluemarin Sport Club, fiecare antrenor, sportiv si sustinator este parte dintr-o calatorie care transforma apa intr-un loc al reusitelor, al increderii si al unitatii.",
-      "Prin cursurile noastre de inot, impletim profesionalismul cu empatia, transformand bazinul intr-un loc unde sportul, educatia si voia buna se intalnesc armonios.",
-      "Te asteptam sa inoti alaturi de noi si sa scriem impreuna urmatoarea fila din Povestea Bluemarin!"
+      "În 2017, din pasiune pentru sport, am creat mai mult decât un club de înot – am construit o comunitate unită de apă, ambiție și visuri îndrăznețe.",
+      "La Bluemarin Sport Club, fiecare antrenor, sportiv și susținător este parte dintr-o călătorie care transformă apa într-un loc al reușitelor, al încrederii și al unității.",
+      "Prin cursurile noastre de înot, împletim profesionalismul cu empatia, transformând bazinul într-un loc unde sportul, educația și voia bună se întâlnesc armonios.",
+      "Te așteptăm să înoți alături de noi și să scriem împreună următoarea filă din Povestea Bluemarin!"
     ]
   },
   "values": {
     "title": "Valori",
+    "lead": "Patru cuvinte care ne ghidează fiecare oră petrecută în bazin.",
     "items": [
-      { "title": "Pasiune", "text": "Ingredientul principal cu care am pornit la drum." },
-      { "title": "Profesionalism", "text": "Tehnica pusa in practica prin experienta." },
-      { "title": "Perseverenta", "text": "Alegerea noastra de a continua indiferent de obstacole." },
-      { "title": "Succes", "text": "Realizarile dobandite prin munca sustinuta cu drag." }
+      {
+        "title": "Pasiune",
+        "text": "Ingredientul principal cu care am pornit la drum.",
+        "icon": "heart"
+      },
+      {
+        "title": "Profesionalism",
+        "text": "Tehnica pusă în practică prin experiență.",
+        "icon": "award"
+      },
+      {
+        "title": "Perseverență",
+        "text": "Alegerea noastră de a continua indiferent de obstacole.",
+        "icon": "swimmer"
+      },
+      {
+        "title": "Succes",
+        "text": "Realizările dobândite prin muncă susținută, cu drag.",
+        "icon": "trophy"
+      }
     ]
   },
   "philosophy": {
-    "title": "Filozofia noastra",
-    "text": "Pasiunea duce la antrenament, antrenamentul duce la performanta, performanta duce la succes!",
+    "title": "Filozofia noastră",
+    "text": "Pasiunea duce la antrenament, antrenamentul duce la performanță, performanța duce la succes!",
     "quote": "Cu fiecare lungime de bazin devenim tot mai puternici!",
     "cite": "Bluemarin Sport Club",
     "image": "/images/filozofia.webp"
   },
   "academy": {
-    "title": "Academia de inot Bluemarin",
-    "text": "Pornim de la gradinita, continuam la scoala si ajungem performanta.",
-    "image": "/images/academia.webp",
+    "title": "Academia de înot Bluemarin",
+    "text": "Pornim de la grădiniță, continuăm la școală și ajungem la performanță.",
+    "image": "/images/academia-copii.webp",
     "cards": [
       {
-        "title": "Cursuri inot copii",
-        "text": "Contribuim la viitorul copiilor si ii indrumam catre sport.",
+        "title": "Cursuri înot copii",
+        "text": "Contribuim la viitorul copiilor și îi îndrumăm către sport.",
         "href": "/cursuri-inot-copii"
       },
       {
-        "title": "Cursuri inot adulti",
-        "text": "Niciodata nu e prea tarziu sa inveti sa inoti corect si relaxat.",
+        "title": "Cursuri înot adulți",
+        "text": "Niciodată nu e prea târziu să înveți să înoți corect și relaxat.",
         "href": "/cursuri-de-inot"
       }
     ]
   },
   "team": {
     "title": "Echipa",
-    "lead": "Sportivi de performanta, actuali antrenori ce aduc diversitate in idei, metodologii, aptitudini, cu rolul de a maximiza rezultatele atat pe plan sportiv cat si pe plan educational.",
-    "featured": ["bogdan-marin", "adriana-pache", "andreea-balan"],
-    "cta": { "label": "Echipa completa", "href": "/echipa" }
+    "lead": "Sportivi de performanță, actuali antrenori, care aduc diversitate în idei, metodologii și aptitudini, cu rolul de a maximiza rezultatele atât pe plan sportiv, cât și pe plan educațional.",
+    "featured": [
+      "bogdan-marin",
+      "adriana-pache",
+      "andreea-balan"
+    ],
+    "cta": {
+      "label": "Echipa completă",
+      "href": "/echipa"
+    }
   },
   "experience": {
-    "title": "Experienta",
-    "lead": "Fiecare cursant este o noua provocare, ce ne determina sa reusim. Devenim tot mai puternici prin proiectele realizate, iar in final oferim o experienta cat mai buna!",
+    "title": "Experiența",
+    "lead": "Fiecare cursant este o nouă provocare, care ne determină să reușim. Devenim tot mai puternici prin proiectele realizate, iar la final oferim o experiență cât mai bună!",
     "counters": [
-      { "to": 9, "label": "Ani experienta", "icon": "award" },
-      { "to": 7000, "label": "Cursanti", "icon": "swimmer", "separator": "." },
-      { "to": 300, "label": "Medalii", "icon": "medal", "separator": "." },
-      { "to": 12, "label": "Cupe", "icon": "trophy", "separator": "." }
+      {
+        "to": 9,
+        "label": "Ani de experiență",
+        "icon": "award"
+      },
+      {
+        "to": 7000,
+        "label": "Cursanți",
+        "icon": "swimmer",
+        "separator": "."
+      },
+      {
+        "to": 300,
+        "label": "Medalii",
+        "icon": "medal",
+        "separator": "."
+      },
+      {
+        "to": 12,
+        "label": "Cupe",
+        "icon": "trophy",
+        "separator": "."
+      }
     ]
   },
   "testimonials": {
     "title": "Testimoniale",
-    "lead": "Parerea clientilor reprezinta prioritatea noastra!",
+    "lead": "Părerea clienților reprezintă prioritatea noastră!",
     "items": [
       {
         "author": "Iuliana Moga",
-        "text": "Cand un copil vine la bazin cu placere, asa cum vin copiii mei, inseamna ca le place tot: locatia, piscina, atmosfera si, nu in ultimul rand, antrenorii. Bogdan si colegii sai ii invata pe cei mici nu doar sa inoate, ci si sa daruiasca, sa iubeasca sportul si competitia, sa fie mai buni si mai puternici."
+        "text": "Când un copil vine la bazin cu plăcere, așa cum vin copiii mei, înseamnă că le place tot: locația, piscina, atmosfera și, nu în ultimul rând, antrenorii. Bogdan și colegii săi îi învață pe cei mici nu doar să înoate, ci și să dăruiască, să iubească sportul și competiția, să fie mai buni și mai puternici."
       },
       {
-        "author": "Alexia Schiopescu",
+        "author": "Alexia Șchiopescu",
         "text": "I think the people are the most important in this whole club – I love the positive atmosphere, the happy vibes and the fact that the coaches are always motivating you. Hands down, best swimming club out there!"
       },
       {
         "author": "Iulia Belc",
-        "text": "Ore de inot intr-un mediu special, elegant, sub indrumarea unor antrenori dedicati, implicati, foarte indragiti de copii si de adulti. Sportul devine o placere, o emulatie, o sursa de bucurie si sanatate."
+        "text": "Ore de înot într-un mediu special, elegant, sub îndrumarea unor antrenori dedicați, implicați, foarte îndrăgiți de copii și de adulți. Sportul devine o plăcere, o emulație, o sursă de bucurie și sănătate."
       },
       {
         "author": "Astrid Demetrescu",
-        "text": "Un colectiv minunat, de oameni talentati si pasionati! Va multumim ca existati si ca aduceti bucurie atat in sufletele copiilor nostri, cat si in sufletele copilasilor atat de greu incercati de viata, prin tot ceea ce faceti!"
+        "text": "Un colectiv minunat, de oameni talentați și pasionați! Vă mulțumim că existați și că aduceți bucurie atât în sufletele copiilor noștri, cât și în sufletele copilașilor atât de greu încercați de viață, prin tot ceea ce faceți!"
       },
       {
-        "author": "Voinopol Antigona",
-        "text": "Vorba cantecului Tinei Turner: Simply the best!"
+        "author": "Antigona Voinopol",
+        "text": "Vorba cântecului Tinei Turner: simply the best!"
       },
       {
         "author": "Cosmin Vasilache",
-        "text": "Probabil cei mai buni instructori ce exista in Bucuresti. Recomand cu placere sesiunile de inot alaturi de colectivul #Bluemarin."
+        "text": "Probabil cei mai buni instructori care există în București. Recomand cu plăcere sesiunile de înot alături de colectivul #Bluemarin."
       },
       {
-        "author": "Monica Vladut",
-        "text": "Dupa a doua sedinta baietelul inota fara emotii… a urmat un concediu linistit, 80% in piscina singurel."
+        "author": "Monica Vlăduț",
+        "text": "După a doua ședință, băiețelul înota fără emoții… a urmat un concediu liniștit, 80% în piscină, singurel."
       },
       {
-        "author": "Gabriela Fagaras",
-        "text": "Multumim ca ati aparut in viata noastra si ne-ati invatat sa inotam! Chiar ca ati avut nevoie de multa rabdare sa ne transformati si pe noi in delfinasi. VA MULTUMIM!"
+        "author": "Gabriela Făgăraș",
+        "text": "Mulțumim că ați apărut în viața noastră și ne-ați învățat să înotăm! Chiar că ați avut nevoie de multă răbdare ca să ne transformați și pe noi în delfinași. Vă mulțumim!"
       },
       {
-        "author": "Adriana Elena Plesa",
-        "text": "Copilul nostru a trecut datorita lui Bogdan foarte repede de la sedintele individuale la cel de grup. Are o tehnica excelenta, copiii prind rapid. Il recomandam cu incredere!"
+        "author": "Adriana Elena Pleșa",
+        "text": "Copilul nostru a trecut, datorită lui Bogdan, foarte repede de la ședințele individuale la cele de grup. Are o tehnică excelentă, copiii prind rapid. Îl recomandăm cu încredere!"
       },
       {
-        "author": "Larisa Boaca",
-        "text": "Inotul pare simplu acum, iar frica de apa… depasita cu brio! Multumim!"
+        "author": "Larisa Boacă",
+        "text": "Înotul pare simplu acum, iar frica de apă… depășită cu brio! Mulțumim!"
       },
       {
-        "author": "Mihaela Paun",
-        "text": "Bogdan este antrenorul copiilor mei de mai bine de 2 ani. Este bine pregatit, serios, sever atunci cand este cazul… iar copiii il indragesc foarte mult! Multumim Bogdan!"
+        "author": "Mihaela Păun",
+        "text": "Bogdan este antrenorul copiilor mei de mai bine de 2 ani. Este bine pregătit, serios, sever atunci când este cazul… iar copiii îl îndrăgesc foarte mult! Mulțumim, Bogdan!"
       }
     ]
   },
   "contactSection": {
     "title": "Contact",
     "formTitle": "Scrie-ne!",
-    "formLead": "Fie ca vrei sa te inscrii, sa afli o informatie sau sa facem cunostinta, noi suntem aici.",
+    "formLead": "Fie că vrei să te înscrii, să afli o informație sau doar să facem cunoștință, noi suntem aici.",
     "image": "/images/contact-bg.webp"
   }
 }

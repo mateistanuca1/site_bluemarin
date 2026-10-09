@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import Counter from '@/components/Counter';
-import Icon from '@/components/Icon';
+import Icon, { type IconName } from '@/components/Icon';
 import PageHero from '@/components/PageHero';
 import ParallaxQuote from '@/components/ParallaxQuote';
 import Section from '@/components/Section';
@@ -32,18 +32,22 @@ export default async function HomePage() {
         title={home.hero.title}
         quote={site.tagline}
         image={home.hero.image}
+        imagePosition={home.hero.imagePosition}
+        highlights={home.hero.highlights}
         cta={home.hero.primaryCta}
+        secondaryCta={home.hero.secondaryCta}
+        scrollTo="#despre"
       />
 
       {/* 1. Intro */}
-      <Section size="lg">
-        <SectionTitle>{home.intro.title}</SectionTitle>
-        <div className="mx-auto mt-10 max-w-3xl prose-ro text-center">
+      <Section id="despre" size="lg">
+        <SectionTitle kicker="Despre noi">{home.intro.title}</SectionTitle>
+        <div className="prose-ro mx-auto mt-10 max-w-prose text-center">
           {home.intro.paragraphs.map((p) => (
             <p key={p.slice(0, 32)}>{p}</p>
           ))}
         </div>
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Link href={home.hero.primaryCta.href} className="btn btn-primary">
             {home.hero.primaryCta.label}
           </Link>
@@ -54,58 +58,49 @@ export default async function HomePage() {
       </Section>
 
       {/* 2. Valori */}
-      <Section tone="deep" pattern className="bg-deep">
-        <SectionTitle>{home.values.title}</SectionTitle>
-        <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2">
+      <Section tone="deep">
+        <SectionTitle lead={home.values.lead}>{home.values.title}</SectionTitle>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {home.values.items.map((v) => (
-            <div key={v.title} className="flex gap-5">
-              <span className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center border-2 border-white/40">
-                <Icon name="check" className="h-5 w-5" />
+            <div key={v.title} className="card-dark p-7">
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/10">
+                <Icon name={(v.icon ?? 'check') as IconName} className="h-5 w-5 text-brand-light" />
               </span>
-              <div>
-                <h3 className="text-[17px] font-semibold uppercase tracking-headline">{v.title}</h3>
-                <p className="mt-2 text-[14px] font-light leading-relaxed text-white/80">{v.text}</p>
-              </div>
+              <h3 className="text-[16px] font-bold uppercase tracking-wide2">{v.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-white/75">{v.text}</p>
             </div>
           ))}
         </div>
       </Section>
 
       {/* 3. Filozofia noastra */}
-      <Section image={home.philosophy.image} overlay="#4048c9" overlayOpacity={0.88} pattern size="lg">
+      <Section image={home.philosophy.image} scrim="soft" size="lg">
         <SectionTitle lead={home.philosophy.text}>{home.philosophy.title}</SectionTitle>
         <ParallaxQuote
           quote={home.philosophy.quote}
           cite={home.philosophy.cite}
-          className="mt-16"
+          className="mt-14"
         />
       </Section>
 
       {/* 4. Academia de inot */}
-      <Section image={home.academy.image} overlay="rgba(16, 12, 109, 0.84)" size="lg">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-[24px] font-semibold uppercase tracking-headline sm:text-[32px]">
-            {home.academy.title}
-          </h2>
-          <p className="mt-5 text-[15px] font-light leading-relaxed text-white/85 sm:text-base">
-            {home.academy.text}
-          </p>
-        </div>
+      <Section tone="soft" size="lg">
+        <SectionTitle kicker="Academia" lead={home.academy.text}>
+          {home.academy.title}
+        </SectionTitle>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {home.academy.cards.map((c) => (
-            <Link
-              key={c.href}
-              href={c.href}
-              className="group border border-white/25 px-8 py-10 text-center transition-colors hover:border-white hover:bg-white/10"
-            >
-              <h3 className="text-[17px] font-semibold uppercase tracking-headline">{c.title}</h3>
-              <p className="mt-3 text-[14px] font-light leading-relaxed text-white/80">{c.text}</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-wide2">
-                Afla mai mult
+            <Link key={c.href} href={c.href} className="card card-hover group flex flex-col p-8">
+              <h3 className="text-[18px] font-bold uppercase tracking-wide2 transition-colors group-hover:text-brand">
+                {c.title}
+              </h3>
+              <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-soft">{c.text}</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-[11.5px] font-bold uppercase tracking-wide2 text-brand">
+                Află mai mult
                 <Icon
                   name="arrow-right"
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
                 />
               </span>
             </Link>
@@ -115,13 +110,15 @@ export default async function HomePage() {
 
       {/* 5. Echipa */}
       <Section size="lg">
-        <SectionTitle lead={home.team.lead}>{home.team.title}</SectionTitle>
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <SectionTitle kicker="Antrenorii" lead={home.team.lead}>
+          {home.team.title}
+        </SectionTitle>
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((m) => (
             <TeamCard key={m.slug} member={m} />
           ))}
         </div>
-        <div className="mt-14 text-center">
+        <div className="mt-12 text-center">
           <Link href={home.team.cta.href} className="btn btn-outline">
             {home.team.cta.label}
           </Link>
@@ -129,9 +126,9 @@ export default async function HomePage() {
       </Section>
 
       {/* 6. Experienta — countere */}
-      <Section tone="deep" pattern className="bg-deep">
+      <Section image={home.academy.image} size="lg">
         <SectionTitle lead={home.experience.lead}>{home.experience.title}</SectionTitle>
-        <div className="mt-16 grid grid-cols-2 gap-y-14 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
           {home.experience.counters.map((c) => (
             <Counter key={c.label} {...c} />
           ))}
@@ -140,50 +137,45 @@ export default async function HomePage() {
 
       {/* 7. Testimoniale */}
       <Section tone="soft" size="lg">
-        <SectionTitle lead={home.testimonials.lead}>{home.testimonials.title}</SectionTitle>
-        <div className="mt-14">
+        <SectionTitle kicker="Ce spun părinții" lead={home.testimonials.lead}>
+          {home.testimonials.title}
+        </SectionTitle>
+        <div className="mt-12">
           <Testimonials items={home.testimonials.items} />
         </div>
       </Section>
 
-      {/* 8. Social media */}
-      <SocialCards site={site} />
+      {/* 8. Contact */}
+      <Section id="contact" tone="night" size="lg">
+        <SectionTitle kicker="Hai să vorbim">{home.contactSection.title}</SectionTitle>
 
-      {/* 9. Contact */}
-      <Section
-        id="contact"
-        image={home.contactSection.image}
-        overlay="rgba(6, 21, 106, 0.88)"
-        size="lg"
-      >
-        <SectionTitle>{home.contactSection.title}</SectionTitle>
-
-        <div className="mt-14 grid gap-12 lg:grid-cols-2">
+        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
-            <div className="grid gap-6 sm:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2">
               {contact.cards.map((c) => (
                 <a
                   key={c.label}
                   href={c.href}
                   target={c.href.startsWith('http') ? '_blank' : undefined}
                   rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="group text-center transition-colors hover:text-brand-light"
+                  className="card-dark card-dark-hover flex items-start gap-3.5 p-5"
                 >
-                  <Icon name={c.icon as 'phone'} className="mx-auto mb-3 h-7 w-7 text-brand-light" />
-                  <span className="block text-[12px] font-semibold uppercase tracking-headline">
-                    {c.label}
-                  </span>
-                  <span className="mt-1.5 block text-[13px] font-light text-white/80">
-                    {c.value}
+                  <Icon
+                    name={c.icon as IconName}
+                    className="mt-0.5 h-5 w-5 shrink-0 text-brand-light"
+                  />
+                  <span>
+                    <span className="label block text-white/55">{c.label}</span>
+                    <span className="mt-1.5 block text-[14px] leading-snug">{c.value}</span>
                   </span>
                 </a>
               ))}
             </div>
 
-            <div className="mt-10 aspect-[4/3] w-full border border-white/20">
+            <div className="mt-5 aspect-[16/11] w-full overflow-hidden rounded-card border border-white/15">
               <iframe
                 src={site.contact.mapEmbed}
-                title="Harta — Bluemarin Sport Club, Calea Giulesti 18"
+                title={`Harta — ${site.name}, ${site.contact.address}`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="h-full w-full"
@@ -191,17 +183,20 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="bg-white p-7 text-ink shadow-xl sm:p-9">
-            <h3 className="text-[20px] font-semibold uppercase tracking-wide2">
+          <div className="rounded-card bg-white p-7 text-ink shadow-card-hover sm:p-9">
+            <h3 className="text-[19px] font-bold uppercase tracking-wide2">
               {home.contactSection.formTitle}
             </h3>
-            <p className="mb-7 mt-3 text-[14px] font-light leading-relaxed text-ink/75">
+            <p className="mb-7 mt-2.5 text-[14.5px] leading-relaxed text-ink-soft">
               {home.contactSection.formLead}
             </p>
             <ContactForm />
           </div>
         </div>
       </Section>
+
+      {/* 9. Social media */}
+      <SocialCards site={site} />
     </>
   );
 }

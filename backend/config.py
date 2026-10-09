@@ -74,6 +74,20 @@ class Settings:
     debug: bool = field(default_factory=lambda: _bool("FLASK_DEBUG"))
     is_vercel: bool = field(default_factory=lambda: bool(os.getenv("VERCEL")))
 
+    # --- Unde ajung formularele ---
+    # "db" (implicit): Postgres + PDF generat de noi + email prin Resend.
+    # "apps-script": totul pleaca la Google Apps Script (Sheets + Drive + Gmail),
+    #                fara baza de date — varianta complet gratuita pe Vercel.
+    forms_backend: str = field(
+        default_factory=lambda: os.getenv("FORMS_BACKEND", "db").strip().lower()
+    )
+    apps_script_url: str = field(default_factory=lambda: os.getenv("APPS_SCRIPT_URL", "").strip())
+    # Secret comun, verificat de script — altfel oricine poate posta pe URL-ul /exec.
+    apps_script_token: str = field(
+        default_factory=lambda: os.getenv("APPS_SCRIPT_TOKEN", "").strip()
+    )
+    apps_script_timeout: int = field(default_factory=lambda: _int("APPS_SCRIPT_TIMEOUT", 25))
+
     # --- Baza de date ---
     database_url: str = field(default_factory=_database_url)
 
@@ -135,6 +149,11 @@ class Settings:
     @property
     def uses_sqlite(self) -> bool:
         return self.database_url.startswith("sqlite")
+
+    @property
+    def uses_apps_script(self) -> bool:
+        """Formularele pleaca la Google, nu in baza de date."""
+        return self.forms_backend == "apps-script" and bool(self.apps_script_url)
 
     def resolved_secret_key(self) -> str:
         """Cheia de sesiune. Daca lipseste, generam una temporara in dev."""

@@ -18,7 +18,7 @@ type Props = {
  * Semnatura desenata cu degetul sau mouse-ul. Scrisa de la zero cu Pointer Events,
  * ca sa nu depindem de o librarie externa.
  */
-export default function SignaturePad({ ref, label = 'Semnatura' }: Props) {
+export default function SignaturePad({ ref, label = 'Semnătura' }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const last = useRef<{ x: number; y: number } | null>(null);
@@ -132,16 +132,16 @@ export default function SignaturePad({ ref, label = 'Semnatura' }: Props) {
   return (
     <div>
       <div className="mb-1.5 flex items-end justify-between">
-        <span className="text-[12px] font-semibold uppercase tracking-wide2 text-ink/75">
+        <span className="text-[12px] font-bold uppercase tracking-wide2 text-ink-soft">
           {label}
           <span className="ml-1 text-accent">*</span>
         </span>
         <button
           type="button"
           onClick={clear}
-          className="text-[12px] font-semibold uppercase tracking-wide2 text-brand hover:underline"
+          className="text-[12px] font-bold uppercase tracking-wide2 text-brand hover:underline"
         >
-          Sterge
+          Șterge
         </button>
       </div>
 
@@ -152,13 +152,13 @@ export default function SignaturePad({ ref, label = 'Semnatura' }: Props) {
         onPointerUp={end}
         onPointerLeave={end}
         onPointerCancel={end}
-        className="h-[170px] w-full cursor-crosshair touch-none border border-black/15 bg-white"
-        aria-label="Zona de semnatura — deseneaza cu degetul sau cu mouse-ul"
+        className="h-[170px] w-full cursor-crosshair touch-none rounded border border-dashed border-brand-300 bg-brand-50/40 transition-colors hover:border-brand"
+        aria-label="Zonă de semnătură — desenează cu degetul sau cu mouse-ul"
         role="img"
       />
 
-      <p className="mt-1.5 text-[12px] text-muted">
-        {empty ? 'Semneaza in casuta de mai sus.' : 'Semnatura a fost inregistrata.'}
+      <p className="mt-1.5 text-[12.5px] text-ink-muted">
+        {empty ? 'Semnează în căsuța de mai sus.' : '✓ Semnătura a fost înregistrată.'}
       </p>
     </div>
   );

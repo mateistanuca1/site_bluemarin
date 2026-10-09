@@ -6,86 +6,243 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* Lasa loc sub ancore pentru bara fixa de sus. */
+    scroll-padding-top: 96px;
   }
 
   body {
     @apply bg-white font-sans text-ink antialiased;
+    /* Cifre cu aceeasi latime — preturile si counterele nu mai "sar". */
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Titlurile de secțiune din tema veche: majuscule, spațiate, subțiri */
   h1, h2, h3, h4 {
-    @apply font-sans;
+    @apply font-sans text-balance;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-deep-800;
+  }
+
+  /* Un singur inel de focus, vizibil pe orice fundal. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-400 ring-offset-2 ring-offset-white;
+  }
+  .on-dark :focus-visible {
+    @apply ring-white ring-offset-deep-700;
+  }
+
+  /* Rezerva locul pentru bara fixa de telefon de pe mobil. */
+  @supports (padding: env(safe-area-inset-bottom)) {
+    .pb-callbar {
+      padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+    }
   }
 }
 
 @layer components {
-  /* Containerul standard de pagină */
+  /* ------------------------------------------------------------ Bara de sus */
+  /*
+   * Bara e alba implicit. Devine transparenta DOAR cat timp esti in capul unei
+   * pagini care are banner (`[data-page-hero]`). Regula sta in CSS, nu in JS,
+   * ca sa fie corecta de la prima randare — altfel ar palpai la fiecare
+   * incarcare, iar pe paginile fara banner textul alb ar ramane invizibil.
+   */
+  .site-header {
+    --hdr-fg: theme(colors.ink.soft);
+    --hdr-fg-hover: theme(colors.brand.DEFAULT);
+    --hdr-fg-active: theme(colors.brand.DEFAULT);
+    --hdr-logo: none;
+
+    background-color: rgb(255 255 255 / 0.96);
+    box-shadow: theme(boxShadow.header);
+    backdrop-filter: blur(12px);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .site-header__link {
+    color: var(--hdr-fg);
+    transition: color 0.2s ease;
+  }
+  .site-header__link:hover {
+    color: var(--hdr-fg-hover);
+  }
+  .site-header__link.is-active {
+    color: var(--hdr-fg-active);
+  }
+  .site-header__logo {
+    filter: var(--hdr-logo);
+    transition: filter 0.3s ease;
+  }
+  .site-header__cta {
+    @apply btn-primary;
+  }
+
+  body:has([data-page-hero]) .site-header[data-top='true'][data-menu='false'] {
+    --hdr-fg: #fff;
+    --hdr-fg-hover: theme(colors.brand.light);
+    --hdr-fg-active: theme(colors.brand.light);
+    --hdr-logo: brightness(0) invert(1);
+
+    background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      rgb(11 17 66 / 0.62) 0%,
+      rgb(11 17 66 / 0.22) 60%,
+      transparent 100%
+    );
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  body:has([data-page-hero]) .site-header[data-top='true'][data-menu='false'] .site-header__cta {
+    @apply btn-light;
+  }
+
+  /* Pe paginile fara banner bara e opaca, deci continutul trebuie impins sub ea. */
+  .page-offset {
+    @apply pt-[68px] lg:pt-[84px];
+  }
+
+  /* Containerul standard de pagina */
   .shell {
     @apply mx-auto w-full max-w-content px-5 sm:px-8;
   }
 
-  /* Titlu mare de secțiune, cu linia de dedesubt — semnătura temei Brooklyn */
-  .section-title {
-    @apply relative mb-10 text-center text-[26px] font-semibold uppercase tracking-headline sm:text-[34px];
-  }
-  .section-title::after {
-    content: '';
-    @apply mx-auto mt-5 block h-[2px] w-14 bg-current opacity-60;
-  }
-
-  .section-lead {
-    @apply mx-auto max-w-3xl text-center text-[15px] font-light leading-relaxed sm:text-base;
-  }
-
-  /* Butonul principal: contur subțire, majuscule spațiate */
+  /* ---------------------------------------------------------------- Butoane */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 border-2 px-7 py-3
-           text-[12px] font-semibold uppercase tracking-wide2 transition-colors
-           duration-200 sm:text-[13px];
+    @apply inline-flex items-center justify-center gap-2 rounded border border-transparent
+           px-7 py-3 text-[12px] font-bold uppercase leading-none tracking-wide2
+           transition-all duration-200 sm:text-[13px];
+  }
+  .btn:active {
+    @apply translate-y-px;
   }
   .btn-primary {
-    @apply border-brand bg-brand text-white hover:bg-transparent hover:text-brand;
+    @apply border-brand bg-brand text-white shadow-sm hover:border-brand-600 hover:bg-brand-600
+           hover:shadow-card;
   }
   .btn-outline {
-    @apply border-brand bg-transparent text-brand hover:bg-brand hover:text-white;
+    @apply border-brand/60 bg-transparent text-brand-600 hover:border-brand hover:bg-brand hover:text-white;
   }
   .btn-light {
-    @apply border-white bg-transparent text-white hover:bg-white hover:text-deep;
+    @apply border-white/80 bg-white/10 text-white backdrop-blur-sm hover:bg-white hover:text-deep-700;
+  }
+  .btn-solid-light {
+    @apply border-white bg-white text-deep-700 hover:bg-brand-100;
+  }
+  .btn-ghost {
+    @apply border-transparent px-4 text-ink-soft hover:text-brand;
+  }
+  .btn-sm {
+    @apply px-5 py-2.5 text-[11px];
   }
 
+  /* --------------------------------------------------------------- Etichete */
+  /* Textul mic, majuscule, spatiat — semnatura vizuala a temei. */
+  .label {
+    @apply text-[11px] font-bold uppercase leading-none tracking-label sm:text-[12px];
+  }
+
+  /* ----------------------------------------------------------------- Carduri */
+  .card {
+    @apply rounded-card border border-line bg-white shadow-card transition-all duration-200;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover;
+  }
+  .card-dark {
+    @apply rounded-card border border-white/15 bg-white/[0.06] transition-colors duration-200;
+  }
+  .card-dark-hover {
+    @apply hover:border-white/45 hover:bg-white/[0.12];
+  }
+
+  /* ------------------------------------------------------------------- Text */
   .prose-ro {
-    @apply text-[15px] font-light leading-[1.85] text-ink/85;
+    @apply text-[15.5px] font-normal leading-[1.8] text-ink-soft sm:text-base;
   }
-  .prose-ro p {
-    @apply mb-5;
+  .prose-ro p + p {
+    @apply mt-5;
   }
-  .prose-ro strong {
+  .prose-ro strong,
+  .prose-ro b {
     @apply font-semibold text-ink;
   }
   .prose-ro ul {
-    @apply mb-5 space-y-2;
+    @apply my-5 space-y-2.5;
   }
-  .prose-ro li {
-    @apply relative pl-6;
+  .prose-ro ol {
+    @apply my-5 list-decimal space-y-2.5 pl-5;
   }
-  .prose-ro li::before {
+  .prose-ro ul > li {
+    @apply relative pl-7;
+  }
+  .prose-ro ul > li::before {
     content: '';
-    @apply absolute left-0 top-[0.65em] h-[6px] w-[6px] rounded-full bg-brand;
+    @apply absolute left-0 top-[0.68em] h-[7px] w-[7px] rounded-full bg-brand-300;
+  }
+  .prose-ro h2 {
+    @apply mb-4 mt-10 text-[19px] font-bold uppercase tracking-headline text-ink first:mt-0 sm:text-[22px];
   }
   .prose-ro h3 {
-    @apply mb-3 mt-8 text-[17px] font-semibold uppercase tracking-wide2;
+    @apply mb-3 mt-8 text-[16px] font-bold uppercase tracking-wide2 text-ink first:mt-0;
   }
   .prose-ro a {
-    @apply text-brand underline underline-offset-2 hover:no-underline;
+    @apply font-medium text-brand-600 underline decoration-brand-300 underline-offset-[3px]
+           transition-colors hover:text-brand-700 hover:decoration-brand-600;
+  }
+
+  /* Varianta pentru sectiunile cu fundal inchis */
+  .on-dark .prose-ro {
+    @apply text-white/85;
+  }
+  .on-dark .prose-ro strong,
+  .on-dark .prose-ro b,
+  .on-dark .prose-ro h2,
+  .on-dark .prose-ro h3 {
+    @apply text-white;
+  }
+  .on-dark .prose-ro ul > li::before {
+    @apply bg-brand-light;
+  }
+  .on-dark .prose-ro a {
+    @apply text-brand-light decoration-brand-light/50 hover:text-white hover:decoration-white;
   }
 }
 
-/* Respectă utilizatorii care au cerut mai puțină animație */
+@layer utilities {
+  /* Dega­deul folosit peste fotografiile de fundal: lasa poza sa se vada sus,
+     dar pastreaza textul lizibil. */
+  .scrim {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(11, 17, 66, 0.72) 0%,
+      rgba(11, 17, 66, 0.52) 38%,
+      rgba(11, 17, 66, 0.78) 100%
+    );
+  }
+  .scrim-soft {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(11, 17, 66, 0.35) 0%,
+      rgba(11, 17, 66, 0.6) 100%
+    );
+  }
+}
+
+/* Respecta utilizatorii care au cerut mai putina animatie. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

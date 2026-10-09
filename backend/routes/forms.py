@@ -11,7 +11,7 @@ from html import escape
 from flask import Blueprint, jsonify, request
 from werkzeug.datastructures import FileStorage
 
-from .. import security as sec
+from .. import appsscript, security as sec
 from ..config import settings
 from ..db import session_scope
 from ..mail import Attachment, send
@@ -127,6 +127,27 @@ def _guard():
     return None
 
 
+def _to_google(form_type: str, fields: dict, files: dict | None = None):
+    """Trimite formularul la Google Apps Script in loc de baza de date.
+
+    Intoarce un raspuns Flask gata de returnat, sau None daca modul
+    `apps-script` nu e activ si trebuie urmata calea obisnuita.
+    """
+    if not settings.uses_apps_script:
+        return None
+
+    try:
+        appsscript.send(form_type, fields, files)
+    except appsscript.AppsScriptError:
+        log.exception("Trimiterea catre Apps Script a esuat (%s)", form_type)
+        return sec.json_error(
+            "Nu am putut inregistra cererea chiar acum. Te rugam sa incerci din nou "
+            "sau sa ne suni la 0744 258 258.",
+            502,
+        )
+    return True
+
+
 # --------------------------------------------------------------------------- #
 # Contact
 # --------------------------------------------------------------------------- #
@@ -146,6 +167,15 @@ def contact():
         sec.consent(data.get("gdpr", True))
     except sec.ValidationError as exc:
         return sec.json_error(exc.message)
+
+    sent = _to_google(
+        "contact",
+        {"name": name, "email": email_addr, "subject": subject, "message": message},
+    )
+    if sent is not None:
+        if sent is not True:
+            return sent
+        return jsonify({"message": "Mesajul a fost trimis. Te contactam in cel mai scurt timp!"})
 
     with session_scope() as db:
         db.add(
@@ -195,6 +225,25 @@ def package_request():
         sec.consent(data.get("gdpr", True))
     except sec.ValidationError as exc:
         return sec.json_error(exc.message)
+
+    sent = _to_google(
+        "pachet",
+        {
+            "name": name,
+            "email": email_addr,
+            "phone": phone,
+            "age": age,
+            "message": message,
+            "package": package,
+            "location": location,
+        },
+    )
+    if sent is not None:
+        if sent is not True:
+            return sent
+        return jsonify(
+            {"message": "Cererea a fost trimisa! Te contactam pentru a stabili programul."}
+        )
 
     with session_scope() as db:
         db.add(
@@ -264,6 +313,16 @@ def careers():
     assert cv is not None
     cv_content, cv_name, cv_type = cv
 
+    sent = _to_google(
+        "cariere",
+        {"name": name, "email": email_addr, "phone": phone, "message": message},
+        {"cv": (cv_name, cv_content, cv_type)},
+    )
+    if sent is not None:
+        if sent is not True:
+            return sent
+        return jsonify({"message": "Am primit CV-ul tau. Te contactam in cel mai scurt timp!"})
+
     with session_scope() as db:
         submission = Submission(
             kind="cariere",
@@ -319,11 +378,13 @@ def enrollment():
 
         photo = _check_file(
             request.files.get("photo"),
-            label="certificatul de naștere / cartea de identitate",
+            label="avizul epidemiologic",
             allowed=ALLOWED_UPLOAD_TYPES,
         )
         medical = _check_file(
-            request.files.get("medical"), label="avizul medical", allowed=ALLOWED_UPLOAD_TYPES
+            request.files.get("medical"),
+            label="adeverința «apt efort fizic»",
+            allowed=ALLOWED_UPLOAD_TYPES,
         )
 
         raw_signature = (data.get("signature") or "").strip()
@@ -348,6 +409,39 @@ def enrollment():
 
     submitted_at = datetime.now(timezone.utc)
     ip = sec.client_ip()
+
+    # Varianta "apps-script": Google face tot — Sheet, PDF in Drive, email si
+    # membrul in Virtuagym. Formatul campurilor e cel asteptat de scriptul
+    # clubului (vezi scripts/apps-script/Cod.gs).
+    sent = _to_google(
+        "inscriere",
+        {
+            "firstName": student,
+            "birthDate": data.get("birthDate", ""),
+            "nameLegalParent": parent,
+            "phone": phone,
+            "email": email_addr,
+            "locationName": location,
+            "enrolleeType": data.get("enrolleeType", ""),
+            "signature": base64.b64encode(signature).decode("ascii"),
+            "consentIp": ip,
+        },
+        {
+            "file": (photo_name, photo_content, photo_type),
+            "medicalCertificate": (medical_name, medical_content, medical_type),
+        },
+    )
+    if sent is not None:
+        if sent is not True:
+            return sent
+        return jsonify(
+            {
+                "message": (
+                    "Felicitari! Inscrierea a fost trimisa. Verifica emailul — ai primit "
+                    "o copie a fisei in format PDF."
+                )
+            }
+        )
 
     with session_scope() as db:
         submission = Submission(
@@ -383,8 +477,8 @@ def enrollment():
                     submission_id=submission_id,
                     signature_png=signature,
                     documents=[
-                        ("Certificat de naștere / carte de identitate", photo_content),
-                        ("Aviz medical", medical_content),
+                        ("Aviz epidemiologic", photo_content),
+                        ("Adeverință «apt efort fizic»", medical_content),
                     ],
                 ),
                 club_name=CLUB,
@@ -395,8 +489,8 @@ def enrollment():
             pdf_bytes = None
 
         files: list[tuple[str, bytes, str, str]] = [
-            ("document", photo_content, photo_name, photo_type),
-            ("aviz-medical", medical_content, medical_name, medical_type),
+            ("aviz-epidemiologic", photo_content, photo_name, photo_type),
+            ("adeverinta-efort-fizic", medical_content, medical_name, medical_type),
             ("semnatura", signature, "semnatura.png", "image/png"),
         ]
         pdf_name = f"fisa-inscriere-{submission_id}.pdf"

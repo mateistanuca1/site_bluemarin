@@ -7,7 +7,7 @@ import { publicApiBase } from '@/lib/public-api';
 export type PostState = { ok: boolean; message: string } | null;
 
 const GENERIC_ERROR =
-  'Nu am putut trimite formularul. Te rugam sa incerci din nou sau sa ne suni la 0744 258 258.';
+  'Nu am putut trimite formularul. Te rugăm să încerci din nou sau să ne suni la 0744 258 258.';
 
 /**
  * Trimite un formular catre backend si tine minte starea (in curs / reusit / eroare).

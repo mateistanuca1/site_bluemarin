@@ -2,10 +2,31 @@
   "title": "Contact",
   "hero": "/images/contact-bg.webp",
   "formTitle": "Scrie-ne!",
-  "formLead": "Fie ca vrei sa te inscrii, sa afli o informatie sau sa facem cunostinta, noi suntem aici.",
+  "formLead": "Fie că vrei să te înscrii, să afli o informație sau doar să facem cunoștință, noi suntem aici.",
   "cards": [
-    { "label": "Telefon", "value": "0744 258 258", "icon": "phone", "href": "tel:+40744258258" },
-    { "label": "Adresa", "value": "Calea Giulesti 18, sect. 6, Bucuresti", "icon": "pin", "href": "https://maps.google.com/?q=Calea+Giulesti+18+Bucuresti" },
-    { "label": "E-mail", "value": "contact@bluemarin.ro", "icon": "mail", "href": "mailto:contact@bluemarin.ro" }
+    {
+      "label": "Înscrieri",
+      "value": "0744 258 258",
+      "icon": "phone",
+      "href": "tel:+40744258258"
+    },
+    {
+      "label": "Recepție",
+      "value": "0724 212 978",
+      "icon": "phone",
+      "href": "tel:+40724212978"
+    },
+    {
+      "label": "E-mail",
+      "value": "contact@bluemarin.ro",
+      "icon": "mail",
+      "href": "mailto:contact@bluemarin.ro"
+    },
+    {
+      "label": "Adresă",
+      "value": "Calea Giulești 18, sector 6, București",
+      "icon": "pin",
+      "href": "https://maps.google.com/?q=Calea+Giulesti+18+Bucuresti"
+    }
   ]
 }

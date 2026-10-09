@@ -10,7 +10,7 @@ import { getContent } from '@/lib/content';
 export const metadata: Metadata = {
   title: 'Galerie',
   description:
-    'Poze din bazin: cursuri de inot pentru copii si adulti, antrenamente si competitii la Bluemarin Sport Club.',
+    'Poze din bazin: cursuri de înot pentru copii și adulți, antrenamente și competiții la Bluemarin Sport Club.',
   alternates: { canonical: '/galerie' },
 };
 
@@ -19,20 +19,19 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <PageHero
-        title={gallery.title}
-        kicker="Momente din bazin"
-        image="/images/academia.webp"
-      />
+      <PageHero title={gallery.title} kicker="Momente din bazin" image="/images/academia.webp" />
 
       <Section size="lg">
-        <SectionTitle lead={gallery.lead}>{gallery.title}</SectionTitle>
-        <div className="mt-14">
+        <SectionTitle kicker={`${gallery.images.length} fotografii`} lead={gallery.lead}>
+          {gallery.title}
+        </SectionTitle>
+
+        <div className="mt-12">
           {gallery.images.length > 0 ? (
             <GalleryGrid images={gallery.images} />
           ) : (
-            <p className="text-center text-[14px] text-muted">
-              Galeria se completeaza in curand.
+            <p className="text-center text-[14px] text-ink-muted">
+              Galeria se completează în curând.
             </p>
           )}
         </div>

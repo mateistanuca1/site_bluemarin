@@ -32,6 +32,7 @@ export async function generateMetadata({
   };
 }
 
+/** Pagina unui antrenor. Nu are banner foto, deci bara de sus ramane alba. */
 export default async function MemberPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const [site, team] = await Promise.all([getContent('site'), getContent('team')]);
@@ -43,51 +44,56 @@ export default async function MemberPage({ params }: { params: Promise<Params> }
 
   return (
     <>
-      <Section tone="soft" className="pt-28 lg:pt-36">
+      <Section tone="soft" size="lg" className="page-offset">
         <Link
           href="/echipa"
-          className="mb-10 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-wide2 text-brand hover:underline"
+          className="mb-9 inline-flex items-center gap-2 text-[11.5px] font-bold uppercase
+                     tracking-wide2 text-brand hover:underline"
         >
           <Icon name="chevron-left" className="h-4 w-4" />
-          Toata echipa
+          Toată echipa
         </Link>
 
-        <div className="grid gap-10 lg:grid-cols-[400px_1fr] lg:gap-16">
-          <div className="relative aspect-square w-full overflow-hidden">
+        <div className="grid gap-9 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-14">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-brand-100 shadow-card">
             <Image
               src={member.photo}
               alt={member.name}
               fill
               priority
-              sizes="(min-width: 1024px) 400px, 92vw"
+              sizes="(min-width: 1024px) 380px, 92vw"
               className="object-cover"
             />
           </div>
 
-          <div>
-            <h1 className="text-[28px] font-semibold uppercase tracking-headline sm:text-[36px]">
+          <div className="lg:pt-2">
+            <p className="label text-brand">{member.shortRole}</p>
+
+            <h1 className="mt-3 text-[clamp(1.7rem,4.5vw,2.5rem)] font-bold uppercase leading-tight tracking-headline">
               {member.name}
             </h1>
-            <p className="mt-3 text-[13px] font-light uppercase tracking-wide2 text-brand">
-              {member.role}
-            </p>
 
-            <blockquote className="mt-8 border-l-2 border-brand pl-6 font-quote text-[19px] italic leading-relaxed text-ink/80 sm:text-[22px]">
+            {/* Rolul complet doar cand spune ceva in plus fata de eticheta de sus. */}
+            {member.role !== member.shortRole && (
+              <p className="mt-2.5 text-[14px] text-ink-muted">{member.role}</p>
+            )}
+
+            <blockquote className="mt-8 border-l-[3px] border-brand pl-6 font-quote text-[19px] italic leading-relaxed text-ink-soft sm:text-[22px]">
               “{member.quote}”
             </blockquote>
 
-            <div className="mt-8 prose-ro">
+            <div className="prose-ro mt-8">
               {member.bio.map((p) => (
                 <p key={p.slice(0, 32)}>{p}</p>
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/tarife" className="btn btn-primary">
-                Vezi tarifele
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link href="/inscriere/bazin-cs-rapid" className="btn btn-primary">
+                Înscrie-te
               </Link>
-              <Link href="/contact" className="btn btn-outline">
-                Contacteaza-ne
+              <Link href="/tarife" className="btn btn-outline">
+                Vezi tarifele
               </Link>
             </div>
           </div>
@@ -96,13 +102,18 @@ export default async function MemberPage({ params }: { params: Promise<Params> }
 
       {others.length > 0 && (
         <Section size="lg">
-          <h2 className="mb-14 text-center text-[20px] font-semibold uppercase tracking-headline">
+          <h2 className="mb-12 text-center text-[clamp(1.1rem,2.4vw,1.5rem)] font-bold uppercase tracking-headline">
             Restul echipei
           </h2>
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((m) => (
               <TeamCard key={m.slug} member={m} />
             ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Link href="/echipa" className="btn btn-outline">
+              Echipa completă
+            </Link>
           </div>
         </Section>
       )}

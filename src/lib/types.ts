@@ -15,6 +15,10 @@ export type Site = {
   contact: {
     phone: string;
     phoneHref: string;
+    phoneLabel?: string;
+    phoneSecondary?: string;
+    phoneSecondaryHref?: string;
+    phoneSecondaryLabel?: string;
     email: string;
     address: string;
     mapEmbed: string;
@@ -22,6 +26,7 @@ export type Site = {
   social: { facebook: string; instagram: string; youtube: string };
   socialCards: { network: 'facebook' | 'instagram' | 'youtube'; label: string; caption: string }[];
   nav: NavItem[];
+  headerCta?: Link;
   footerLinks: Link[];
   schedule: { label: string; lines: string[] }[];
 };
@@ -32,11 +37,18 @@ export type Home = {
     title: string;
     subtitle: string;
     image: string;
+    /** Ex. "50% 32%" — ce parte din fotografie ramane vizibila. */
+    imagePosition?: string;
     primaryCta: Link;
     secondaryCta: Link;
+    highlights?: string[];
   };
   intro: { title: string; paragraphs: string[] };
-  values: { title: string; items: { title: string; text: string }[] };
+  values: {
+    title: string;
+    lead?: string;
+    items: { title: string; text: string; icon?: string }[];
+  };
   philosophy: { title: string; text: string; quote: string; cite: string; image: string };
   academy: {
     title: string;
@@ -66,7 +78,13 @@ export type TeamMember = {
 
 export type Team = { title: string; lead: string; members: TeamMember[] };
 
-export type Package = { sessions: number; label: string; price: number };
+export type Package = {
+  sessions: number;
+  label: string;
+  price: number;
+  /** Pachetul evidentiat ca "cel mai ales" in lista de tarife. */
+  featured?: boolean;
+};
 
 export type PricingCategory = {
   id: string;
@@ -126,7 +144,13 @@ export type Kids = {
   hero: string;
   subtitle: string;
   intro: string[];
-  acclimatisation: { title: string; text: string; materials: string[]; closing: string };
+  acclimatisation: {
+    title: string;
+    text: string;
+    materials: string[];
+    closing: string;
+    image?: string;
+  };
   levels: { title: string; items: { title: string; subtitle: string; text: string }[] };
   formats: { title: string; items: { title: string; text: string }[] };
 };

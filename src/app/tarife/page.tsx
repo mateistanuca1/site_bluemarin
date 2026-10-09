@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import Icon from '@/components/Icon';
+import Icon, { type IconName } from '@/components/Icon';
 import PageHero from '@/components/PageHero';
 import PricingTable from '@/components/PricingTable';
 import Section from '@/components/Section';
@@ -12,9 +12,32 @@ import { getContent } from '@/lib/content';
 export const metadata: Metadata = {
   title: 'Tarife',
   description:
-    'Tarifele cursurilor de inot Bluemarin la Bazinul CS Rapid si Militari Wellness: abonamente de grup, mini-grup si antrenor personal, de la 80 lei sedinta.',
+    'Tarifele cursurilor de înot Bluemarin la Bazinul CS Rapid și Militari Wellness: abonamente de grup, mini-grup și antrenor personal, de la 80 lei ședința.',
   alternates: { canonical: '/tarife' },
 };
+
+const GOOD_TO_KNOW: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: 'calendar',
+    title: 'Programarea e obligatorie',
+    text: 'Având un număr limitat de cursanți pe oră, stabilim de comun acord zilele și orele. Programările se fac la recepție, telefonic sau online.',
+  },
+  {
+    icon: 'clock',
+    title: 'Anulare cu 24 de ore înainte',
+    text: 'Poți anula o ședință cu cel puțin 24 de ore în avans, ca să fie reprogramată. În caz contrar, ședința se consideră efectuată.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Aviz medical',
+    text: 'Este necesară o adeverință de la medicul de familie care atestă că ești apt din punct de vedere fizic și epidemiologic.',
+  },
+  {
+    icon: 'swimmer',
+    title: 'Echipament',
+    text: 'Cască de înot, ochelari, costum de baie, prosop și papuci de baie.',
+  },
+];
 
 export default async function PricingPage() {
   const [site, pricing] = await Promise.all([getContent('site'), getContent('pricing')]);
@@ -25,7 +48,7 @@ export default async function PricingPage() {
 
       <Section size="lg">
         <SectionTitle lead={pricing.lead}>Alege abonamentul potrivit</SectionTitle>
-        <div className="mt-14">
+        <div className="mt-12">
           <PricingTable
             locations={pricing.locations}
             currency={pricing.currency}
@@ -35,39 +58,25 @@ export default async function PricingPage() {
       </Section>
 
       <Section tone="soft">
-        <SectionTitle>Bun de stiut</SectionTitle>
-        <div className="mx-auto mt-12 grid max-w-4xl gap-7 sm:grid-cols-2">
-          {[
-            {
-              title: 'Programarea e obligatorie',
-              text: 'Avand un numar limitat de cursanti pe ora, stabilim de comun acord zilele si orele. Programarile se fac la receptie, telefonic sau online.',
-            },
-            {
-              title: 'Anulare cu 24 de ore inainte',
-              text: 'Poti anula o sedinta cu cel putin 24 de ore in avans ca sa fie reprogramata. In caz contrar, sedinta se considera efectuata.',
-            },
-            {
-              title: 'Aviz medical',
-              text: 'Este necesara o adeverinta de la medicul de familie care atesta ca cursantul este apt din punct de vedere fizic si epidemiologic.',
-            },
-            {
-              title: 'Echipament',
-              text: 'Casca de inot, ochelari, costum de baie, prosop si papuci de baie.',
-            },
-          ].map((c) => (
-            <div key={c.title} className="flex gap-4">
-              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-brand text-white">
-                <Icon name="check" className="h-4 w-4" />
+        <SectionTitle kicker="Înainte de prima ședință">Bun de știut</SectionTitle>
+        <div className="mx-auto mt-12 grid max-w-4xl gap-5 sm:grid-cols-2">
+          {GOOD_TO_KNOW.map((c) => (
+            <div key={c.title} className="card flex gap-4 p-6">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white">
+                <Icon name={c.icon} className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="text-[15px] font-semibold uppercase tracking-wide2">{c.title}</h3>
-                <p className="mt-1.5 text-[14px] font-light leading-relaxed text-ink/75">{c.text}</p>
+                <h3 className="text-[14.5px] font-bold uppercase tracking-wide2">{c.title}</h3>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-ink-soft">{c.text}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
+          <Link href="/inscriere/bazin-cs-rapid" className="btn btn-primary">
+            Înscrie-te
+          </Link>
           <Link href="/regulament" className="btn btn-outline">
             Regulamentul complet
           </Link>

@@ -1,178 +1,178 @@
 {
   "title": "Regulament intern",
-  "subtitle": "Regulamentul cursurilor de inot",
+  "subtitle": "Regulamentul cursurilor de înot",
   "hero": "/images/regulament-hero.webp",
-  "lead": "Ne dedicam mereu in cautarea celor mai bune solutii pentru a-ti oferi o experienta confortabila si plina de valoare. Pentru a ne asigura ca toate activitatile se desfasoara intr-un mod placut si eficient, te rugam sa accepti si sa respecti regulile de mai jos.",
+  "lead": "Ne dedicăm mereu căutării celor mai bune soluții pentru a-ți oferi o experiență confortabilă și plină de valoare. Pentru a ne asigura că toate activitățile se desfășoară într-un mod plăcut și eficient, te rugăm să accepți și să respecți regulile de mai jos.",
   "sections": [
     {
       "title": "Principii generale",
       "items": [
-        "Abonamentele sunt valabile o (1) luna, asa ca va incurajam sa utilizati sedintele in acest interval.",
-        "Programarea este obligatorie, iar pentru a va asigura locul in programul dorit, va recomandam sa faceti rezervarile din timp.",
-        "Va oferim posibilitatea de a anula sedinta de inot cu 24 ore inainte. In caz contrar, sedinta va fi considerata efectuata.",
-        "Putem reprograma sedinta oricand, in functie de intervalele disponibile, cu conditia ca aceasta sa se incadreze in perioada de valabilitate a abonamentului.",
-        "Daca nu optati pentru abonament, sedintele nominale se achita in avans pentru a putea fi programate in softul nostru.",
-        "In cazul unei probleme medicale, putem prelungi valabilitatea abonamentului pe baza unei adeverinte care sa confirme perioada de repaus recomandata."
+        "Abonamentele sunt valabile o (1) lună, așa că vă încurajăm să utilizați ședințele în acest interval.",
+        "Programarea este obligatorie, iar pentru a vă asigura locul în programul dorit, vă recomandăm să faceți rezervările din timp.",
+        "Vă oferim posibilitatea de a anula ședința de înot cu 24 de ore înainte. În caz contrar, ședința va fi considerată efectuată.",
+        "Putem reprograma ședința oricând, în funcție de intervalele disponibile, cu condiția ca aceasta să se încadreze în perioada de valabilitate a abonamentului.",
+        "Dacă nu optați pentru abonament, ședințele nominale se achită în avans, pentru a putea fi programate în softul nostru.",
+        "În cazul unei probleme medicale, putem prelungi valabilitatea abonamentului pe baza unei adeverințe care să confirme perioada de repaus recomandată."
       ]
     },
     {
-      "title": "Conduita si respect",
-      "intro": "La Bluemarin Sport Club promovam o atmosfera prietenoasa si o comunicare pozitiva. Ne dorim ca fiecare client sa contribuie la aceasta energie pozitiva prin:",
+      "title": "Conduită și respect",
+      "intro": "La Bluemarin Sport Club promovăm o atmosferă prietenoasă și o comunicare pozitivă. Ne dorim ca fiecare client să contribuie la această energie pozitivă prin:",
       "items": [
-        "Adoptarea unui comportament respectuos fata de personalul clubului si ceilalti cursanti.",
-        "Evitarea limbajului neadecvat sau a oricaror forme de agresivitate verbala.",
-        "Respectarea indicatiilor personalului pentru o colaborare cat mai buna si productiva."
+        "Adoptarea unui comportament respectuos față de personalul clubului și față de ceilalți cursanți.",
+        "Evitarea limbajului neadecvat sau a oricăror forme de agresivitate verbală.",
+        "Respectarea indicațiilor personalului, pentru o colaborare cât mai bună și mai productivă."
       ]
     },
     {
-      "title": "Conditii de inscriere",
+      "title": "Condiții de înscriere",
       "items": [
-        "Regulamentul se aplica in egala masura cursantilor copii si adulti.",
-        "Completarea unui formular de inscriere.",
-        "Prezentarea unui aviz medical care sa ateste aptitudinea fizica si epidemiologica.",
-        "Varsta minima pentru participare: 4 ani.",
-        "Solicitarea regulamentului si ofertelor de servicii."
+        "Regulamentul se aplică în egală măsură cursanților copii și adulți.",
+        "Completarea unui formular de înscriere.",
+        "Prezentarea unui aviz medical care să ateste aptitudinea fizică și epidemiologică.",
+        "Vârsta minimă pentru participare: 4 ani.",
+        "Solicitarea regulamentului și a ofertelor de servicii."
       ]
     },
     {
-      "title": "Program de functionare",
-      "intro": "Clubul Sportiv Bluemarin isi desfasoara activitatea zilnica intre orele 06:00 si 21:00. In acest interval, se organizeaza diverse tipuri de clase, structurate in functie de activitate si nivelul participantilor.",
+      "title": "Program de funcționare",
+      "intro": "Clubul Sportiv Bluemarin își desfășoară activitatea zilnic, între orele 06:00 și 21:00. În acest interval se organizează diverse tipuri de clase, structurate în funcție de activitate și de nivelul participanților.",
       "items": [
-        "Programarea pentru fiecare clasa se face prin intermediul aplicatiei de gestiune a clubului sau la receptie.",
-        "Clubul isi rezerva dreptul de a ajusta programul in functie de nevoile operationale si disponibilitatea instructorilor.",
-        "Pentru detalii suplimentare despre programul specific al claselor si disponibilitatea acestora, va rugam sa consultati aplicatia clubului sau sa contactati receptia."
+        "Programarea pentru fiecare clasă se face prin intermediul aplicației de gestiune a clubului sau la recepție.",
+        "Clubul își rezervă dreptul de a ajusta programul în funcție de nevoile operaționale și de disponibilitatea instructorilor.",
+        "Pentru detalii suplimentare despre programul specific al claselor și despre disponibilitatea acestora, vă rugăm să consultați aplicația clubului sau să contactați recepția."
       ]
     },
     {
-      "title": "Accesul in incinta complexului",
+      "title": "Accesul în incinta complexului",
       "items": [
-        "Va recomandam sosirea cu 30 min inainte de inceperea cursului.",
+        "Vă recomandăm sosirea cu 30 de minute înainte de începerea cursului.",
         "Accesul se face doar pe baza cardului de membru.",
-        "Accesul la vestiare si bazin este permis doar dupa finalizarea formalitatilor de inscriere sau check-in."
+        "Accesul la vestiare și la bazin este permis doar după finalizarea formalităților de înscriere sau check-in."
       ]
     },
     {
       "title": "Vestiare",
-      "intro": "Cursantii au acces la urmatoarele vestiare, organizate pentru copii si adulti:",
+      "intro": "Cursanții au acces la următoarele vestiare, organizate pentru copii și adulți:",
       "items": [
-        "2 vestiare pentru copii sub 8 ani, unde accesul este permis insotitorilor de orice sex: vestiar pentru baieti si vestiar pentru fete.",
-        "2 vestiare pentru copii peste 8 ani si adulti: vestiar pentru baieti/barbati (acces doar pentru persoane de sex masculin) si vestiar pentru fete/femei (acces doar pentru persoane de sex feminin).",
-        "Cusete pentru echipamente sunt disponibile in incinta vestiarelor si pe hol. Cheia poate fi solicitata de la receptie."
+        "2 vestiare pentru copii sub 8 ani, unde accesul este permis însoțitorilor de orice sex: vestiar pentru băieți și vestiar pentru fete.",
+        "2 vestiare pentru copii peste 8 ani și adulți: vestiar pentru băieți/bărbați (acces doar pentru persoane de sex masculin) și vestiar pentru fete/femei (acces doar pentru persoane de sex feminin).",
+        "Cușete pentru echipamente sunt disponibile în incinta vestiarelor și pe hol. Cheia poate fi solicitată la recepție."
       ]
     },
     {
       "title": "Echipament",
       "items": [
-        "Casca de inot.",
-        "Ochelari de inot.",
-        "Costum/slip/short de baie.",
+        "Cască de înot.",
+        "Ochelari de înot.",
+        "Costum / slip / short de baie.",
         "Prosop sau halat.",
         "Papuci de baie."
       ]
     },
     {
-      "title": "Abonamente – programari – anulari",
+      "title": "Abonamente, programări și anulări",
       "items": [
-        "Perioada de valabilitate a abonamentelor este de o (1) luna.",
-        "Programarea este obligatorie si se face in functie de disponibilitatea din grila de program.",
-        "Sedinta dureaza aprox. 60 de minute, din care 10 minute sunt alocate pentru incalzirea pe uscat.",
-        "Anularea se face cu cel putin 24 de ore in avans pentru a putea fi reprogramata, cu exceptia situatiilor medicale.",
-        "Neprezentarea la data si ora programata se anunta cu cel putin 24 ore inainte, in caz contrar sedinta se considera efectuata.",
-        "Cursantii care prezinta o scutire medicala beneficiaza de prelungirea abonamentului conform recomandarii medicului.",
-        "In cazul anularii sedintelor de catre club, abonamentul va fi prelungit automat.",
-        "Abonamentele si sedintele nu sunt transmisibile si nu se ramburseaza."
+        "Perioada de valabilitate a abonamentelor este de o (1) lună.",
+        "Programarea este obligatorie și se face în funcție de disponibilitatea din grila de program.",
+        "Ședința durează aproximativ 60 de minute, din care 10 minute sunt alocate încălzirii pe uscat.",
+        "Anularea se face cu cel puțin 24 de ore în avans, pentru a putea fi reprogramată, cu excepția situațiilor medicale.",
+        "Neprezentarea la data și ora programate se anunță cu cel puțin 24 de ore înainte; în caz contrar, ședința se consideră efectuată.",
+        "Cursanții care prezintă o scutire medicală beneficiază de prelungirea abonamentului conform recomandării medicului.",
+        "În cazul anulării ședințelor de către club, abonamentul va fi prelungit automat.",
+        "Abonamentele și ședințele nu sunt transmisibile și nu se rambursează."
       ]
     },
     {
       "title": "Utilizarea softului de gestiune",
-      "intro": "Pentru a facilita programarea si gestionarea activitatilor, Clubul Sportiv Bluemarin utilizeaza un soft de gestiune dedicat. Prin utilizarea serviciilor clubului, clientii isi exprima acordul pentru gestionarea programarilor, abonamentelor si comunicarilor prin intermediul acestui soft.",
+      "intro": "Pentru a facilita programarea și gestionarea activităților, Clubul Sportiv Bluemarin utilizează un soft de gestiune dedicat. Prin utilizarea serviciilor clubului, clienții își exprimă acordul pentru gestionarea programărilor, a abonamentelor și a comunicărilor prin intermediul acestui soft.",
       "items": [
-        "Date necesare pentru crearea profilului: nume, prenume, data nasterii, adresa de email si numarul de telefon.",
-        "Activarea contului se realizeaza prin intermediul email-ului care include link-ul pentru activare, precum si instructiuni pentru descarcarea aplicatiei.",
-        "Functionalitati disponibile: vizualizarea programului claselor de inot, programarea/anularea/reprogramarea sedintelor, acces la istoricul abonamentelor si produselor, profilul clientului.",
-        "Utilizatorii sunt responsabili de actiunile efectuate in aplicatie si pentru mentinerea confidentialitatii contului si a datelor de acces.",
-        "In cazul unor erori sau dificultati tehnice, clientii sunt rugati sa contacteze receptia clubului pentru asistenta. Clubul isi rezerva dreptul de a restrictiona accesul la aplicatie in cazul nerespectarii conditiilor de utilizare sau al furnizarii de informatii incorecte."
+        "Date necesare pentru crearea profilului: nume, prenume, data nașterii, adresa de e-mail și numărul de telefon.",
+        "Activarea contului se realizează prin intermediul e-mailului care include link-ul pentru activare, precum și instrucțiuni pentru descărcarea aplicației.",
+        "Funcționalități disponibile: vizualizarea programului claselor de înot, programarea / anularea / reprogramarea ședințelor, accesul la istoricul abonamentelor și al produselor, profilul clientului.",
+        "Utilizatorii sunt responsabili de acțiunile efectuate în aplicație și de menținerea confidențialității contului și a datelor de acces.",
+        "În cazul unor erori sau dificultăți tehnice, clienții sunt rugați să contacteze recepția clubului pentru asistență. Clubul își rezervă dreptul de a restricționa accesul la aplicație în cazul nerespectării condițiilor de utilizare sau al furnizării de informații incorecte."
       ]
     },
     {
-      "title": "Receptie / antrenori / participanti",
+      "title": "Recepție, antrenori și participanți",
       "groups": [
         {
-          "label": "Receptia",
+          "label": "Recepția",
           "items": [
-            "Asigura prezentarea serviciilor si regulamentului.",
-            "Intocmeste formalitatile de inscriere.",
-            "Gestioneaza abonamentele, programarile si accesul cursantilor.",
-            "Poate efectua verificari pentru respectarea regulilor de acces si securitate.",
-            "Poate refuza accesul in cazul in care documentele sau conditiile de participare nu sunt indeplinite."
+            "Asigură prezentarea serviciilor și a regulamentului.",
+            "Întocmește formalitățile de înscriere.",
+            "Gestionează abonamentele, programările și accesul cursanților.",
+            "Poate efectua verificări pentru respectarea regulilor de acces și de securitate.",
+            "Poate refuza accesul în cazul în care documentele sau condițiile de participare nu sunt îndeplinite."
           ]
         },
         {
           "label": "Antrenorii",
           "items": [
             "Vor implementa cele mai bune metode pentru acomodarea cu mediul acvatic.",
-            "Vor supraveghea si ghida cursantii catre o evolutie permanenta.",
-            "Au dreptul sa ceara parintilor sa iasa din bazin sau din incinta bazinului, precum si sprijinul acestora in anumite situatii.",
-            "Isi rezerva dreptul de a intrerupe sedintele sau abonamentele in cazul unei imposibile colaborari cu parintii, tutorii sau cursantii."
+            "Vor supraveghea și vor ghida cursanții către o evoluție permanentă.",
+            "Au dreptul să ceară părinților să iasă din bazin sau din incinta bazinului, precum și sprijinul acestora în anumite situații.",
+            "Își rezervă dreptul de a întrerupe ședințele sau abonamentele în cazul unei colaborări imposibile cu părinții, tutorii sau cursanții."
           ]
         },
         {
-          "label": "Parintii / tutorii / cursantii",
+          "label": "Părinții, tutorii și cursanții",
           "items": [
-            "Pot cere informatii despre metodologie si modul de predare, dar nu au dreptul sa solicite schimbarea acestora.",
-            "Trebuie sa respecte indicatiile antrenorilor si regulile de disciplina.",
-            "Este interzisa adresarea de recomandari, indicatii sau gesticulatii menite sa influenteze modul in care cursantii isi desfasoara activitatea. Aceasta regula se aplica atat din interiorul bazinului, cat si din exteriorul acestuia, pentru a permite cursantilor sa se concentreze si sa respecte instructiunile antrenorilor."
+            "Pot cere informații despre metodologie și despre modul de predare, dar nu au dreptul să solicite schimbarea acestora.",
+            "Trebuie să respecte indicațiile antrenorilor și regulile de disciplină.",
+            "Este interzisă adresarea de recomandări, indicații sau gesticulații menite să influențeze modul în care cursanții își desfășoară activitatea. Această regulă se aplică atât din interiorul bazinului, cât și din exteriorul acestuia, pentru a permite cursanților să se concentreze și să respecte instrucțiunile antrenorilor."
           ]
         }
       ]
     },
     {
-      "title": "Accesul in bazin",
+      "title": "Accesul în bazin",
       "items": [
-        "Accesul se face cu cel tarziu 10 min inainte de ora fixa, doar in prezenta antrenorilor.",
-        "Dusul este obligatoriu inainte de intrarea in bazin.",
-        "Este interzis accesul persoanelor cu boli transmisibile, plagi deschise, dermatite sau alte afectiuni.",
-        "Insotitorilor le este interzis accesul in interiorul bazinului. Acestia sunt invitati sa stationeze in holul din zona receptiei."
+        "Accesul se face cu cel târziu 10 minute înainte de ora fixă, doar în prezența antrenorilor.",
+        "Dușul este obligatoriu înainte de intrarea în bazin.",
+        "Este interzis accesul persoanelor cu boli transmisibile, plăgi deschise, dermatite sau alte afecțiuni.",
+        "Însoțitorilor le este interzis accesul în interiorul bazinului. Aceștia sunt invitați să staționeze în holul din zona recepției."
       ]
     },
     {
-      "title": "Starea de sanatate",
-      "intro": "Parintele/tutorele/cursantul au obligatia de a instiinta instructorul sau receptia despre orice problema sau schimbare medicala survenita asupra starii de sanatate. De asemenea, este obligat sa aduca ulterior acte medicale care sa ateste ca este din nou apt din punct de vedere medical. In caz contrar, clubul si instructorul nu pot fi raspunzatori in niciun fel.",
+      "title": "Starea de sănătate",
+      "intro": "Părintele, tutorele sau cursantul are obligația de a înștiința instructorul ori recepția despre orice problemă sau schimbare medicală survenită asupra stării de sănătate. De asemenea, este obligat să aducă ulterior acte medicale care să ateste că este din nou apt din punct de vedere medical. În caz contrar, clubul și instructorul nu pot fi răspunzători în niciun fel.",
       "items": [
-        "Cursantii care prezinta afectiuni medicale ce necesita repaus pot beneficia de prelungirea abonamentului pe baza unei scutiri medicale.",
-        "Clubul isi rezerva dreptul de a refuza accesul la activitati in cazul constatarii unor probleme medicale care pot pune in pericol sanatatea cursantului sau a celorlalti participanti."
+        "Cursanții care prezintă afecțiuni medicale ce necesită repaus pot beneficia de prelungirea abonamentului pe baza unei scutiri medicale.",
+        "Clubul își rezervă dreptul de a refuza accesul la activități în cazul constatării unor probleme medicale care pot pune în pericol sănătatea cursantului sau a celorlalți participanți."
       ]
     },
     {
       "title": "GDPR",
       "items": [
-        "Prin semnarea contractului, cursantii sau reprezentantii lor legali isi exprima acordul pentru prelucrarea datelor personale.",
-        "Clubul are dreptul de a utiliza materialele foto-video realizate in timpul activitatilor pentru promovare."
+        "Prin semnarea contractului, cursanții sau reprezentanții lor legali își exprimă acordul pentru prelucrarea datelor personale.",
+        "Clubul are dreptul de a utiliza materialele foto-video realizate în timpul activităților pentru promovare."
       ]
     },
     {
-      "title": "Dreptul de selectie a clientelei",
+      "title": "Dreptul de selecție a clientelei",
       "items": [
-        "Bluemarin Sport Club isi rezerva dreptul de a selecta clientela."
+        "Bluemarin Sport Club își rezervă dreptul de a selecta clientela."
       ]
     },
     {
       "title": "Alte clauze",
       "items": [
-        "Pierderea cardului implica o taxa de 50 de lei pentru reinnoire.",
+        "Pierderea cardului implică o taxă de 50 de lei pentru reînnoire.",
         "Clubul nu este responsabil pentru obiectele uitate sau pierdute."
       ]
     },
     {
-      "title": "Obligatia de a respecta regulamentele",
-      "intro": "Clientii Clubului Sportiv Bluemarin au obligatia de a respecta urmatoarele documente ce reglementeaza utilizarea serviciilor clubului:",
+      "title": "Obligația de a respecta regulamentele",
+      "intro": "Clienții Clubului Sportiv Bluemarin au obligația de a respecta următoarele documente care reglementează utilizarea serviciilor clubului:",
       "items": [
-        "Regulamentul Intern – stabileste normele de conduita si procedurile aplicabile in incinta clubului si in timpul activitatilor desfasurate.",
-        "Termeni si Conditii – detaliaza conditiile generale de furnizare a serviciilor si drepturile si obligatiile partilor implicate.",
-        "Politica de Confidentialitate – descrie modul in care sunt colectate, utilizate si protejate datele personale ale clientilor.",
-        "Politica de Cookies – explica utilizarea cookie-urilor pe site-ul clubului si drepturile utilizatorilor in acest context."
+        "Regulamentul intern – stabilește normele de conduită și procedurile aplicabile în incinta clubului și în timpul activităților desfășurate.",
+        "Termeni și condiții – detaliază condițiile generale de furnizare a serviciilor, precum și drepturile și obligațiile părților implicate.",
+        "Politica de confidențialitate – descrie modul în care sunt colectate, utilizate și protejate datele personale ale clienților.",
+        "Politica de cookies – explică utilizarea cookie-urilor pe site-ul clubului și drepturile utilizatorilor în acest context."
       ],
-      "closing": "Prin inscrierea si utilizarea serviciilor clubului, clientii declara ca au citit, inteles si acceptat aceste documente. Nerespectarea prevederilor poate duce la suspendarea accesului la servicii, fara rambursarea sumelor achitate.\n\nAcest regulament a fost conceput pentru a asigura desfasurarea eficienta si sigura a tuturor activitatilor din cadrul clubului."
+      "closing": "Prin înscrierea și utilizarea serviciilor clubului, clienții declară că au citit, au înțeles și au acceptat aceste documente. Nerespectarea prevederilor poate duce la suspendarea accesului la servicii, fără rambursarea sumelor achitate.\n\nAcest regulament a fost conceput pentru a asigura desfășurarea eficientă și sigură a tuturor activităților din cadrul clubului."
     }
   ]
 }

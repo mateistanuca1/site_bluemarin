@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#6b98ed',
+  themeColor: '#4f7fe4',
   width: 'device-width',
   initialScale: 1,
 };
@@ -62,20 +62,39 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const site = await getContent('site');
 
   // Date structurate pentru Google — ajuta la afisarea in rezultatele locale.
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bluemarin.ro';
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SportsActivityLocation',
     name: site.name,
+    legalName: site.company.legalName,
     description: site.seo.description,
-    telephone: site.contact.phone,
+    telephone: site.contact.phoneHref,
     email: site.contact.email,
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bluemarin.ro',
+    url: siteUrl,
+    logo: `${siteUrl}${site.logo}`,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Calea Giulesti 18',
-      addressLocality: 'Bucuresti',
+      streetAddress: 'Calea Giulești 18',
+      addressLocality: 'București',
+      addressRegion: 'Sector 6',
       addressCountry: 'RO',
     },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '12:00',
+        closes: '19:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'Saturday',
+        opens: '12:00',
+        closes: '14:00',
+      },
+    ],
     sameAs: [site.social.facebook, site.social.instagram, site.social.youtube],
   };
 
@@ -85,7 +104,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a
           href="#continut"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70]
-                     focus:bg-brand focus:px-4 focus:py-2 focus:text-[13px] focus:font-semibold focus:text-white"
+                     focus:rounded focus:bg-brand focus:px-4 focus:py-2 focus:text-[13px]
+                     focus:font-semibold focus:text-white"
         >
           Sari la conținut
         </a>
@@ -96,9 +116,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           nav={site.nav}
           phone={site.contact.phone}
           phoneHref={site.contact.phoneHref}
+          cta={site.headerCta}
         />
 
-        <main id="continut" className="pb-14 md:pb-0">
+        <main id="continut" className="pb-callbar md:pb-0">
           {children}
         </main>
 

@@ -1,80 +1,80 @@
 {
-  "title": "Locatii",
-  "lead": "Doua bazine in Bucuresti, acelasi standard de predare.",
+  "title": "Locații",
+  "lead": "Două bazine în București, același standard de predare.",
   "items": [
     {
       "slug": "bazin-cs-rapid",
       "name": "Bazin CS Rapid",
       "shortName": "Bazin C.S. Rapid",
-      "address": "Calea Giulesti 18, sector 6, Bucuresti",
+      "address": "Calea Giulești 18, sector 6, București",
       "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.905887153301!2d26.055069976587784!3d44.455601000165565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b2018b65c69587%3A0xcd6e8f9699326d64!2sCalea%20Gliule%C8%99ti%2018%2C%20Bucure%C8%99ti!5e0!3m2!1sro!2sro!4v1770678738101",
       "hero": "/images/locatii/bazin-cs-rapid.webp",
-      "intro": "BLUEMARIN SPORT CLUB si CS RAPID isi unesc fortele pentru a forma viitorii campioni. Pasiunea pentru apa ne aduce impreuna si ne inspira sa coordonam cu dedicare sectia de initiere, acolo unde copiii descopera inotul, isi dezvolta tehnica si pot face primii pasi spre performanta in INOT si POLO.",
+      "intro": "BLUEMARIN SPORT CLUB și CS RAPID își unesc forțele pentru a forma viitorii campioni. Pasiunea pentru apă ne aduce împreună și ne inspiră să coordonăm cu dedicare secția de inițiere, acolo unde copiii descoperă înotul, își dezvoltă tehnica și pot face primii pași spre performanță în ÎNOT și POLO.",
       "specs": [
         { "label": "Lungime", "value": "30 m" },
-        { "label": "Latime", "value": "18 m" },
-        { "label": "Adancime", "value": "2,2 m" },
-        { "label": "Temp. apei", "value": "27–28 °C" }
+        { "label": "Lățime", "value": "18 m" },
+        { "label": "Adâncime", "value": "2,2 m" },
+        { "label": "Temperatura apei", "value": "27–28 °C" }
       ],
-      "schedule": ["Luni – Vineri | 12:00 – 19:00", "Sambata | 12:00 – 14:00"],
+      "schedule": ["Luni – Vineri · 12:00 – 19:00", "Sâmbătă · 12:00 – 14:00"],
       "sections": [
         {
-          "title": "Baza sportiva",
-          "text": "Baza Sportiva CS Rapid, un spatiu cu traditie care reprezinta o adevarata casa a sportului, gazduieste cursurile de inot Bluemarin intr-un cadru modern si primitor. Situata pe Calea Giulesti nr. 18, Sector 6, Bucuresti, locatia ofera acces facil din zonele Crangasi, Giulesti si Militari, asigurand un mediu sigur si stabil pentru dezvoltarea copiilor."
+          "title": "Baza sportivă",
+          "text": "Baza Sportivă CS Rapid, un spațiu cu tradiție care reprezintă o adevărată casă a sportului, găzduiește cursurile de înot Bluemarin într-un cadru modern și primitor. Situată pe Calea Giulești nr. 18, sector 6, București, locația oferă acces facil din zonele Crângași, Giulești și Militari, asigurând un mediu sigur și stabil pentru dezvoltarea copiilor."
         },
         {
           "title": "Bazinul",
-          "text": "Bazinul Rapid este un spatiu hibrid, modern si incalzit, conceput pentru a gazdui atat cursurile de inot, cat si antrenamentele de polo. Temperatura apei este mentinuta la 27–28 °C, oferind conditii optime pentru initiere si perfectionare, fiind un spatiu potrivit pentru copii, cat si pentru sportivi de performanta."
+          "text": "Bazinul Rapid este un spațiu hibrid, modern și încălzit, conceput pentru a găzdui atât cursurile de înot, cât și antrenamentele de polo. Temperatura apei este menținută la 27–28 °C, oferind condiții optime pentru inițiere și perfecționare — un spațiu potrivit atât pentru copii, cât și pentru sportivi de performanță."
         },
         {
           "title": "Cursurile",
-          "text": "Desfasuram cursuri de inot in regim de grup si cu antrenor personal, structurate pentru orice nivel de pregatire. Accentul este pus pe initiere si perfectionare, iar copiii care evolueaza constant pot fi selectati pentru marea performanta in inot si polo, intr-un mediu sigur, bine organizat si orientat spre progres."
+          "text": "Desfășurăm cursuri de înot în regim de grup și cu antrenor personal, structurate pentru orice nivel de pregătire. Accentul este pus pe inițiere și perfecționare, iar copiii care evoluează constant pot fi selectați pentru marea performanță în înot și polo, într-un mediu sigur, bine organizat și orientat spre progres."
         },
         {
-          "title": "Zona de asteptare",
-          "text": "Zona de asteptare este amplasata in interiorul bazinului si ofera un spatiu acoperit, practic si confortabil pentru parinti. Vizibilitatea buna prin peretele de sticla permite urmarirea parcursului copiilor pe durata antrenamentelor, o facilitate apreciata care ofera transparenta si o conexiune directa cu evolutia lor in apa."
+          "title": "Zona de așteptare",
+          "text": "Zona de așteptare este amplasată în interiorul bazinului și oferă un spațiu acoperit, practic și confortabil pentru părinți. Vizibilitatea bună prin peretele de sticlă permite urmărirea parcursului copiilor pe durata antrenamentelor — o facilitate apreciată, care oferă transparență și o conexiune directă cu evoluția lor în apă."
         },
         {
-          "title": "Facilitati sportive",
-          "text": "Baza Sportiva CS Rapid reuneste spatii dedicate mai multor ramuri sportive, de la fotbal si atletism pana la zone de pregatire fizica si recuperare. Acest cadru complex si bine structurat completeaza experienta copiilor si sportivilor care se antreneaza aici."
+          "title": "Facilități sportive",
+          "text": "Baza Sportivă CS Rapid reunește spații dedicate mai multor ramuri sportive, de la fotbal și atletism până la zone de pregătire fizică și recuperare. Acest cadru complex și bine structurat completează experiența copiilor și a sportivilor care se antrenează aici."
         },
         {
           "title": "Parcare",
-          "text": "Parcarea din incinta bazei sportive este accesibila si ofera o solutie comoda pentru sosirea si plecarea copiilor la antrenamente. Recomandam parintilor sa foloseasca acest spatiu cu durata redusa de stationare, pentru a permite tuturor familiilor sa beneficieze in mod eficient de aceasta facilitate."
+          "text": "Parcarea din incinta bazei sportive este accesibilă și oferă o soluție comodă pentru sosirea și plecarea copiilor la antrenamente. Recomandăm părinților să folosească acest spațiu cu durată redusă de staționare, pentru ca toate familiile să beneficieze în mod eficient de această facilitate."
         }
       ],
-      "galleryNote": "O locatie ideala pentru cursurile de inot copii!"
+      "galleryNote": "O locație ideală pentru cursurile de înot pentru copii!"
     },
     {
       "slug": "militari-wellness",
       "name": "Militari Wellness",
       "shortName": "Militari Wellness",
-      "address": "Str. Rezervelor 72, Militari Residence – Rosu",
+      "address": "Str. Rezervelor 72, Militari Residence – Roșu",
       "mapEmbed": "https://www.google.com/maps?q=Strada+Rezervelor+72,+Rosu,+Bucuresti&output=embed",
       "hero": "/images/locatii/militari-wellness.webp",
-      "intro": "Un spatiu modern si prietenos in zona de vest a Capitalei. Aici, cursurile de inot sunt organizate in grupe, mini-grupe si sedinte individuale, oferind fiecarui cursant atentia necesara pentru a progresa in ritmul propriu.",
+      "intro": "Un spațiu modern și prietenos în zona de vest a Capitalei. Aici, cursurile de înot sunt organizate în grupe, mini-grupe și ședințe individuale, oferind fiecărui cursant atenția necesară pentru a progresa în ritmul propriu.",
       "specs": [
         { "label": "Grupe", "value": "1:6" },
         { "label": "Mini-grupe", "value": "1:2" },
         { "label": "Individual", "value": "1:1" },
-        { "label": "Durata sedinta", "value": "50 min" }
+        { "label": "Durata ședinței", "value": "50 min" }
       ],
-      "schedule": ["Luni – Vineri | 10:00 – 20:00"],
+      "schedule": ["Luni – Vineri · 10:00 – 20:00"],
       "sections": [
         {
-          "title": "Locatia",
-          "text": "Militari Wellness se afla in Militari Residence – Rosu, pe Strada Rezervelor nr. 72, cu acces usor din zona de vest a Bucurestiului si din Chiajna. Spatiul este modern, curat si gandit pentru familii."
+          "title": "Locația",
+          "text": "Militari Wellness se află în Militari Residence – Roșu, pe Strada Rezervelor nr. 72, cu acces ușor din zona de vest a Bucureștiului și din Chiajna. Spațiul este modern, curat și gândit pentru familii."
         },
         {
           "title": "Formatul cursurilor",
-          "text": "Lucram in grupe de maxim 6 cursanti, in mini-grupe de 2 cursanti si in sedinte individuale cu antrenor personal. Formatul il alegi in functie de nivelul cursantului si de cat de multa atentie individuala are nevoie."
+          "text": "Lucrăm în grupe de maximum 6 cursanți, în mini-grupe de 2 cursanți și în ședințe individuale cu antrenor personal. Formatul îl alegi în funcție de nivelul cursantului și de câtă atenție individuală are nevoie."
         },
         {
           "title": "Pentru cine este potrivit",
-          "text": "Locatia este potrivita atat pentru copii la prima experienta in bazin, cat si pentru adulti care vor sa invete sa inoate sau sa isi corecteze tehnica intr-un cadru discret si liniştit."
+          "text": "Locația este potrivită atât pentru copiii aflați la prima experiență în bazin, cât și pentru adulții care vor să învețe să înoate sau să își corecteze tehnica într-un cadru discret și liniștit."
         }
       ],
-      "galleryNote": "Un bazin modern, in zona de vest a Capitalei."
+      "galleryNote": "Un bazin modern, în zona de vest a Capitalei."
     }
   ]
 }

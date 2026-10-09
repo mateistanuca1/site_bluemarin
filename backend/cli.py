@@ -81,6 +81,16 @@ def cmd_check(_args: argparse.Namespace) -> int:
 
     print("Configurare backend\n")
 
+    print(f"  Formulare:       {settings.forms_backend}")
+    if settings.forms_backend == "apps-script":
+        ok = bool(settings.apps_script_url)
+        print(f"  {mark(ok)}  APPS_SCRIPT_URL")
+        if not ok:
+            print("         Modul apps-script are nevoie de URL-ul /exec al Web App-ului.")
+        elif not settings.apps_script_token:
+            print("         Fara APPS_SCRIPT_TOKEN, oricine poate posta pe acel URL.")
+        print("         In acest mod nu e nevoie de baza de date sau de Resend.\n")
+
     db_ok = True
     try:
         with engine.connect() as conn:
@@ -91,6 +101,8 @@ def cmd_check(_args: argparse.Namespace) -> int:
 
     kind = "SQLite (local)" if settings.uses_sqlite else "Postgres"
     print(f"  {mark(db_ok)}  Baza de date — {kind}")
+    if settings.uses_apps_script:
+        print("         (optionala in modul apps-script — doar pentru panoul de admin)")
     if not db_ok:
         print(f"         {db_error}")
     elif settings.uses_sqlite and settings.is_vercel:

@@ -1,195 +1,195 @@
 {
   "_comment": "Generat de npm run images. Poti edita manual: adauga caile pozelor din public/images/galerie/.",
   "title": "Galerie",
-  "lead": "Momente din bazin, de la primele sedinte de acomodare pana la competitii.",
+  "lead": "Momente din bazin, de la primele ședințe de acomodare până la competiții.",
   "images": [
     {
-      "src": "/images/galerie/499553393-10025600034227033-6654084440610791703-.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/499683658-10033934480060255-2387838677049361582-.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/502493236-10025600054227031-439931322323512579-n.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/54458084-2108780902575692-1387461198965899264-n.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/militari-wellness-13.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/bazin-rapid.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/bazin-rapid-3.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/bazin-rapid-4.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/bazin-rapid-5.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/bazin-rapid2-copy-min-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/097a6049.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/097a7082.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-0132.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-0139.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-0212.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-0334.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-1520-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-1583-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
       "src": "/images/galerie/dsc-1988.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-2367.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-2371.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-2373.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-2959.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-7424-2.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-8351.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-8456.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-8502.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-8739.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/dsc-9724-3.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
       "src": "/images/galerie/dsc-9727-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/img-2071.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/img-2074.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/img-2081.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/img-2141.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/cover-initiere-3.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/82805044-680189142517773-160705375429984256-o.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/097a0265.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/097a0245.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/097a7158.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
-    },
-    {
-      "src": "/images/galerie/097a4529-32.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
       "src": "/images/galerie/dsc-9770.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
-      "src": "/images/galerie/dsc-1477-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "src": "/images/galerie/dsc-8351.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
-      "src": "/images/galerie/dsc-0131.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "src": "/images/galerie/dsc-2371.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
-      "src": "/images/galerie/avansati-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "src": "/images/galerie/dsc-1583-1.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
-      "src": "/images/galerie/personal-trainer-1.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "src": "/images/galerie/dsc-0334.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
-      "src": "/images/galerie/medalii-copy.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "src": "/images/galerie/dsc-0212.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
     },
     {
       "src": "/images/galerie/fluture-marin-2.webp",
-      "alt": "Bluemarin Sport Club — cursuri de inot"
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/097a7082.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-1520-1.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-2373.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-2367.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/097a7158.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-1477-1.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-0131.webp",
+      "alt": "Copii la cursurile de înot Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/097a4529-32.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/097a6049.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-8502.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-8456.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-9724-3.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-8739.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-2959.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-7424-2.webp",
+      "alt": "Antrenament de înot la Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/img-2081.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/82805044-680189142517773-160705375429984256-o.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-0132.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/dsc-0139.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/img-2071.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/img-2074.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/img-2141.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/cover-initiere-3.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/097a0265.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/097a0245.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/avansati-1.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/personal-trainer-1.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/medalii-copy.webp",
+      "alt": "Competiții și rezultate — Bluemarin Sport Club"
+    },
+    {
+      "src": "/images/galerie/499553393-10025600034227033-6654084440610791703-.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/499683658-10033934480060255-2387838677049361582-.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/502493236-10025600054227031-439931322323512579-n.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/54458084-2108780902575692-1387461198965899264-n.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/militari-wellness-13.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/bazin-rapid.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/bazin-rapid-3.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/bazin-rapid-4.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/bazin-rapid-5.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
+    },
+    {
+      "src": "/images/galerie/bazin-rapid2-copy-min-1.webp",
+      "alt": "Bazinele în care se desfășoară cursurile Bluemarin"
     }
   ]
 }

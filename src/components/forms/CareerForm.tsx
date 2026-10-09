@@ -22,22 +22,22 @@ export default function CareerForm() {
     const cv = fd.get('cv');
 
     if (!(cv instanceof File) || cv.size === 0) {
-      setFileError('Ataseaza CV-ul tau (PDF, DOC sau imagine).');
+      setFileError('Atașează CV-ul tău (PDF, DOC sau imagine).');
       return;
     }
     if (cv.size > MAX_CV_MB * 1024 * 1024) {
-      setFileError(`Fisierul e prea mare. Maxim ${MAX_CV_MB} MB.`);
+      setFileError(`Fișierul e prea mare. Maximum ${MAX_CV_MB} MB.`);
       return;
     }
 
-    const ok = await submit(fd, 'Am primit CV-ul tau. Te contactam in cel mai scurt timp!');
+    const ok = await submit(fd, 'Am primit CV-ul tău. Te contactăm în cel mai scurt timp!');
     if (ok) form.reset();
   }
 
   return (
     <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
-      <TextField label="Nume si prenume" name="name" required autoComplete="name" />
-      <TextField label="Email" name="email" type="email" inputMode="email" required autoComplete="email" />
+      <TextField label="Nume și prenume" name="name" required autoComplete="name" />
+      <TextField label="E-mail" name="email" type="email" inputMode="email" required autoComplete="email" />
       <TextField
         label="Telefon"
         name="phone"
@@ -48,24 +48,27 @@ export default function CareerForm() {
         placeholder="07xx xxx xxx"
       />
       <TextArea
-        label="Cateva cuvinte despre tine"
+        label="Câteva cuvinte despre tine"
         name="message"
         rows={4}
-        placeholder="Experienta, atestate, disponibilitate…"
+        placeholder="Experiență, atestate, disponibilitate…"
       />
       <FileField
-        label="CV-ul tau"
+        label="CV-ul tău"
         name="cv"
         required
         accept=".pdf,.doc,.docx,image/*"
-        hint={`PDF, DOC sau imagine, maxim ${MAX_CV_MB} MB.`}
+        hint={`PDF, DOC sau imagine, maximum ${MAX_CV_MB} MB.`}
         error={fileError}
       />
 
       <CheckboxField name="gdpr" required>
         Sunt de acord cu prelucrarea datelor conform{' '}
-        <Link href="/politica-de-confidentialitate" className="text-brand underline">
-          Politicii de confidentialitate
+        <Link
+          href="/politica-de-confidentialitate"
+          className="font-medium text-brand underline underline-offset-2"
+        >
+          Politica de confidențialitate
         </Link>
       </CheckboxField>
 

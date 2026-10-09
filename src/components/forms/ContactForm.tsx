@@ -23,7 +23,7 @@ export default function ContactForm({ onDark = false }: Props) {
         subject: String(fd.get('subject') ?? '').trim(),
         message: String(fd.get('message') ?? '').trim(),
       },
-      'Mesajul a fost trimis. Te contactam in cel mai scurt timp!',
+      'Mesajul a fost trimis. Te contactăm în cel mai scurt timp!',
     );
 
     if (ok) formRef.current?.reset();
@@ -31,9 +31,9 @@ export default function ContactForm({ onDark = false }: Props) {
 
   return (
     <form ref={formRef} onSubmit={onSubmit} className="space-y-4" noValidate={false}>
-      <TextField label="Numele tau" name="name" required autoComplete="name" placeholder="Nume si prenume" />
+      <TextField label="Numele tău" name="name" required autoComplete="name" placeholder="Nume și prenume" />
       <TextField
-        label="Emailul tau"
+        label="E-mailul tău"
         name="email"
         type="email"
         inputMode="email"
@@ -41,13 +41,16 @@ export default function ContactForm({ onDark = false }: Props) {
         autoComplete="email"
         placeholder="nume@exemplu.ro"
       />
-      <TextField label="Subiect" name="subject" placeholder="Despre ce vrei sa vorbim?" />
-      <TextArea label="Mesajul tau" name="message" required rows={5} placeholder="Scrie-ne aici…" />
+      <TextField label="Subiect" name="subject" placeholder="Despre ce vrei să vorbim?" />
+      <TextArea label="Mesajul tău" name="message" required rows={5} placeholder="Scrie-ne aici…" />
 
       <CheckboxField name="gdpr" required>
         Sunt de acord cu{' '}
-        <Link href="/politica-de-confidentialitate" className="text-brand underline">
-          Politica de confidentialitate
+        <Link
+          href="/politica-de-confidentialitate"
+          className="font-medium text-brand underline underline-offset-2"
+        >
+          Politica de confidențialitate
         </Link>
       </CheckboxField>
 

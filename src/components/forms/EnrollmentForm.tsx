@@ -11,6 +11,7 @@ import {
   SelectField,
   SubmitButton,
   TextField,
+  ToggleGroup,
 } from './Field';
 import SignaturePad, { type SignaturePadHandle } from './SignaturePad';
 import { useFormPost } from './useFormPost';
@@ -42,24 +43,40 @@ const years = Array.from({ length: 90 }, (_, i) => {
 });
 
 type Errors = Partial<Record<'birthDate' | 'photo' | 'medical' | 'signature', string>>;
+type Who = 'minor' | 'adult';
+
+/** Antetul numerotat al unei sectiuni din formular. */
+function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
+  return (
+    <fieldset className="space-y-4">
+      <legend className="mb-5 flex items-center gap-3">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-[12px] font-bold text-white">
+          {n}
+        </span>
+        <span className="text-[13px] font-bold uppercase tracking-label text-ink">{title}</span>
+      </legend>
+      {children}
+    </fieldset>
+  );
+}
 
 /**
- * Formularul complet de inscriere: date cursant, parinte/tutore, doua documente
- * si semnatura. Backend-ul genereaza PDF-ul si il trimite pe email.
- *
- * Inlocuieste scriptul Google Apps Script de pe site-ul vechi.
+ * Formularul complet de inscriere: date cursant, parinte/tutore (doar pentru
+ * minori), cele doua documente medicale si semnatura. Backend-ul genereaza
+ * PDF-ul, il trimite pe email si il arhiveaza.
  */
 export default function EnrollmentForm({ locationSlug, locationName }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const sigRef = useRef<SignaturePadHandle>(null);
   const [errors, setErrors] = useState<Errors>({});
+  const [who, setWho] = useState<Who>('minor');
   const { submit, pending, state } = useFormPost('/inscriere');
 
   function validateFile(value: FormDataEntryValue | null): string | undefined {
-    if (!(value instanceof File) || value.size === 0) return 'Ataseaza un fisier.';
-    if (value.size > MAX_MB * 1024 * 1024) return `Fisierul e prea mare. Maxim ${MAX_MB} MB.`;
+    if (!(value instanceof File) || value.size === 0) return 'Atașează un fișier.';
+    if (value.size > MAX_MB * 1024 * 1024) return `Fișierul e prea mare. Maximum ${MAX_MB} MB.`;
     const ok = value.type.startsWith('image/') || value.type === 'application/pdf';
-    return ok ? undefined : 'Accceptam doar imagini (JPG, PNG) sau PDF.';
+    return ok ? undefined : 'Acceptăm doar imagini (JPG, PNG) sau PDF.';
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -74,12 +91,12 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
     const year = String(fd.get('birthYear') ?? '');
 
     if (!day || !month || !year) {
-      next.birthDate = 'Alege ziua, luna si anul nasterii.';
+      next.birthDate = 'Alege ziua, luna și anul nașterii.';
     } else {
       // Respinge date inexistente, ex. 31 februarie.
       const d = new Date(Number(year), Number(month) - 1, Number(day));
       if (d.getDate() !== Number(day) || d.getMonth() !== Number(month) - 1) {
-        next.birthDate = 'Data nasterii nu este valida.';
+        next.birthDate = 'Data nașterii nu este validă.';
       }
     }
 
@@ -87,11 +104,9 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
     next.medical = validateFile(fd.get('medical'));
 
     const signature = sigRef.current?.toBase64() ?? null;
-    if (!signature) next.signature = 'Te rugam sa semnezi inainte de a trimite formularul.';
+    if (!signature) next.signature = 'Te rugăm să semnezi înainte de a trimite formularul.';
 
-    const clean = Object.fromEntries(
-      Object.entries(next).filter(([, v]) => v),
-    ) as Errors;
+    const clean = Object.fromEntries(Object.entries(next).filter(([, v]) => v)) as Errors;
     setErrors(clean);
 
     if (Object.keys(clean).length > 0) {
@@ -110,10 +125,14 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
     fd.set('signature', signature!);
     fd.set('locationSlug', locationSlug);
     fd.set('locationName', locationName);
+    fd.set('enrolleeType', who);
+
+    // Pentru adulti, semnatarul este cursantul insusi.
+    if (who === 'adult') fd.set('nameLegalParent', String(fd.get('firstName') ?? ''));
 
     const ok = await submit(
       fd,
-      'Felicitari! Inscrierea a fost trimisa. Verifica emailul — ai primit o copie a fisei in format PDF.',
+      'Felicitări! Înscrierea a fost trimisă. Verifică e-mailul — ai primit o copie a fișei în format PDF.',
     );
 
     if (ok) {
@@ -124,68 +143,98 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
 
   if (state?.ok) {
     return (
-      <div className="border border-brand/30 bg-brand-soft px-6 py-12 text-center">
-        <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-white text-brand">
+      <div className="rounded-card border border-brand-200 bg-brand-50 px-6 py-12 text-center">
+        <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-white text-brand shadow-card">
           <Icon name="check" className="h-8 w-8" />
         </span>
-        <h2 className="text-[19px] font-semibold uppercase tracking-wide2 text-deep-dark">
-          Inscriere trimisa
+        <h2 className="text-[19px] font-bold uppercase tracking-wide2 text-deep-700">
+          Înscriere trimisă
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-[15px] font-light leading-relaxed text-ink/80">
+        <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-soft">
           {state.message}
         </p>
         <Link href="/" className="btn btn-primary mt-8">
-          Inapoi la prima pagina
+          Înapoi la prima pagină
         </Link>
       </div>
     );
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="space-y-8">
-      <fieldset className="space-y-4" disabled={pending}>
-        <legend className="mb-4 text-[13px] font-semibold uppercase tracking-headline text-brand">
-          Date cursant
-        </legend>
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-10">
+      <Step n={1} title="Date cursant">
+        <ToggleGroup<Who>
+          label="Cursantul este"
+          value={who}
+          onChange={setWho}
+          options={[
+            { value: 'minor', label: 'Copil (sub 18 ani)' },
+            { value: 'adult', label: 'Adult' },
+          ]}
+        />
 
         <TextField
-          label="Nume si prenume cursant"
+          label="Nume și prenume cursant"
           name="firstName"
           required
           autoComplete="name"
-          placeholder="Nume si prenume"
+          placeholder="Nume și prenume"
         />
 
         <div>
-          <span className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide2 text-ink/75">
-            Data nasterii<span className="ml-1 text-accent">*</span>
+          <span className="mb-1.5 block text-[12px] font-bold uppercase tracking-wide2 text-ink-soft">
+            Data nașterii
+            <span className="ml-1 text-accent" aria-hidden="true">
+              *
+            </span>
           </span>
-          <div className="grid grid-cols-3 gap-3">
-            <SelectField label="Ziua" name="birthDay" options={days} placeholder="Zi" required
-              error={errors.birthDate ? ' ' : undefined} className="[&>label]:sr-only" />
-            <SelectField label="Luna" name="birthMonth" options={months} placeholder="Luna" required
-              error={errors.birthDate ? ' ' : undefined} className="[&>label]:sr-only" />
-            <SelectField label="Anul" name="birthYear" options={years} placeholder="An" required
-              error={errors.birthDate ? ' ' : undefined} className="[&>label]:sr-only" />
+          <div className="grid grid-cols-3 gap-2.5">
+            <SelectField
+              label="Ziua"
+              name="birthDay"
+              options={days}
+              placeholder="Zi"
+              required
+              error={errors.birthDate ? ' ' : undefined}
+              className="[&>label]:sr-only"
+            />
+            <SelectField
+              label="Luna"
+              name="birthMonth"
+              options={months}
+              placeholder="Luna"
+              required
+              error={errors.birthDate ? ' ' : undefined}
+              className="[&>label]:sr-only"
+            />
+            <SelectField
+              label="Anul"
+              name="birthYear"
+              options={years}
+              placeholder="An"
+              required
+              error={errors.birthDate ? ' ' : undefined}
+              className="[&>label]:sr-only"
+            />
           </div>
           {errors.birthDate && (
-            <p className="mt-1.5 text-[12px] font-medium text-accent">{errors.birthDate}</p>
+            <p className="mt-1.5 text-[12.5px] font-medium text-accent-dark">{errors.birthDate}</p>
           )}
         </div>
-      </fieldset>
+      </Step>
 
-      <fieldset className="space-y-4" disabled={pending}>
-        <legend className="mb-4 text-[13px] font-semibold uppercase tracking-headline text-brand">
-          Parinte / reprezentant legal
-        </legend>
+      <Step n={2} title={who === 'minor' ? 'Părinte / reprezentant legal' : 'Date de contact'}>
+        {who === 'minor' && (
+          <TextField
+            label="Nume și prenume părinte / tutore"
+            name="nameLegalParent"
+            required
+            autoComplete="name"
+            placeholder="Numele părintelui sau al tutorelui"
+            hint="Persoana care semnează fișa de înscriere."
+          />
+        )}
 
-        <TextField
-          label="Nume si prenume"
-          name="nameLegalParent"
-          required
-          placeholder="Numele parintelui sau tutorelui"
-          hint="Daca cursantul este adult, scrie propriul nume."
-        />
         <TextField
           label="Telefon"
           name="phone"
@@ -195,81 +244,85 @@ export default function EnrollmentForm({ locationSlug, locationName }: Props) {
           autoComplete="tel"
           placeholder="07xx xxx xxx"
         />
+
         <TextField
-          label="Email"
+          label="E-mail"
           name="email"
           type="email"
           inputMode="email"
           required
           autoComplete="email"
           placeholder="nume@exemplu.ro"
-          hint="Aici primesti fisa de inscriere in format PDF."
+          hint="Aici primești fișa de înscriere în format PDF."
         />
-      </fieldset>
+      </Step>
 
-      <fieldset className="space-y-4" disabled={pending}>
-        <legend className="mb-4 text-[13px] font-semibold uppercase tracking-headline text-brand">
-          Documente
-        </legend>
-
+      <Step n={3} title="Documente medicale">
         <FileField
-          label="Certificat de nastere sau carte de identitate"
+          label="Aviz epidemiologic"
           name="photo"
           required
           accept={ACCEPT}
-          hint={`Fotografie clara sau PDF, maxim ${MAX_MB} MB.`}
+          hint={`De la medicul de familie. Fotografie clară sau PDF, maximum ${MAX_MB} MB.`}
           error={errors.photo}
         />
         <FileField
-          label="Aviz medical"
+          label="Adeverință „apt efort fizic”"
           name="medical"
           required
           accept={ACCEPT}
-          hint="Adeverinta de la medicul de familie care atesta ca cursantul este apt pentru inot."
+          hint="Adeverința care atestă că cursantul este apt pentru efort fizic."
           error={errors.medical}
         />
-      </fieldset>
+      </Step>
 
-      <fieldset disabled={pending}>
-        <legend className="mb-4 text-[13px] font-semibold uppercase tracking-headline text-brand">
-          Semnatura si acord
-        </legend>
-
+      <Step n={4} title="Semnătură și acord">
         <SignaturePad ref={sigRef} />
         {errors.signature && (
-          <p className="mt-1.5 text-[12px] font-medium text-accent">{errors.signature}</p>
+          <p className="text-[12.5px] font-medium text-accent-dark">{errors.signature}</p>
         )}
 
-        <div className="mt-6">
+        <div className="pt-2">
           <CheckboxField name="terms" required>
-            Am citit si accept{' '}
-            <Link href="/regulament" className="text-brand underline">
+            Am citit și accept{' '}
+            <Link href="/regulament" className="font-medium text-brand underline underline-offset-2">
               Regulamentul intern
             </Link>
             ,{' '}
-            <Link href="/termeni-si-conditii" className="text-brand underline">
-              Termenii si conditiile
+            <Link
+              href="/termeni-si-conditii"
+              className="font-medium text-brand underline underline-offset-2"
+            >
+              Termenii și condițiile
             </Link>
             ,{' '}
-            <Link href="/politica-de-confidentialitate" className="text-brand underline">
-              Politica de confidentialitate
+            <Link
+              href="/politica-de-confidentialitate"
+              className="font-medium text-brand underline underline-offset-2"
+            >
+              Politica de confidențialitate
             </Link>{' '}
-            si{' '}
-            <Link href="/politica-de-cookies" className="text-brand underline">
+            și{' '}
+            <Link
+              href="/politica-de-cookies"
+              className="font-medium text-brand underline underline-offset-2"
+            >
               Politica de cookies
             </Link>
           </CheckboxField>
         </div>
-      </fieldset>
+      </Step>
 
-      <FormStatus state={state} />
+      <div className="space-y-4 border-t border-line pt-7">
+        <FormStatus state={state} />
 
-      <SubmitButton pending={pending}>Trimite inscrierea</SubmitButton>
+        <SubmitButton pending={pending}>Trimite înscrierea</SubmitButton>
 
-      <p className="text-center text-[12px] leading-relaxed text-muted">
-        La final primesti pe email un PDF cu toate informatiile completate, iar un exemplar este
-        salvat in sistemul nostru intern.
-      </p>
+        <p className="text-center text-[12.5px] leading-relaxed text-ink-muted">
+          La final primești pe e-mail un PDF cu toate informațiile completate, iar un exemplar
+          rămâne arhivat la noi.
+        </p>
+      </div>
     </form>
   );
 }

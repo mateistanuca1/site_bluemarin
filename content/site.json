@@ -1,26 +1,30 @@
 {
   "name": "Bluemarin Sport Club",
   "legalName": "Asociația Clubul Sportiv Bluemarin",
-  "tagline": "Locul in care fiecare val poarta o poveste!",
+  "tagline": "Locul în care fiecare val poartă o poveste!",
   "quote": "Cu fiecare lungime de bazin devenim tot mai puternici!",
   "logo": "/images/logo-bluemarin.png",
   "seo": {
-    "title": "Bluemarin Sport Club — Cursuri de inot in Bucuresti",
-    "description": "Cursuri de inot pentru copii si adulti in Bucuresti, la Bazinul CS Rapid si Militari Wellness. Grupe mici, antrenori licentiati, de la initiere pana la performanta.",
+    "title": "Bluemarin Sport Club — Cursuri de înot în București",
+    "description": "Cursuri de înot pentru copii și adulți în București, la Bazinul CS Rapid și Militari Wellness. Grupe mici, antrenori licențiați, de la inițiere până la performanță.",
     "keywords": [
-      "cursuri de inot Bucuresti",
-      "cursuri inot copii",
-      "lectii de inot",
+      "cursuri de înot București",
+      "cursuri înot copii",
+      "lecții de înot",
       "bazin CS Rapid",
       "Militari Wellness",
-      "antrenor personal inot"
+      "antrenor personal înot"
     ]
   },
   "contact": {
     "phone": "0744 258 258",
     "phoneHref": "+40744258258",
+    "phoneLabel": "Înscrieri și informații",
+    "phoneSecondary": "0724 212 978",
+    "phoneSecondaryHref": "+40724212978",
+    "phoneSecondaryLabel": "Recepție",
     "email": "contact@bluemarin.ro",
-    "address": "Calea Giulesti 18, sector 6, Bucuresti",
+    "address": "Calea Giulești 18, sector 6, București",
     "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.905887153301!2d26.055069976587784!3d44.455601000165565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b2018b65c69587%3A0xcd6e8f9699326d64!2sCalea%20Gliule%C8%99ti%2018%2C%20Bucure%C8%99ti!5e0!3m2!1sro!2sro!4v1770678738101"
   },
   "social": {
@@ -32,38 +36,44 @@
     {
       "network": "instagram",
       "label": "Instagram",
-      "caption": "cele mai recente imagini"
+      "caption": "Cele mai recente imagini din bazin"
     },
     {
       "network": "facebook",
       "label": "Facebook",
-      "caption": "ultimele noastre povesti"
+      "caption": "Ultimele noastre povești"
     },
     {
       "network": "youtube",
       "label": "YouTube",
-      "caption": "pasiune in fiecare secunda"
+      "caption": "Pasiune în fiecare secundă"
     }
   ],
   "nav": [
     {
-      "label": "Acasa",
+      "label": "Acasă",
       "href": "/"
     },
     {
-      "label": "Cursuri de inot",
-      "href": "/cursuri-de-inot"
-    },
-    {
-      "label": "Cursuri inot copii",
-      "href": "/cursuri-inot-copii"
+      "label": "Cursuri",
+      "href": "/cursuri-de-inot",
+      "children": [
+        {
+          "label": "Cursuri de înot",
+          "href": "/cursuri-de-inot"
+        },
+        {
+          "label": "Cursuri înot copii",
+          "href": "/cursuri-inot-copii"
+        }
+      ]
     },
     {
       "label": "Echipa",
       "href": "/echipa"
     },
     {
-      "label": "Locatii",
+      "label": "Locații",
       "href": "/locatii/bazin-cs-rapid",
       "children": [
         {
@@ -97,6 +107,10 @@
       "href": "/contact"
     }
   ],
+  "headerCta": {
+    "label": "Înscrie-te",
+    "href": "/inscriere/bazin-cs-rapid"
+  },
   "footerLinks": [
     {
       "label": "Regulament intern",
@@ -107,11 +121,11 @@
       "href": "/politica-de-cookies"
     },
     {
-      "label": "Politica de confidentialitate",
+      "label": "Politica de confidențialitate",
       "href": "/politica-de-confidentialitate"
     },
     {
-      "label": "Termeni si conditii",
+      "label": "Termeni și condiții",
       "href": "/termeni-si-conditii"
     }
   ],
@@ -119,20 +133,20 @@
     {
       "label": "Bazin CS Rapid",
       "lines": [
-        "Luni – Vineri | 12:00 – 19:00",
-        "Sambata | 12:00 – 14:00"
+        "Luni – Vineri · 12:00 – 19:00",
+        "Sâmbătă · 12:00 – 14:00"
       ]
     },
     {
       "label": "Militari Wellness",
       "lines": [
-        "Luni – Vineri | 10:00 – 20:00"
+        "Luni – Vineri · 10:00 – 20:00"
       ]
     }
   ],
   "company": {
-    "legalName": "Asociatia Clubul Sportiv Bluemarin",
+    "legalName": "Asociația Clubul Sportiv Bluemarin",
     "cif": "37787434",
-    "registeredOffice": "Str. Mihail Sebastian, nr. 180, sector 5, Bucuresti"
+    "registeredOffice": "Str. Mihail Sebastian nr. 180, sector 5, București"
   }
 }
