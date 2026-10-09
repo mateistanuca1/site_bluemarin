@@ -8,7 +8,7 @@ type Props = {
   /** Imagine de fundal full-width. */
   image?: string;
   /** Cat de tare intuneca degradeul imaginea: 'soft' lasa poza sa se vada. */
-  scrim?: 'soft' | 'strong';
+  scrim?: 'soft' | 'strong' | 'deep';
   /** Fundal plat, fara imagine. */
   tone?: 'white' | 'soft' | 'deep' | 'night';
   className?: string;
@@ -65,7 +65,10 @@ export default function Section({
           />
           <div
             aria-hidden="true"
-            className={cx('absolute inset-0 -z-10', scrim === 'soft' ? 'scrim-soft' : 'scrim')}
+            className={cx(
+              'absolute inset-0 -z-10',
+              scrim === 'soft' ? 'scrim-soft' : scrim === 'deep' ? 'scrim-deep' : 'scrim',
+            )}
           />
         </>
       )}

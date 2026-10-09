@@ -17,19 +17,26 @@ const DURATION = 1600;
 /** Cifra care numara crescator cand intra in ecran. */
 export default function Counter({ to, label, icon, separator }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState(0);
+  // Pornim de la valoarea finala: asa apare corect si in HTML-ul de pe server,
+  // chiar daca JavaScript-ul nu ruleaza. Animatia o aducem la zero abia cand
+  // stim ca cifra e sub ecran si chiar poate fi vazuta cum creste.
+  const [value, setValue] = useState(to);
   const started = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    // Daca utilizatorul a cerut mai putina animatie, arata direct valoarea finala.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setValue(to);
-      return;
-    }
+    // Daca utilizatorul a cerut mai putina animatie, lasam valoarea finala.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    // Daca cifra e deja pe ecran la incarcare, o lasam asa: n-ar avea cine sa
+    // vada animatia, iar o resetare la zero ar parea o eroare.
+    if (el.getBoundingClientRect().top <= window.innerHeight) return;
+
+    // Nu ducem valoarea la zero acum, ci lasam animatia sa porneasca de acolo.
+    // Asa, daca observatorul nu se declanseaza niciodata, pe ecran ramane
+    // numarul real, nu un zero.
     const run = () => {
       if (started.current) return;
       started.current = true;

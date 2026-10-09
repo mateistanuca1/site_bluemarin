@@ -226,6 +226,14 @@
       rgba(11, 17, 66, 0.78) 100%
     );
   }
+  .scrim-deep {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(11, 17, 66, 0.9) 0%,
+      rgba(11, 17, 66, 0.84) 50%,
+      rgba(11, 17, 66, 0.92) 100%
+    );
+  }
   .scrim-soft {
     background-image: linear-gradient(
       to bottom,

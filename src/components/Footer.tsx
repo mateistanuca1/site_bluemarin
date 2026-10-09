@@ -147,7 +147,7 @@ export default function Footer({ site }: { site: Site }) {
             ))}
           </ul>
 
-          <p className="mt-7 text-[12px] leading-relaxed text-white/40">
+          <p className="mt-7 text-[12px] leading-relaxed text-white/55">
             {site.company.legalName}
             <br />
             C.I.F. {site.company.cif}

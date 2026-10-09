@@ -126,7 +126,7 @@ export default async function HomePage() {
       </Section>
 
       {/* 6. Experienta — countere */}
-      <Section image={home.academy.image} size="lg">
+      <Section image={home.academy.image} scrim="deep" size="lg">
         <SectionTitle lead={home.experience.lead}>{home.experience.title}</SectionTitle>
         <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
           {home.experience.counters.map((c) => (
