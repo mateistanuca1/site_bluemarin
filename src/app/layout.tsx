@@ -5,6 +5,7 @@ import CallNowButton from '@/components/CallNowButton';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { getContent } from '@/lib/content';
+import { siteUrl } from '@/lib/env';
 import '@/styles/globals.css';
 
 const raleway = Raleway({
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const site = await getContent('site');
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bluemarin.ro'),
+    metadataBase: new URL(siteUrl()),
     title: {
       default: site.seo.title,
       template: `%s | ${site.name}`,
@@ -61,9 +62,9 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const site = await getContent('site');
 
-  // Date structurate pentru Google — ajuta la afisarea in rezultatele locale.
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bluemarin.ro';
+  const url = siteUrl();
 
+  // Date structurate pentru Google — ajuta la afisarea in rezultatele locale.
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SportsActivityLocation',
@@ -72,8 +73,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     description: site.seo.description,
     telephone: site.contact.phoneHref,
     email: site.contact.email,
-    url: siteUrl,
-    logo: `${siteUrl}${site.logo}`,
+    url,
+    logo: `${url}${site.logo}`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Calea Giulești 18',

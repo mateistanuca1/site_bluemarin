@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next';
 
+import { siteUrl } from '@/lib/env';
 import { getContentSync } from '@/lib/content';
 
-const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bluemarin.ro').replace(/\/+$/, '');
+const BASE = siteUrl();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const team = getContentSync('team');

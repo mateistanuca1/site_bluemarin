@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
-const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bluemarin.ro').replace(/\/+$/, '');
+import { siteUrl } from '@/lib/env';
+const BASE = siteUrl();
 
 export default function robots(): MetadataRoute.Robots {
   return {
