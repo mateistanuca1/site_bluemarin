@@ -4,7 +4,6 @@
 
   "functions": {
     "api/index.py": {
-      "runtime": "@vercel/python@24.0.0",
       "maxDuration": 30,
       "memory": 1024
     }
