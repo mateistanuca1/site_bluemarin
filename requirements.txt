@@ -7,6 +7,9 @@ psycopg2-binary==2.9.10
 # Generare PDF — Python pur, fara librarii de sistem (merge pe Vercel).
 fpdf2==2.8.4
 Pillow==11.3.0
-# Apeluri HTTP catre Resend si catre webhook-ul de revalidare Next.js
+# Apeluri HTTP catre Resend, Google si webhook-ul de revalidare Next.js
 requests==2.32.5
+# Semnarea tokenului pentru Google Sheets/Drive. Apelurile le facem direct
+# pe REST, ca sa nu caram google-api-python-client pe Vercel.
+google-auth==2.41.1
 python-dotenv==1.1.1

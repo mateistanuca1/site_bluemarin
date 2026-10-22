@@ -25,6 +25,7 @@ Virtuagym. Nu exista nicio dependenta de Google Apps Script.
 - [Ce se intampla la o inscriere](#ce-se-intampla-la-o-inscriere)
 - [Structura proiectului](#structura-proiectului)
 - [Cum editezi continutul](#cum-editezi-continutul)
+- [Unde ajung datele din formulare](#unde-ajung-datele-din-formulare)
 - [Deploy pe Vercel](#deploy-pe-vercel)
 - [Cat costa](#cat-costa)
 - [Variabile de mediu](#variabile-de-mediu)
@@ -195,7 +196,73 @@ Scriptul le descarca, le converteste in WebP si rescrie `content/gallery.json`.
 
 ---
 
+## Unde ajung datele din formulare
+
+Doua variante, alese automat dupa ce e configurat. Verifici oricand cu
+`python -m backend.cli check`.
+
+### Google Sheets + Drive
+
+Ce facea scriptul Apps Script de pe site-ul vechi: randuri intr-o foaie de
+calcul, fisierele intr-un folder de Drive. Deschizi foaia si vezi tot, fara
+panou de admin.
+
+Filele si coloanele sunt identice cu cele vechi:
+
+| Fila | Coloane |
+|---|---|
+| `Inscrieri` | Data, Cursant, Data nașterii, Părinte, Telefon, E-mail, Locație, Tip, IP, Fișă PDF |
+| `Contact` | Data, Nume, E-mail, Telefon, Pachet, Locație, Vârstă, Subiect, Mesaj |
+| `Cereri abonament` | la fel ca `Contact` |
+| `Cariere` | Data, Nume, E-mail, Telefon, Mesaj, CV |
+
+Filele se creeaza singure, cu titluri, la prima trimitere.
+
+**Configurare**, o singura data:
+
+1. In [Google Cloud Console](https://console.cloud.google.com): proiect nou →
+   activeaza **Google Sheets API** si **Google Drive API** → OAuth consent
+   screen (External, adauga contul clubului la *Test users*) → Credentials →
+   **OAuth client ID**, tip *Desktop app*
+2. Ruleaza pe calculatorul tau:
+   ```bash
+   python3 scripts/google-auth.py
+   ```
+   Te duce prin autorizare si scrie `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
+   si `GOOGLE_REFRESH_TOKEN` in `vercel-env.txt`.
+3. Completezi acolo `GOOGLE_SHEET_ID` si `GOOGLE_DRIVE_FOLDER_ID`, luate din
+   adresele foii si folderului
+4. Copiezi blocul in Vercel → Settings → Environment Variables
+
+> **De ce token OAuth si nu service account?** Un service account nu are spatiu
+> propriu de stocare. Pe un cont Gmail obisnuit, Drive refuza incarcarile cu
+> `storageQuotaExceeded`. Cu tokenul contului clubului, fisierele ii apartin
+> lui si consuma din cele 15 GB. Service account-ul ramane suportat
+> (`GOOGLE_SERVICE_ACCOUNT_JSON`), dar are nevoie de un Shared Drive.
+
+### Baza de date
+
+Varianta implicita, cand cheile Google lipsesc: Postgres pe Vercel, SQLite
+local. Vine cu panoul de admin — filtre, note interne, export CSV, incarcare
+de poze.
+
+---
+
 ## Deploy pe Vercel
+
+### Varianta minima: doar frontend-ul
+
+Site-ul merge si fara backend. Textele se citesc din `content/*.json`, toate
+cele 30 de pagini se genereaza static si nu ai nevoie de nicio baza de date.
+
+Lasi goale `CONTENT_API_URL`, `DATABASE_URL` si restul si setezi doar:
+
+| Variabila | Valoare |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | adresa site-ului |
+
+Formularele nu vor functiona pana nu adaugi si backend-ul. Textele le editezi
+in `content/*.json` si dai push.
 
 ### 1. Baza de date (2 minute, gratis)
 
@@ -309,6 +376,9 @@ Cele care conteaza cel mai des:
 | `REVALIDATE_SECRET` | — | Fara ea, modificarile apar dupa ~5 minute in loc de imediat. |
 | `STORAGE_BACKEND` | `db` | `db`, `s3` sau `local`. |
 | `BACKEND_ORIGIN` | — | Doar local: unde ruleaza Flask, ca `/api/*` sa ajunga la el. |
+| `GOOGLE_REFRESH_TOKEN` | — | Cand e setat, trimiterile merg in Sheets + Drive in loc de baza de date. |
+| `GOOGLE_SHEET_ID` | — | Foaia in care se scriu randurile. |
+| `GOOGLE_DRIVE_FOLDER_ID` | — | Folderul in care ajung fisele PDF si documentele. |
 | `MAX_UPLOAD_MB` | `8` | Limita per fisier incarcat. |
 | `RATE_LIMIT_PER_HOUR` | `12` | Cate formulare accepta de la acelasi IP intr-o ora. |
 | `VIRTUAGYM_API_KEY` | — | Fara ea, inscrierile nu ajung in softul clubului. |

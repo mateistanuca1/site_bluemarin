@@ -119,6 +119,17 @@ def cmd_check(_args: argparse.Namespace) -> int:
     if not (has_admin or with_db_admin):
         print("         Ruleaza: python -m backend.cli create-admin")
 
+    from . import google_api, submissions
+
+    where = submissions.active_backend()
+    print(f"  {'OK  ' if where == 'google' else '—   '}  Arhivare — "
+          f"{'Google Sheets + Drive' if where == 'google' else 'baza de date'}")
+    if where == "google":
+        for key, value in google_api.check().items():
+            print(f"         {key}: {value}")
+    else:
+        print("         Fara cheile GOOGLE_*, trimiterile merg in baza de date.")
+
     has_reval = bool(settings.site_url and settings.revalidate_secret)
     print(f"  {mark(has_reval)}  Revalidare Next.js")
     if not has_reval:

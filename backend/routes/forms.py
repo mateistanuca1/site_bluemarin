@@ -1,4 +1,11 @@
-"""Formularele publice: contact, cerere de abonament, cariere si inscriere."""
+"""Formularele publice: contact, cerere de abonament, cariere si inscriere.
+
+Fac acelasi lucru ca cele doua scripturi Apps Script de pe site-ul vechi
+(Bazin CS Rapid si Militari Wellness): valideaza datele, construiesc fisa PDF,
+o trimit pe email si o arhiveaza, apoi creeaza membrul in Virtuagym.
+
+Unde se arhiveaza depinde de configurare — vezi backend/submissions.py.
+"""
 
 from __future__ import annotations
 
@@ -10,14 +17,13 @@ from html import escape
 
 from flask import Blueprint, jsonify, request
 from werkzeug.datastructures import FileStorage
+from werkzeug.utils import secure_filename
 
-from .. import security as sec, virtuagym
+from .. import security as sec, submissions, virtuagym
 from ..config import settings
-from ..db import session_scope
-from ..mail import Attachment, send
-from ..models import StoredFile, Submission
+from ..mail import Attachment as MailAttachment, send
 from ..pdf import EnrollmentData, build_enrollment_pdf
-from ..storage import save as store_file
+from ..submissions import Attachment
 
 log = logging.getLogger(__name__)
 
@@ -75,27 +81,30 @@ def _check_file(
             "Folosește o imagine (JPG, PNG) sau un PDF."
         )
 
-    from werkzeug.utils import secure_filename
-
-    name = secure_filename(f.filename) or "fisier"
-    return content, name[:255], content_type
+    return content, (secure_filename(f.filename) or "fisier")[:255], content_type
 
 
-def _persist(db, submission: Submission, files: list[tuple[str, bytes, str, str]]) -> None:
-    """Salveaza fisierele atasate unei trimiteri deja inserate (cu id)."""
-    for role, content, filename, content_type in files:
-        stored = store_file(submission.id, role, filename, content, content_type)
-        db.add(
-            StoredFile(
-                submission_id=submission.id,
-                role=role,
-                filename=filename,
-                content_type=content_type,
-                size=len(content),
-                data=stored.data,
-                storage_key=stored.storage_key,
-            )
+def _archive(kind: str, fields: dict, attachments: list[Attachment]) -> submissions.Stored | None:
+    """Salveaza trimiterea. Nu arunca: o arhivare esuata nu trebuie sa piarda emailul."""
+    try:
+        return submissions.record(kind, fields, attachments)
+    except Exception:
+        log.exception("Arhivarea trimiterii „%s” a esuat", kind)
+        return None
+
+
+def _finish(stored: submissions.Stored | None, emailed: bool, message: str):
+    """Raspunsul catre vizitator.
+
+    Daca si arhivarea, si emailul au esuat, datele s-au pierdut si trebuie sa
+    spunem asta. Daca macar unul a mers, clubul are cererea — a doua incercare
+    ar produce doar un duplicat.
+    """
+    if stored is None and not emailed:
+        return sec.json_error(
+            "Nu am putut inregistra cererea. Te rugam sa ne suni la 0744 258 258.", 502
         )
+    return jsonify({"message": message})
 
 
 def _rows_html(rows: list[tuple[str, str]]) -> str:
@@ -112,6 +121,13 @@ def _rows_html(rows: list[tuple[str, str]]) -> str:
 
 def _rows_text(rows: list[tuple[str, str]]) -> str:
     return "\n".join(f"{k}: {v or '—'}" for k, v in rows)
+
+
+def _meta() -> dict:
+    return {
+        "consent_ip": sec.client_ip(),
+        "user_agent": request.headers.get("User-Agent", "")[:255],
+    }
 
 
 def _guard():
@@ -147,22 +163,13 @@ def contact():
     except sec.ValidationError as exc:
         return sec.json_error(exc.message)
 
-    with session_scope() as db:
-        db.add(
-            Submission(
-                kind="contact",
-                name=name,
-                email=email_addr,
-                subject=subject,
-                message=message,
-                consent=True,
-                consent_ip=sec.client_ip(),
-                user_agent=request.headers.get("User-Agent", "")[:255],
-            )
-        )
+    fields = {
+        "name": name, "email": email_addr, "subject": subject, "message": message, **_meta()
+    }
+    stored = _archive("contact", fields, [])
 
     rows = [("Nume", name), ("Email", email_addr), ("Subiect", subject), ("Mesaj", message)]
-    send(
+    emailed = send(
         to=settings.mail_to,
         subject=f"[Site] Mesaj nou de la {name}",
         text_body=_rows_text(rows),
@@ -170,7 +177,7 @@ def contact():
         reply_to=email_addr,
     )
 
-    return jsonify({"message": "Mesajul a fost trimis. Te contactam in cel mai scurt timp!"})
+    return _finish(stored, emailed, "Mesajul a fost trimis. Te contactam in cel mai scurt timp!")
 
 
 # --------------------------------------------------------------------------- #
@@ -196,34 +203,18 @@ def package_request():
     except sec.ValidationError as exc:
         return sec.json_error(exc.message)
 
-    with session_scope() as db:
-        db.add(
-            Submission(
-                kind="pachet",
-                name=name,
-                email=email_addr,
-                phone=phone,
-                age=age,
-                message=message,
-                package=package,
-                location=location,
-                subject=f"Cerere abonament — {package}",
-                consent=True,
-                consent_ip=sec.client_ip(),
-                user_agent=request.headers.get("User-Agent", "")[:255],
-            )
-        )
+    fields = {
+        "name": name, "email": email_addr, "phone": phone, "age": age, "message": message,
+        "package": package, "location": location,
+        "subject": f"Cerere abonament — {package}", **_meta(),
+    }
+    stored = _archive("pachet", fields, [])
 
     rows = [
-        ("Pachet", package),
-        ("Locație", location),
-        ("Nume", name),
-        ("Email", email_addr),
-        ("Telefon", phone),
-        ("Vârstă", age),
-        ("Preferințe oră/zi", message),
+        ("Pachet", package), ("Locație", location), ("Nume", name), ("Email", email_addr),
+        ("Telefon", phone), ("Vârstă", age), ("Preferințe oră/zi", message),
     ]
-    send(
+    emailed = send(
         to=settings.mail_to,
         subject=f"[Site] Cerere abonament — {name} ({package})",
         text_body=_rows_text(rows),
@@ -231,8 +222,8 @@ def package_request():
         reply_to=email_addr,
     )
 
-    return jsonify(
-        {"message": "Cererea a fost trimisa! Te contactam pentru a stabili programul."}
+    return _finish(
+        stored, emailed, "Cererea a fost trimisa! Te contactam pentru a stabili programul."
     )
 
 
@@ -264,33 +255,23 @@ def careers():
     assert cv is not None
     cv_content, cv_name, cv_type = cv
 
-    with session_scope() as db:
-        submission = Submission(
-            kind="cariere",
-            name=name,
-            email=email_addr,
-            phone=phone,
-            message=message,
-            subject="Aplicare cariere",
-            consent=True,
-            consent_ip=sec.client_ip(),
-            user_agent=request.headers.get("User-Agent", "")[:255],
-        )
-        db.add(submission)
-        db.flush()  # ca sa avem id-ul pentru fisiere
-        _persist(db, submission, [("cv", cv_content, cv_name, cv_type)])
+    fields = {
+        "name": name, "email": email_addr, "phone": phone, "message": message,
+        "subject": "Aplicare cariere", **_meta(),
+    }
+    stored = _archive("cariere", fields, [Attachment("cv", cv_name, cv_content, cv_type)])
 
     rows = [("Nume", name), ("Email", email_addr), ("Telefon", phone), ("Mesaj", message)]
-    send(
+    emailed = send(
         to=settings.mail_to,
         subject=f"[Site] CV nou — {name}",
         text_body=_rows_text(rows),
         html_body=_rows_html(rows),
         reply_to=email_addr,
-        attachments=[Attachment(cv_name, cv_content, cv_type)],
+        attachments=[MailAttachment(cv_name, cv_content, cv_type)],
     )
 
-    return jsonify({"message": "Am primit CV-ul tau. Te contactam in cel mai scurt timp!"})
+    return _finish(stored, emailed, "Am primit CV-ul tau. Te contactam in cel mai scurt timp!")
 
 
 # --------------------------------------------------------------------------- #
@@ -332,7 +313,6 @@ def enrollment():
         if not raw_signature:
             raise sec.ValidationError("Te rugam sa semnezi inainte de a trimite formularul.")
         try:
-            # Acceptam si forma completa "data:image/png;base64,…".
             if "," in raw_signature and raw_signature.startswith("data:"):
                 raw_signature = raw_signature.split(",", 1)[1]
             signature = base64.b64decode(raw_signature, validate=True)
@@ -350,90 +330,73 @@ def enrollment():
 
     submitted_at = datetime.now(timezone.utc)
     ip = sec.client_ip()
+    # Numar de fisa lizibil, care nu depinde de un id din baza de date.
+    reference = submitted_at.strftime("%Y%m%d-%H%M%S")
 
-    with session_scope() as db:
-        submission = Submission(
-            kind="inscriere",
-            name=student,
-            email=email_addr,
-            phone=phone,
-            birth_date=birth,
-            legal_parent=parent,
-            location=location,
-            subject=f"Înscriere — {student}",
-            consent=True,
-            consent_ip=ip,
-            user_agent=request.headers.get("User-Agent", "")[:255],
-            created_at=submitted_at,
+    # Fisa PDF — acelasi rol pe care il avea scriptul Apps Script.
+    try:
+        pdf_bytes = build_enrollment_pdf(
+            EnrollmentData(
+                student_name=student,
+                birth_date=birth,
+                legal_parent=parent,
+                phone=phone,
+                email=email_addr,
+                location_name=location,
+                consent_ip=ip,
+                submitted_at=submitted_at,
+                reference=reference,
+                signature_png=signature,
+                documents=[
+                    ("Aviz epidemiologic", photo_content),
+                    ("Adeverință «apt efort fizic»", medical_content),
+                ],
+            ),
+            club_name=CLUB,
         )
-        db.add(submission)
-        db.flush()
-        submission_id = submission.id
+    except Exception:
+        # Inscrierea nu se pierde chiar daca PDF-ul nu se genereaza.
+        log.exception("Generarea PDF a esuat pentru inscrierea %s", reference)
+        pdf_bytes = None
 
-        # Fisa de inscriere in PDF, trimisa pe email si arhivata la noi.
-        try:
-            pdf_bytes = build_enrollment_pdf(
-                EnrollmentData(
-                    student_name=student,
-                    birth_date=birth,
-                    legal_parent=parent,
-                    phone=phone,
-                    email=email_addr,
-                    location_name=location,
-                    consent_ip=ip,
-                    submitted_at=submitted_at,
-                    submission_id=submission_id,
-                    signature_png=signature,
-                    documents=[
-                        ("Aviz epidemiologic", photo_content),
-                        ("Adeverință «apt efort fizic»", medical_content),
-                    ],
-                ),
-                club_name=CLUB,
-            )
-        except Exception:
-            # Inscrierea nu se pierde chiar daca PDF-ul nu se genereaza.
-            log.exception("Generarea PDF a eșuat pentru inscrierea %s", submission_id)
-            pdf_bytes = None
+    pdf_name = f"fisa-inscriere-{reference}.pdf"
+    attachments = [
+        Attachment("aviz-epidemiologic", photo_name, photo_content, photo_type),
+        Attachment("adeverinta-efort-fizic", medical_name, medical_content, medical_type),
+        Attachment("semnatura", "semnatura.png", signature, "image/png"),
+    ]
+    if pdf_bytes:
+        attachments.insert(0, Attachment("fisa-pdf", pdf_name, pdf_bytes, "application/pdf"))
 
-        files: list[tuple[str, bytes, str, str]] = [
-            ("aviz-epidemiologic", photo_content, photo_name, photo_type),
-            ("adeverinta-efort-fizic", medical_content, medical_name, medical_type),
-            ("semnatura", signature, "semnatura.png", "image/png"),
-        ]
-        pdf_name = f"fisa-inscriere-{submission_id}.pdf"
-        if pdf_bytes:
-            files.append(("fisa-pdf", pdf_bytes, pdf_name, "application/pdf"))
+    fields = {
+        "name": student, "email": email_addr, "phone": phone, "birth_date": birth,
+        "legal_parent": parent, "location": location,
+        "subject": f"Înscriere — {student}", **_meta(),
+    }
+    stored = _archive("inscriere", fields, attachments)
 
-        _persist(db, submission, files)
-
-        # Creeaza membrul in softul clubului. Optional: daca nu e configurat
-        # sau daca Virtuagym nu raspunde, inscrierea ramane salvata oricum.
-        submission.virtuagym_member_id = virtuagym.create_member(
-            full_name=student,
-            email=email_addr,
-            phone=phone,
-            external_id=f"bluemarin-{submission_id}",
-        )
+    # Membrul in softul clubului. Optional: fara chei, pasul e sarit.
+    virtuagym.create_member(
+        full_name=student,
+        email=email_addr,
+        phone=phone,
+        external_id=f"bluemarin-{reference}",
+    )
 
     rows = [
-        ("Cursant", student),
-        ("Data nașterii", birth),
-        ("Părinte / reprezentant", parent),
-        ("Telefon", phone),
-        ("Email", email_addr),
-        ("Locație", location),
+        ("Cursant", student), ("Data nașterii", birth), ("Părinte / reprezentant", parent),
+        ("Telefon", phone), ("Email", email_addr), ("Locație", location),
     ]
-    attachments = [Attachment(pdf_name, pdf_bytes, "application/pdf")] if pdf_bytes else []
+    mail_files = [MailAttachment(pdf_name, pdf_bytes, "application/pdf")] if pdf_bytes else []
 
     # 1. Notificare catre club
-    send(
+    emailed = send(
         to=settings.mail_to,
         subject=f"[Site] Înscriere noua — {student} ({location})",
         text_body=_rows_text(rows),
         html_body=_rows_html(rows),
         reply_to=email_addr,
-        attachments=attachments,
+        attachments=mail_files,
     )
 
     # 2. Confirmare catre parinte, cu fisa atasata
@@ -449,14 +412,12 @@ def enrollment():
             "Pentru orice întrebare, ne găsești la 0744 258 258 sau contact@bluemarin.ro.\n\n"
             f"Cu drag,\nEchipa {CLUB}"
         ),
-        attachments=attachments,
+        attachments=mail_files,
     )
 
-    return jsonify(
-        {
-            "message": (
-                "Felicitari! Inscrierea a fost trimisa. Verifica emailul — "
-                "ai primit o copie a fisei in format PDF."
-            )
-        }
+    return _finish(
+        stored,
+        emailed,
+        "Felicitari! Inscrierea a fost trimisa. Verifica emailul — "
+        "ai primit o copie a fisei in format PDF.",
     )

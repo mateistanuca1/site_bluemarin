@@ -45,7 +45,9 @@ class EnrollmentData:
     location_name: str
     consent_ip: str = ""
     submitted_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
-    submission_id: int | None = None
+    # Numarul fisei. Cand salvam in baza de date e id-ul randului; cu Google,
+    # unde nu exista id, e un numar derivat din data si ora trimiterii.
+    reference: str = ""
     # Imaginile, ca bytes: semnatura, documentul de identitate, avizul medical
     signature_png: bytes | None = None
     documents: list[tuple[str, bytes]] = field(default_factory=list)
@@ -192,7 +194,7 @@ def build_enrollment_pdf(data: EnrollmentData, club_name: str = "Bluemarin Sport
     pdf.set_font(pdf.base_font, "", 9)
     pdf.set_text_color(*GREY)
     stamp = data.submitted_at.strftime("%d.%m.%Y, ora %H:%M UTC")
-    ref = f"Nr. {data.submission_id}" if data.submission_id else "Nr. —"
+    ref = f"Nr. {data.reference}" if data.reference else "Nr. —"
     pdf.cell(0, 5, f"{ref} · completată la {stamp}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf.ln(2)
 

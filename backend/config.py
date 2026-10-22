@@ -133,6 +133,30 @@ class Settings:
         default_factory=lambda: os.getenv("REVALIDATE_SECRET", "").strip()
     )
 
+    # --- Google Sheets + Drive ---
+    # Inlocuiesc baza de date: randurile ajung in foaia de calcul, fisierele in
+    # folderul de Drive — exact ce facea scriptul Apps Script.
+    #
+    # Doua feluri de autentificare, vezi backend/google_api.py:
+    #   OAuth (recomandat pe conturi Gmail): CLIENT_ID + CLIENT_SECRET + REFRESH_TOKEN
+    #   Service account (doar cu Shared Drive): SERVICE_ACCOUNT_JSON
+    google_client_id: str = field(
+        default_factory=lambda: os.getenv("GOOGLE_CLIENT_ID", "").strip()
+    )
+    google_client_secret: str = field(
+        default_factory=lambda: os.getenv("GOOGLE_CLIENT_SECRET", "").strip()
+    )
+    google_refresh_token: str = field(
+        default_factory=lambda: os.getenv("GOOGLE_REFRESH_TOKEN", "").strip()
+    )
+    google_service_account_json: str = field(
+        default_factory=lambda: os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
+    )
+    google_sheet_id: str = field(default_factory=lambda: os.getenv("GOOGLE_SHEET_ID", "").strip())
+    google_drive_folder_id: str = field(
+        default_factory=lambda: os.getenv("GOOGLE_DRIVE_FOLDER_ID", "").strip()
+    )
+
     # --- Limite ---
     max_upload_mb: int = field(default_factory=lambda: _int("MAX_UPLOAD_MB", 8))
     # Cate trimiteri acceptam de la acelasi IP intr-o ora.
