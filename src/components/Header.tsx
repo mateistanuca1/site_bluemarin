@@ -9,6 +9,13 @@ import Icon from './Icon';
 import { cx } from '@/lib/utils';
 import type { Link as LinkType, NavItem } from '@/lib/types';
 
+/** Spatiul dintre elementele din dreapta barii (gap-3 = 12px). */
+const RIGHT_GAP = 12;
+/** Rezerva ceruta ca sa colapsam meniul. */
+const COLLAPSE_MARGIN = 8;
+/** Rezerva, mai mare, ceruta ca sa-l afisam inapoi — evita palpairea. */
+const EXPAND_MARGIN = 28;
+
 type Props = {
   logo: string;
   siteName: string;
@@ -41,6 +48,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
    */
   const navRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
   const [tooNarrow, setTooNarrow] = useState(false);
 
   useEffect(() => {
@@ -63,11 +71,25 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
     /*
      * `invisible` pastreaza elementul in layout, deci `scrollWidth` ramane
      * latimea reala a listei si cand e ascunsa — asa putem sti cand e loc sa o
-     * aratam inapoi. Cele 8 px sunt o rezerva, ca sa nu comutam pe muchie.
+     * aratam inapoi.
+     *
+     * Partea delicata: cand bara e colapsata, butonul de meniu ocupa el spatiu,
+     * iar `box` se ingusteaza exact cu cat ar avea nevoie meniul ca sa reincapa.
+     * Daca masuram asa, raspunsul se auto-confirma si nu mai iesim niciodata din
+     * starea colapsata. De aceea adaugam inapoi latimea butonului cat timp e
+     * afisat — intrebam „ar incapea daca l-am ascunde?", nu „incape acum?".
      */
     const check = () => {
       if (list.scrollWidth === 0) return;
-      setTooNarrow(list.scrollWidth + 8 > box.clientWidth);
+
+      const reclaimed =
+        tooNarrow && burgerRef.current ? burgerRef.current.offsetWidth + RIGHT_GAP : 0;
+      const available = box.clientWidth + reclaimed;
+
+      // Prag asimetric: colapsam imediat ce nu mai incape, dar revenim doar cand
+      // exista o rezerva confortabila. Altfel bara ar palpai la redimensionare.
+      const margin = tooNarrow ? EXPAND_MARGIN : COLLAPSE_MARGIN;
+      setTooNarrow(list.scrollWidth + margin > available);
     };
     check();
 
@@ -79,7 +101,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
     document.fonts?.ready.then(check).catch(() => {});
 
     return () => ro.disconnect();
-  }, [nav]);
+  }, [nav, tooNarrow]);
 
   // Blocheaza derularea paginii cat timp meniul mobil e deschis.
   useEffect(() => {
@@ -95,8 +117,14 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
   const groupActive = (item: NavItem) =>
     isActive(item.href) || (item.children ?? []).some((c) => isActive(c.href));
 
+  /*
+   * Spatierea de 0.1em era prea larga pentru noua intrari: lista cerea 804 px
+   * si nu mai incapea nici pe ecrane de 1440. La 0.045em textul ramane la fel
+   * de lizibil, dar lista scade cu ~40 px si bara respira.
+   */
   const linkBase =
-    'rounded px-2 py-2 text-[11.5px] font-bold uppercase tracking-wide2 transition-colors xl:px-2.5 xl:text-[12px]';
+    'rounded px-2 py-2 text-[11.5px] font-bold uppercase tracking-[0.045em] ' +
+    'transition-colors xl:px-2.5 xl:text-[12px]';
 
   return (
     <header
@@ -144,7 +172,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
                     aria-current={groupActive(item) ? 'page' : undefined}
                     className={cx(
                       linkBase,
-                      'site-header__link flex items-center gap-1 whitespace-nowrap',
+                      'site-header__link site-header__nav-link flex items-center gap-1 whitespace-nowrap',
                       groupActive(item) && 'is-active',
                     )}
                   >
@@ -185,7 +213,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
                     aria-current={isActive(item.href) ? 'page' : undefined}
                     className={cx(
                       linkBase,
-                      'site-header__link block whitespace-nowrap',
+                      'site-header__link site-header__nav-link block whitespace-nowrap',
                       isActive(item.href) && 'is-active',
                     )}
                   >
@@ -198,13 +226,20 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          {/*
+            Numarul scris ocupa ~70 px de care are nevoie meniul, iar alaturi
+            exista deja butonul „Înscrie-te". Pastram doar iconita, cu numarul in
+            aria-label, si il scriem intreg abia cand chiar e loc. Pe mobil
+            numarul ramane oricum vizibil, in bara fixa de jos.
+          */}
           <a
             href={`tel:${phoneHref}`}
+            aria-label={`Sună la ${phone}`}
             className="site-header__link hidden items-center gap-2 whitespace-nowrap rounded
-                       text-[13px] font-semibold md:flex"
+                       p-2 text-[13px] font-semibold md:flex 2xl:px-0 2xl:py-0"
           >
-            <Icon name="phone" className="h-4 w-4 shrink-0" />
-            <span className="tabular-nums">{phone}</span>
+            <Icon name="phone" className="h-[18px] w-[18px] shrink-0" />
+            <span className="hidden tabular-nums 2xl:inline">{phone}</span>
           </a>
 
           {cta && (
@@ -214,6 +249,7 @@ export default function Header({ logo, siteName, nav, phone, phoneHref, cta }: P
           )}
 
           <button
+            ref={burgerRef}
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}

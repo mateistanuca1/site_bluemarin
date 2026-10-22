@@ -148,8 +148,40 @@ Atentie: pierzi **toate** modificarile facute la acea sectiune, nu doar ultima.
 
 ## Pozele
 
-Pozele nu se schimba din panou. Pentru ele, scrie-i celui care se ocupa de
-partea tehnica — e o operatie de cateva minute.
+Pozele se schimba din panou, in doua feluri.
+
+### Direct de pe campul pozei
+
+Cand editezi o secțiune, fiecare poza are o miniatura si un buton
+**Încarcă poză**. Alegi fisierul din calculator sau de pe telefon, se incarca
+singur si adresa se completeaza automat in camp. **Nu uita sa dai Salveaza**
+dupa — incarcarea pozei si salvarea secțiunii sunt doua lucruri separate.
+
+### Din biblioteca
+
+Butonul **Poze** din meniul de sus deschide biblioteca. Acolo poti:
+
+- incarca mai multe poze odata (sau le tragi direct in zona punctata)
+- copia adresa unei poze, ca sa o lipesti unde vrei
+- sterge pozele pe care nu le mai folosesti
+
+### Ce se intampla cu poza pe care o incarci
+
+O micsoram automat la maxim 2000 px pe latura mare si o convertim in WebP, ca
+site-ul sa ramana rapid. Poti incarca liniștit o fotografie direct de pe telefon.
+
+Accepta JPG, PNG, WebP si HEIC (format de iPhone), maxim 8 MB fiecare.
+
+### Doua lucruri de stiut
+
+**Pozele livrate odata cu site-ul nu apar in biblioteca.** Portretele
+antrenorilor si bannerele de pe pagini au venit cu site-ul si se schimba din
+cod. Dar poti pune peste ele o poza incarcata de tine — adresa din camp e cea
+care conteaza.
+
+**Cand stergi o poza, nu verificam unde era folosita.** Daca o stergi si
+rămăsese pusa pe un antrenor, in locul ei va fi un gol. Uita-te intai unde o
+folosesti.
 
 ---
 

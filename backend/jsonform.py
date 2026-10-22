@@ -10,6 +10,7 @@ al fiecarui input.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -25,7 +26,7 @@ class Field:
     path: str
     label: str
     value: Any
-    kind: str  # "text" | "textarea" | "number" | "bool" | "html"
+    kind: str  # "text" | "textarea" | "number" | "bool" | "html" | "image"
 
 
 @dataclass
@@ -48,9 +49,19 @@ def _label(key: str) -> str:
     return spaced.replace("_", " ").replace("-", " ").strip().capitalize()
 
 
+# Chei care tin o cale de imagine. Pe acestea editorul arata o previzualizare
+# si un buton de incarcare, in loc de un simplu camp de text.
+IMAGE_KEYS = {"photo", "image", "hero", "logo", "src", "background", "cover", "poster"}
+
+# O valoare care arata a cale de imagine, chiar daca cheia nu e in lista.
+IMAGE_VALUE = re.compile(r"^/(?:images|api/media)/\S+\.(?:webp|jpg|jpeg|png|avif|gif)$", re.I)
+
+
 def _kind_for(key: str, value: str) -> str:
     if key == "html" or value.lstrip().startswith("<"):
         return "html"
+    if key in IMAGE_KEYS or IMAGE_VALUE.match(value.strip()):
+        return "image"
     if "\n" in value or len(value) > LONG_TEXT:
         return "textarea"
     return "text"

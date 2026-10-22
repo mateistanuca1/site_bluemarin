@@ -171,12 +171,25 @@ Util pentru modificari mari sau cand vrei istoric in Git.
 
 ### Poze
 
-Pozele sunt in `public/images/`. Ca sa adaugi altele de pe site-ul vechi,
-pune-le in `scripts/images.manifest.json` si ruleaza:
+Doua categorii, cu rosturi diferite:
+
+**Livrate cu codul** — `public/images/`. Portretele antrenorilor, bannerele de
+secțiune, logo-ul. Ca sa adaugi altele de pe site-ul vechi, pune-le in
+`scripts/images.manifest.json` si ruleaza:
 
 ```bash
 npm run images
 ```
+
+**Incarcate din admin** — secțiunea **Poze** din panou, sau butonul
+„Încarcă poză" de pe fiecare camp de imagine din editorul de continut. Se
+convertesc automat in WebP, se micsoreaza la maxim 2000 px si se servesc la
+`/api/media/<slug>`. Stau in acelasi loc ca documentele de inscriere, dupa
+`STORAGE_BACKEND`.
+
+> **Local ai nevoie de `BACKEND_ORIGIN`** in `.env.local`, altfel `/api/media/...`
+> nu ajunge la Flask si pozele incarcate nu se vad. Pe Vercel rescrierea o face
+> `vercel.json`, deci variabila se lasa goala.
 
 Scriptul le descarca, le converteste in WebP si rescrie `content/gallery.json`.
 
@@ -295,6 +308,7 @@ Cele care conteaza cel mai des:
 | `CONTENT_REVALIDATE` | `300` | Cat tine cache-ul continutului, in secunde. |
 | `REVALIDATE_SECRET` | — | Fara ea, modificarile apar dupa ~5 minute in loc de imediat. |
 | `STORAGE_BACKEND` | `db` | `db`, `s3` sau `local`. |
+| `BACKEND_ORIGIN` | — | Doar local: unde ruleaza Flask, ca `/api/*` sa ajunga la el. |
 | `MAX_UPLOAD_MB` | `8` | Limita per fisier incarcat. |
 | `RATE_LIMIT_PER_HOUR` | `12` | Cate formulare accepta de la acelasi IP intr-o ora. |
 | `VIRTUAGYM_API_KEY` | — | Fara ea, inscrierile nu ajung in softul clubului. |

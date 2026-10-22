@@ -10,6 +10,7 @@ from flask import (
     Response,
     abort,
     flash,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -17,12 +18,12 @@ from flask import (
 )
 from sqlalchemy import func, select
 
-from .. import jsonform, security as sec
+from .. import jsonform, media as media_lib, security as sec
 from ..db import session_scope
-from ..models import ContentBlock, StoredFile, Submission
+from ..models import ContentBlock, MediaAsset, StoredFile, Submission
 from ..revalidate import ping
 from ..seed import KEYS, read_file, seed
-from ..storage import load as load_file
+from ..storage import load as load_file, save as save_file
 
 bp = Blueprint("admin", __name__)
 
@@ -278,6 +279,109 @@ def revalidate_now():
         "success" if ok else "error",
     )
     return redirect(request.referrer or url_for("admin.dashboard"))
+
+
+# --------------------------------------------------------------------------- #
+# Poze
+# --------------------------------------------------------------------------- #
+
+@bp.get("/poze")
+@sec.login_required
+def media_index():
+    with session_scope() as db:
+        assets = list(db.scalars(select(MediaAsset).order_by(MediaAsset.created_at.desc())))
+        total = sum(a.size for a in assets)
+    return render_template("admin/media.html", assets=assets, total_bytes=total)
+
+
+@bp.post("/poze")
+@sec.login_required
+def media_upload():
+    """Primeste una sau mai multe poze.
+
+    Raspunde cu JSON cand e chemata din editorul de continut (unde completam
+    campul fara sa parasim pagina) si cu redirect cand vine din biblioteca.
+    """
+    wants_json = request.headers.get("Accept", "").startswith("application/json")
+    files = [f for f in request.files.getlist("file") if f and f.filename]
+
+    if not files:
+        if wants_json:
+            return jsonify({"error": "Nu ai ales nicio poză."}), 400
+        flash("Nu ai ales nicio poză.", "error")
+        return redirect(url_for("admin.media_index"))
+
+    saved: list[dict[str, object]] = []
+    errors: list[str] = []
+
+    for f in files:
+        content = f.read()
+        if (f.mimetype or "").lower() not in media_lib.ACCEPTED:
+            errors.append(f"{f.filename}: formatul nu este acceptat.")
+            continue
+        try:
+            prepared = media_lib.prepare(content, f.filename)
+        except media_lib.MediaError as exc:
+            errors.append(f"{f.filename}: {exc}")
+            continue
+
+        with session_scope() as db:
+            asset = MediaAsset(
+                slug=prepared.slug,
+                filename=f.filename[:255],
+                content_type=prepared.content_type,
+                width=prepared.width,
+                height=prepared.height,
+                size=len(prepared.content),
+                alt=request.form.get("alt", "")[:255],
+                uploaded_by=sec.current_admin() or "admin",
+            )
+            db.add(asset)
+            db.flush()
+            stored = save_file(asset.id, "media", prepared.slug, prepared.content,
+                               prepared.content_type)
+            asset.data = stored.data
+            asset.storage_key = stored.storage_key
+            saved.append({
+                "url": f"/api/media/{prepared.slug}",
+                "slug": prepared.slug,
+                "width": prepared.width,
+                "height": prepared.height,
+            })
+
+    if wants_json:
+        if not saved:
+            return jsonify({"error": " ".join(errors) or "Încărcarea a eșuat."}), 400
+        return jsonify({"uploaded": saved, "errors": errors})
+
+    for e in errors:
+        flash(e, "error")
+    if saved:
+        flash(
+            f"{len(saved)} {'poză încărcată' if len(saved) == 1 else 'poze încărcate'}.",
+            "success",
+        )
+    return redirect(url_for("admin.media_index"))
+
+
+@bp.post("/poze/<int:asset_id>/sterge")
+@sec.login_required
+def media_delete(asset_id: int):
+    with session_scope() as db:
+        asset = db.get(MediaAsset, asset_id)
+        if asset is None:
+            abort(404)
+        slug = asset.slug
+        db.delete(asset)
+
+    # Nu stergem si din S3/disc: daca o pagina mai trimite la poza, mai bine o
+    # gaseste decat sa ramana cu un patrat gol. Fisierele orfane se curata rar,
+    # manual, cand chiar deranjeaza.
+    flash(
+        f"Poza a fost ștearsă. Dacă mai e folosită undeva, înlocuiește „/api/media/{slug}”.",
+        "success",
+    )
+    return redirect(url_for("admin.media_index"))
 
 
 # --------------------------------------------------------------------------- #

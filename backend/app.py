@@ -45,9 +45,11 @@ def create_app() -> Flask:
     from .routes.admin import bp as admin_bp
     from .routes.content import bp as content_bp
     from .routes.forms import bp as forms_bp
+    from .routes.media import bp as media_bp
 
     app.register_blueprint(content_bp, url_prefix=API_PREFIX)
     app.register_blueprint(forms_bp, url_prefix=API_PREFIX)
+    app.register_blueprint(media_bp, url_prefix=API_PREFIX)
     app.register_blueprint(admin_bp, url_prefix=f"{API_PREFIX}/admin")
 
     _register_health(app)

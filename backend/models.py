@@ -127,6 +127,39 @@ class StoredFile(Base):
     )
 
 
+class MediaAsset(Base):
+    """O poza incarcata din panoul de admin.
+
+    Pozele livrate odata cu codul stau in public/images/ si se schimba doar
+    printr-un commit. Astea sunt cele pe care le pune administratorul din
+    browser: se salveaza prin acelasi `storage.py` ca documentele de inscriere
+    si se servesc la /api/media/<slug>.
+    """
+
+    __tablename__ = "media_assets"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    # Numele din adresa, ex. "bogdan-marin-a1b2c3.webp". Unic si stabil:
+    # continutul salvat trimite la el, deci nu se schimba dupa incarcare.
+    slug: Mapped[str] = mapped_column(String(190), unique=True, nullable=False, index=True)
+    # Numele original al fisierului, doar pentru afisare in panou.
+    filename: Mapped[str] = mapped_column(String(255), nullable=False, default="")
+    content_type: Mapped[str] = mapped_column(String(128), nullable=False, default="image/webp")
+    width: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    height: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    size: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    alt: Mapped[str] = mapped_column(String(255), nullable=False, default="")
+
+    # Ca la stored_files: ori continutul aici, ori cheia din S3/disc.
+    data: Mapped[bytes | None] = mapped_column(LargeBinary)
+    storage_key: Mapped[str | None] = mapped_column(String(512))
+
+    uploaded_by: Mapped[str] = mapped_column(String(190), nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False, index=True
+    )
+
+
 class RateHit(Base):
     """Numarul de trimiteri pe IP si pe ora, pentru limitare.
 

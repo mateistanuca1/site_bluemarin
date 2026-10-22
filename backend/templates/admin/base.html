@@ -75,6 +75,26 @@
   .right{margin-left:auto}
   .row-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .login-wrap{max-width:380px;margin:9vh auto;padding:0 20px}
+  /* Camp de poza: previzualizare + incarcare pe loc */
+  .imgfield{display:flex;gap:14px;align-items:flex-start}
+  .imgfield__thumb{width:84px;height:84px;object-fit:cover;border:1px solid var(--line);
+                   border-radius:5px;background:var(--soft);flex:none}
+  .imgfield__thumb.is-missing{visibility:hidden}
+  .imgfield__ctl{flex:1;min-width:0}
+  .imgfield__actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:7px}
+  .imgfield__status{font-size:12px}
+  .imgfield__status.err{color:var(--err)}
+  /* Biblioteca de poze */
+  .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+  .media-card{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;
+              display:flex;flex-direction:column}
+  .media-card img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--soft);display:block}
+  .media-card__body{padding:9px 11px;font-size:12px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .media-card__name{font-weight:600;word-break:break-all;line-height:1.35}
+  .media-card__row{display:flex;gap:6px;align-items:center;margin-top:auto}
+  .dropzone{border:2px dashed var(--line);border-radius:7px;padding:26px;text-align:center;
+            background:#fff;transition:border-color .15s,background .15s}
+  .dropzone.is-over{border-color:var(--brand);background:var(--soft)}
   code{background:var(--soft);padding:2px 6px;border-radius:3px;font-size:13px}
   .filebox{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--line);
            border-radius:5px;margin-bottom:9px;background:#fff}
@@ -90,6 +110,7 @@
     <nav class="main">
       <a href="{{ url_for('admin.dashboard') }}" class="{{ 'on' if request.endpoint=='admin.dashboard' }}">Panou</a>
       <a href="{{ url_for('admin.content_index') }}" class="{{ 'on' if 'content' in (request.endpoint or '') }}">Continut</a>
+      <a href="{{ url_for('admin.media_index') }}" class="{{ 'on' if 'media' in (request.endpoint or '') }}">Poze</a>
       <a href="{{ url_for('admin.submissions') }}" class="{{ 'on' if 'submission' in (request.endpoint or '') }}">Cereri</a>
     </nav>
     <form method="post" action="{{ url_for('admin.logout') }}">
@@ -107,5 +128,54 @@
   {% endwith %}
   {% block body %}{% endblock %}
 </main>
+
+<script>
+/* Incarcarea unei poze direct din campul de continut: alegi fisierul, pleaca
+   la /api/admin/poze si adresa primita se scrie singura in camp. Fara reincarcarea
+   paginii, ca sa nu pierzi restul modificarilor nesalvate. */
+document.addEventListener('click', async (e) => {
+  const pick = e.target.closest('[data-imgfield-pick]');
+  if (!pick) return;
+  const wrap = pick.closest('[data-imgfield]');
+  wrap.querySelector('[data-imgfield-file]').click();
+});
+
+document.addEventListener('change', async (e) => {
+  const file = e.target.closest('[data-imgfield-file]');
+  if (!file || !file.files.length) return;
+
+  const wrap = file.closest('[data-imgfield]');
+  const input = wrap.querySelector('[data-imgfield-input]');
+  const thumb = wrap.querySelector('.imgfield__thumb');
+  const status = wrap.querySelector('[data-imgfield-status]');
+
+  status.className = 'muted imgfield__status';
+  status.textContent = 'Se încarcă…';
+
+  const body = new FormData();
+  body.append('file', file.files[0]);
+
+  try {
+    const res = await fetch('{{ url_for('admin.media_upload') }}', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Încărcarea a eșuat.');
+
+    const up = data.uploaded[0];
+    input.value = up.url;
+    thumb.src = up.url;
+    thumb.classList.remove('is-missing');
+    status.textContent = `Gata — ${up.width}×${up.height}. Nu uita să salvezi.`;
+  } catch (err) {
+    status.className = 'muted imgfield__status err';
+    status.textContent = err.message;
+  } finally {
+    file.value = '';
+  }
+});
+</script>
 </body>
 </html>

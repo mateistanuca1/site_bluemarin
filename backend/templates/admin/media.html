@@ -1,0 +1,90 @@
+{% extends "admin/base.html" %}
+{% block title %}Poze{% endblock %}
+{% block body %}
+<h1>Poze</h1>
+<p class="sub">
+  Pozele încărcate de aici se pot folosi oriunde în site. Le alegi direct din
+  <a href="{{ url_for('admin.content_index') }}">Conținut</a>, de pe câmpul fiecărei poze,
+  sau copiezi adresa de mai jos.
+</p>
+
+<form method="post" enctype="multipart/form-data" class="card" id="formIncarcare">
+  <label for="file">Încarcă poze</label>
+  <div class="dropzone" id="dropzone">
+    <input type="file" id="file" name="file" accept="image/*" multiple
+           style="display:block;margin:0 auto 10px">
+    <p class="muted" style="margin:0">
+      Sau trage pozele aici. JPG, PNG, WebP sau HEIC, maxim 8 MB fiecare.<br>
+      Le micșorăm și le convertim automat în WebP.
+    </p>
+  </div>
+  <button class="btn" type="submit" style="margin-top:14px">Încarcă</button>
+</form>
+
+{% if assets %}
+  <h2>{{ assets|length }} {{ 'poză' if assets|length == 1 else 'poze' }}
+    <span class="muted" style="font-weight:400">· {{ (total_bytes / 1048576)|round(1) }} MB</span>
+  </h2>
+
+  <div class="media-grid">
+    {% for a in assets %}
+      <figure class="media-card" style="margin:0">
+        <a href="/api/media/{{ a.slug }}" target="_blank" rel="noopener">
+          <img src="/api/media/{{ a.slug }}" alt="{{ a.alt or a.filename }}" loading="lazy">
+        </a>
+        <figcaption class="media-card__body">
+          <span class="media-card__name">{{ a.filename or a.slug }}</span>
+          <span class="muted">{{ a.width }}×{{ a.height }} · {{ (a.size / 1024)|round|int }} kB</span>
+          <span class="media-card__row">
+            <button type="button" class="btn ghost sm" data-copy="/api/media/{{ a.slug }}">
+              Copiază adresa
+            </button>
+            <form method="post" action="{{ url_for('admin.media_delete', asset_id=a.id) }}"
+                  onsubmit="return confirm('Ștergi poza? Dacă e folosită undeva, locul ei rămâne gol.')">
+              <button class="btn danger sm" type="submit">Șterge</button>
+            </form>
+          </span>
+        </figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="card">
+    <p class="muted" style="margin:0">
+      Nicio poză încărcată încă. Pozele livrate odată cu site-ul (antrenorii, bannerele)
+      nu apar aici — ele se schimbă din cod.
+    </p>
+  </div>
+{% endif %}
+
+<script>
+  /* Copiere adresa */
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    const text = btn.dataset.copy;
+    const before = btn.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = 'Copiat!';
+    } catch {
+      // Unele browsere refuza clipboard-ul fara HTTPS — aratam adresa ca s-o copieze manual.
+      window.prompt('Copiază adresa:', text);
+      btn.textContent = before;
+      return;
+    }
+    setTimeout(() => { btn.textContent = before; }, 1400);
+  });
+
+  /* Trage si lasa */
+  const dz = document.getElementById('dropzone');
+  const input = document.getElementById('file');
+  ['dragenter', 'dragover'].forEach(ev =>
+    dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('is-over'); }));
+  ['dragleave', 'drop'].forEach(ev =>
+    dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('is-over'); }));
+  dz.addEventListener('drop', e => {
+    input.files = e.dataTransfer.files;
+  });
+</script>
+{% endblock %}

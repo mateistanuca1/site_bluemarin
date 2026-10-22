@@ -11,6 +11,16 @@ const nextConfig = {
     formats: ['image/webp'],
   },
 
+  async rewrites() {
+    // In productie, vercel.json trimite /api/* la functia Flask. Local nu exista
+    // nimeni care sa faca asta, iar next/image are nevoie ca pozele incarcate din
+    // admin (/api/media/...) sa fie pe acelasi domeniu. Rescrierea de mai jos pune
+    // dev-ul in aceeasi situatie ca productia.
+    const backend = process.env.BACKEND_ORIGIN;
+    if (!backend) return [];
+    return [{ source: '/api/:path*', destination: `${backend.replace(/\/+$/, '')}/api/:path*` }];
+  },
+
   async redirects() {
     // Pastreaza linkurile vechi din Google ca sa nu pierzi trafic.
     return [
